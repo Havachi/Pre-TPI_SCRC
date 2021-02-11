@@ -1,6 +1,6 @@
 a{
   text-decoration: none;
-  color: black;
+  color: inherit;
 }
 
 .container-nav{
@@ -30,8 +30,9 @@ a{
 }
 .navbar-item.active{
   background: var(--primary-color);
-  color: var(--primary-textover-color);
+  color: var(--primary-textover-color) !important;
   border-bottom:3px solid #000000;
+  font-weight: bold;
 }
 .navbar-item.last{
   border-left:1px solid #000000;
