@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="content/styles/main.css">
     <link rel="stylesheet" href="content/styles/navbar.css">
     <link rel="stylesheet" href="content/styles/color.css">
+    <link rel="stylesheet" href="content/styles/login.css">
   </head>
   <body>
     <header>

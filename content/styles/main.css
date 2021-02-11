@@ -1,24 +1,29 @@
-@font-face { 
-  font-family: SourceSansPro; 
-  src:url(../../content/font/SourceSansPro/SourceSansPro-Regular.ttf); 
-} 
-@font-face { 
-  font-family: SourceSansPro; 
-  src:url(../../content/font/SourceSansPro/SourceSansPro-Bold.ttf); 
-  font-weight: bold; 
-} 
-@font-face { 
-  font-family: SourceSansPro; 
-  src:url(../../content/font/SourceSansPro/SourceSansPro-Italic.ttf); 
-  font-style: italic; 
-} 
- 
- 
-html{ 
-  font-family: SourceSansPro; 
-} 
-.container{ 
-  margin-left: 25%; 
-  margin-right: 25%; 
- 
-} 
+/*font*/
+@font-face {
+  font-family: SourceSansPro;
+  src:url(../../content/font/SourceSansPro/SourceSansPro-Regular.ttf);
+}
+@font-face {
+  font-family: SourceSansPro;
+  src:url(../../content/font/SourceSansPro/SourceSansPro-Bold.ttf);
+  font-weight: bold;
+}
+@font-face {
+  font-family: SourceSansPro;
+  src:url(../../content/font/SourceSansPro/SourceSansPro-Italic.ttf);
+  font-style: italic;
+}
+html{
+  font-family: SourceSansPro;
+}
+
+/*Classes*/
+.container{
+  margin-left: 25%;
+  margin-right: 25%;
+
+}
+.page-title{
+  padding-top: 10px;
+  text-align: center;
+}
