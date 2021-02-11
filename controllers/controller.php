@@ -8,6 +8,11 @@ function displayHome()
 function displayLogin(){
   require "views/login.php";
 }
+function displayRegister()
+{
+  require "views/register.php";
+}
+
 
 /**
  *
@@ -18,5 +23,14 @@ function login($userLoginData){
     isLoginCorrect($userLoginData);
   }else {
     displayLogin();
+  }
+}
+
+function register($userRegisterData)
+{
+  if(false){
+    registerInDB($userRegisterData);
+  }else {
+    displayRegister();
   }
 }
