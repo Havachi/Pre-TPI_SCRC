@@ -3,8 +3,7 @@ require_once 'models/DBConnection.php';
 
 function registerInDB($registerData)
 {
-  require_once "exceptions/DatabaseError.php";
-
+  // TODO: Make this function prepare a PDOStatement instead of a simple sql string (safer)
   $registerResult = null;
   $strSeparator = '\'';
 

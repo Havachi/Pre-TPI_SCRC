@@ -15,7 +15,7 @@ function openDBConnexion(){
     $userPwd = $localConnectionData['password'];
     $dbname = $localConnectionData['dbname'];
     $dsn = "mysql:host=".$hostname.";dbname=".$dbname;
-    
+
     $dbconnect = new PDO($dsn, $userName, $userPwd);
 
     /*

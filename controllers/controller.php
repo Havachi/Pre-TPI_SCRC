@@ -30,7 +30,11 @@ function login($userLoginData){
 function register($userRegisterData)
 {
   if(isset($userRegisterData['inputUserLastName']) && isset($userRegisterData['inputUserFirstName']) && isset($userRegisterData['inputUserEmail']) && isset($userRegisterData['inputUserPassword']) && isset($userRegisterData['inputUserPasswordConf'])){
-    registerInDB($userRegisterData);
+    if ($userRegisterData['inputUserPassword'] === $userRegisterData['inputUserPasswordConf']) {
+      registerInDB($userRegisterData);
+    }else {
+      displayRegister();
+    }
   }else {
     displayRegister();
   }
