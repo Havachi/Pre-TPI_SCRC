@@ -1,5 +1,6 @@
 <?php
 require "models/login.php";
+require "models/register.php";
 
 function displayHome()
 {
@@ -28,7 +29,7 @@ function login($userLoginData){
 
 function register($userRegisterData)
 {
-  if(false){
+  if(isset($userRegisterData['inputUserLastName']) && isset($userRegisterData['inputUserFirstName']) && isset($userRegisterData['inputUserEmail']) && isset($userRegisterData['inputUserPassword']) && isset($userRegisterData['inputUserPasswordConf'])){
     registerInDB($userRegisterData);
   }else {
     displayRegister();

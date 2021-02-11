@@ -38,7 +38,7 @@ $title = "Register";
     </div>
     <!--Submit button -->
     <div class="register-fieldGroup submit">
-      <button class="submitButton" type="submit" name="submitBtn">Valider</button>
+      <button class="submitButton" type="submit">Valider</button>
     </div>
 
   </form>
