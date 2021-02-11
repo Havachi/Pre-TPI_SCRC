@@ -13,74 +13,27 @@ function openDBConnexion(){
     $hostname = $localConnectionData['hostname'];
     $userName = $localConnectionData['username'];
     $userPwd = $localConnectionData['password'];
-    $dbName = $localConnectionData['dbname'];
+    $dbname = $localConnectionData['dbname'];
+    $dsn = "mysql:host=".$hostname.";dbname=".$dbname;
+    
+    $dbconnect = new PDO($dsn, $userName, $userPwd);
 
-    try{
-      $dbconnect = mysqli_connect($hostname, $userName, $userPwd, $dbName);
-    }catch(mysqli_sql_exception $e){
-      throw new SiteUnderMaintenanceExeption ;
-    }
+    /*
     if ($dbconnect->connect_error) {
         die("Database connection failed: " . $dbconnect->connect_error);
-    }
+    }*/
     return $dbconnect;
 }
-function closeDBConnection($Connection){
-    mysqli_close($Connection);
+function executeQuery($query)
+{
+  $db=openDBConnexion();
+  $result = $db->exec($query);
 }
-function executeQueryInsert($insertQuery){
-    try {
-      $dbConnexion = openDBConnexion();
-    } catch (SiteUnderMaintenanceExeption $e) {
-      throw new SiteUnderMaintenanceExeption ;
-    }
-
-
-    if (mysqli_query($dbConnexion, $insertQuery)) {
-      return mysqli_affected_rows($dbConnexion);
-    } else {
-        throw new invalidDatabaseConnection();
-    }
+function executeQuerySelectSingle($query){
+  $db=openDBConnexion();
+  $result = $db->query($query)->fetch();
 }
-function executeQueryUpdate($updateQuery){
-  try {
-    $dbConnexion = openDBConnexion();
-  } catch (SiteUnderMaintenanceExeption $e) {
-    throw new SiteUnderMaintenanceExeption ;
-  }
-  if (mysqli_query($dbConnexion, $updateQuery)) {
-      return mysqli_affected_rows($dbConnexion);
-  } else {
-      throw new invalidDatabaseConnection();
-  }
-}
-function executeQuerySelect($selectQuery){
-    require_once "exceptions/DatabaseError.php";
-    $queryResult = null;
-
-    try {
-      $dbConnexion = openDBConnexion();
-    } catch (SiteUnderMaintenanceExeption $e) {
-      throw $e ;
-    }
-    if ($result = mysqli_query($dbConnexion, $selectQuery)) {
-        if (mysqli_num_rows($result) > 0) {
-            if (mysqli_num_rows($result) == 1) {
-                $row = mysqli_fetch_row($result);
-                $queryResult = array();
-                foreach ($row as $value) {
-                    array_push($queryResult, $value);
-                }
-            } else {
-                $queryResult = array();
-                while ($row = $result->fetch_assoc()) {
-                    $queryResult[] = $row;
-                }
-            }
-        }
-    } else {
-        throw new invalidDatabaseConnection();
-    }
-    //$result->free();
-    return $queryResult;
+function executeQuerySelectMult($query){
+  $db=openDBConnexion();
+  $data = $pdo->query($query)->fetchAll();
 }
