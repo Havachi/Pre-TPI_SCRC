@@ -14,7 +14,6 @@ function displayRegister()
   require "views/register.php";
 }
 
-
 /**
  * This function firstly check if every fields of the form was set,
  * then send data to the model or redirect the user

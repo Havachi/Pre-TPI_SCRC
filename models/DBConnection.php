@@ -44,7 +44,7 @@ function executeQuery($query)
     return $result;
   } catch (Exception $e) {
     $db->rollback();
-    throw $e
+    throw $e;
   }
 }
 /**
@@ -64,7 +64,7 @@ function executeQuerySelectSingle($query){
     return $result;
   } catch (Exception $e) {
     $db->rollback();
-    throw $e
+    throw $e;
   }
 }
 function executeQuerySelectAssoc($query){
@@ -76,7 +76,7 @@ function executeQuerySelectAssoc($query){
     return $data;
   } catch (Exception $e) {
     $db->rollback();
-    throw $e
+    throw $e;
   }
 
 
