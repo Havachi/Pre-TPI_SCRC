@@ -24,6 +24,10 @@ if (isset($_GET['action'])) {
         displayRegister();
       }
       break;
+      /*for testing purpose*/
+    case 'clearSession':
+      require 'views/clearsession.php';
+      break;
     default:
       displayHome();
       break;
