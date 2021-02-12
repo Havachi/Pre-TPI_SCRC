@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="content/styles/navbar.css">
     <link rel="stylesheet" href="content/styles/color.css">
     <link rel="stylesheet" href="content/styles/login.css">
+    <link rel="stylesheet" href="content/styles/register.css">
   </head>
   <body>
     <header>

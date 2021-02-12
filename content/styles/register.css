@@ -1,0 +1,17 @@
+.register-form{
+  display: grid;
+  grid-template-rows: repeat(6,1fr);
+}
+
+.register-fieldGroup{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-column-gap: 10px;
+  padding-top: 25px;
+}
+.submitButton{
+  grid-column-start: 2
+}
+.register-fieldGroup-label{
+  text-align: right;
+}

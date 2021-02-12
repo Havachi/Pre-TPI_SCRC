@@ -17,7 +17,13 @@ if (isset($_GET['action'])) {
         displayLogin();
       }
       break;
-
+    case 'register':
+      if (isset($_POST)) {
+        register($_POST);
+      }else {
+        displayRegister();
+      }
+      break;
     default:
       displayHome();
       break;
