@@ -23,7 +23,13 @@ function displayRegister()
  */
 function login($userLoginData){
   if(isset($userLoginData['inputUserEmail']) && isset($userLoginData['inputUserPassword'])){
-    isLoginCorrect($userLoginData);
+    if (isLoginCorrect($userLoginData)) {
+      createSession($userLoginData['inputUserEmail']);
+      $_GET['action'] = "home";
+      require "views/Home.php";
+    }else {
+      $_GET['error'] = "err:invlog";
+    }
   }else {
     displayLogin();
   }

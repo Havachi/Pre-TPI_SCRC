@@ -18,11 +18,22 @@ function isLoginCorrect($userLoginData)
   } catch (Exception $e) {
     throw $e;
   }
-    if (password_verify($psw,$userDBPSW)) {
+    if (password_verify($psw,$userDBPSW[0])) {
       return true;
     }else {
       return false;
     }
 }
-
+function createSession($userEmailAddress){
+    $_SESSION['isLogged'] = true;
+    //// TODO: add the user type to the session and userID
+    $strSep = '\'';
+    $query = "SELECT * FROM users WHERE userEmail =".$strSep.$userEmailAddress.$strSep;
+    $userData=executeQuerySelectAssoc($query);
+    $_SESSION['userID'] = $userData[0]['userID'];
+    $_SESSION['userFirstName'] = $userData[0]['userFirstName'];
+    $_SESSION['userLastName'] = $userData[0]['userLastName'];
+    $_SESSION['userEmailAddress'] = $userEmailAddress;
+    $_SESSION['userRole'] = $userData[0]['userRole'];
+}
  ?>

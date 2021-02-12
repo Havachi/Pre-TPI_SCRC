@@ -71,7 +71,7 @@ function executeQuerySelectAssoc($query){
   $db=openDBConnexion();
   try {
     $db->beginTransaction();
-    $data = $pdo->query($query)->fetchAll(PDO::FETCH_ASSOC);
+    $data = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
     $db->commit();
     return $data;
   } catch (Exception $e) {
