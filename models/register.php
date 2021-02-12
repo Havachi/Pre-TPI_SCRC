@@ -10,10 +10,10 @@ function registerInDB($registerData)
   $userFirstname = $registerData['inputUserFirstName'];
   $userLastname = $registerData['inputUserLastName'];
   $userEmailAddress = $registerData['inputUserEmail'];
-  $userPasswordHash = password_hash($registerData['inputUserPassword'], PASSWORD_DEFAULT);
+  $userPasswordHash = password_hash($registerData['inputUserPassword'], PASSWORD_ARGON2I);
+  
 
   $registerQuery = 'INSERT INTO users (userFirstname, userLastname, userEmail, userPasswordHash) VALUES (' . $strSeparator . $userFirstname . $strSeparator . ',' . $strSeparator . $userLastname . $strSeparator . ',' . $strSeparator . $userEmailAddress . $strSeparator . ',' . $strSeparator . $userPasswordHash . $strSeparator . ')';
   executeQuery($registerQuery);
 }
-
  ?>
