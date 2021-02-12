@@ -11,9 +11,13 @@ if (isset($_GET['action'])) {
       displayHome();
       break;
     case 'login':
+    if (isset($_POST)) {
+      login($_POST);
+    }else {
       displayLogin();
-      break;
+    }
 
+      break;
     default:
       displayHome();
       break;

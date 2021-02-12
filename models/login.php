@@ -11,14 +11,18 @@ function isLoginCorrect($userLoginData)
 {
   $email=$userLoginData['inputUserEmail'];
   $psw=$userLoginData['inputUserPassword'];
-
-  $query = "SELECT userPasswordHash FROM users WHERE userEmail =\'".$email."\'";
-
-  $DBpsw=executeQuerySelect($query);
-  if ($psw === $DBpsw) {
-    return true;
+  $strSep = '\'';
+  $query = "SELECT userPasswordHash FROM users WHERE userEmail =".$strSep.$email.$strSep;
+  try {
+    $userDBPSW = executeQuerySelectSingle($query);
+  } catch (Exception $e) {
+    throw $e;
   }
-  return false;
+    if (password_verify($psw,$userDBPSW)) {
+      return true;
+    }else {
+      return false;
+    }
 }
 
  ?>

@@ -14,12 +14,12 @@ $title = "Login";
       <input class="form-field" type="text" name="inputUserEmail" value="">
     </div>
     <div class="form-fieldGroup password">
-      <label class="form-field-label" for="inputPassword">Mot de passe</label>
-      <input class="form-field" type="password" name="inputPassword" value="">
+      <label class="form-field-label" for="inputUserPassword">Mot de passe</label>
+      <input class="form-field" type="password" name="inputUserPassword" value="">
     </div>
 
     <div class="form-fieldGroup submit">
-      <button class="form-btn" type="submit" name="loginSubmit">Connexion</button>
+      <button class="form-btn" type="submit">Connexion</button>
     </div>
   </form>
 </div>
