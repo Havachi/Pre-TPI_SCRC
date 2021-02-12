@@ -1,41 +1,27 @@
-.login-container{
-
-}
-
 .login-form{
-display: grid;
-
-grid-template-rows: repeat(4,1fr);
+  display: grid;
+  grid-template-rows: repeat(6,1fr);
 }
 
-.form-fieldGroup{
-padding-top: 20px;
-text-align: center;
-display: grid;
-grid-template-columns: repeat(3,1fr);
-grid-column-gap: 10px;
-margin-top: 10px;
+.login-fieldGroup{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-column-gap: 10px;
+  padding-top: 25px;
 }
-.form-fieldGroup.email{
-grid-row:1/2;
+.login-fieldGroup-label{
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  text-align: right;
 }
-.form-fieldGroup.password{
-grid-row:2/3;
+.login-fieldGroup-input{
+  height: 30px;
+  border-radius: 2px;
+  border-style: solid;
+  border-width: 1px;
+  outline: none
 }
-.form-fieldGroup.submit{
-grid-row:3/4;
-
-}
-
-.form-field{
-grid-column: 2/3;
-}
-.form-field-label{
-text-align: right;
-grid-column: 1/2;
-}
-.form-btn{
-grid-column: 2/3;
-width: 50%;
-
+.login-fieldGroup-input:focus{
+  border-color: var(--primary-color) !important;
 }

@@ -12,7 +12,7 @@ $title = "Register";
     <!--Last Name Field -->
     <div class="register-fieldGroup lastname">
       <label class="register-fieldGroup-label" for="inputUserLastName">Nom de famille</label>
-      <input type="text" name="inputUserLastName" value="">
+      <input class="register-fieldGroup-input" type="text" name="inputUserLastName" value="">
     </div>
     <!--First Name Field -->
     <div class="register-fieldGroup firstname">

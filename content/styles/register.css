@@ -8,9 +8,18 @@
   grid-template-columns: repeat(3,1fr);
   grid-column-gap: 10px;
   padding-top: 25px;
+  text-align: center;
 }
 .submitButton{
-  grid-column-start: 2
+  grid-column-start: 2;
+  background-color: var(--primary-color);
+  border-color: var(--primary-dark-color);
+  border-top: none;
+  border-left:none;
+  border-radius: 3px;
+  color: var(--primary-textover-color);
+  width: 50%;
+  justify-self:center;
 }
 .register-fieldGroup-label{
   text-align: right;
