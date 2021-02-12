@@ -32,7 +32,12 @@
             </div>
             <div class="navbar-item login last">
               <div>
-                <a href="index.php?action=login">Se connecter</a>
+                <?php if ($_SESSION['isLogged'] === true): ?>
+                  <a href="index.php?action=profile"><?php echo $_SESSION['userFirstName'] ?> <?php echo $_SESSION['userLastName'] ?></a>
+                <?php else: ?>
+                  <a href="index.php?action=login">Se connecter</a>
+                <?php endif; ?>
+
               </div>
             </div>
 
