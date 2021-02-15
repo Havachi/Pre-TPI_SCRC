@@ -2,7 +2,9 @@
 <html lang="fr" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>SCRC</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Description" content="SCRC, the cool image localization contest website">
+    <title><?php echo $title; ?></title>
     <link rel="stylesheet" href="content/styles/main.css">
     <link rel="stylesheet" href="content/styles/navbar.css">
     <link rel="stylesheet" href="content/styles/color.css">
@@ -15,22 +17,22 @@
         <div class="navbar">
 
           <div class="navbar-list">
-            <div class="navbar-item home active">
+            <div class="navbar-item home <?=$title=="Acceuil"?"active":""?>">
               <div>
                 <a href="index.php?action=home">Accueil</a>
               </div>
             </div>
-            <div class="navbar-item concours">
+            <div class="navbar-item concours <?=$title=="Concours"?"active":""?>">
               <div >
                 <a href="index.php?action=concours">Concours</a>
               </div>
             </div>
-            <div class="navbar-item classement">
+            <div class="navbar-item classement <?=$title=="Classement"?"active":""?>">
               <div>
                 <a href="index.php?action=classement">Classement</a>
               </div>
             </div>
-            <div class="navbar-item login last">
+            <div class="navbar-item login last <?=($title=="Login"||$title=="Register")?"active":""?>">
               <div>
                 <?php if (isset($_SESSION['isLogged'])): ?>
                   <a href="index.php?action=profile"><?php echo $_SESSION['userFirstName'] ?> <?php echo $_SESSION['userLastName'] ?></a>
@@ -51,6 +53,7 @@
     <footer>
 
     </footer>
+
   </body>
 
 </html>
