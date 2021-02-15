@@ -21,6 +21,9 @@ $title = "Login";
     <div class="login-fieldGroup submit">
       <button class="submitButton" type="submit">Connexion</button>
     </div>
+    <div class="login-noaccount">
+      <p>Pas de compte? Créer en un <a class="login-noaccount-link" href="index.php?action=register">ICI</a></p>
+    </div>
   </form>
 </div>
 
