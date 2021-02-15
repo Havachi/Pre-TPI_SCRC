@@ -1,6 +1,7 @@
 a{
   text-decoration: none;
   color: inherit;
+  display: block;
 }
 
 .container-nav{
@@ -12,9 +13,9 @@ a{
 .navbar{
   background: white;
 
-  border-left:1px solid #000000;
-  border-top:1px solid #000000;
-  border-bottom:1px solid #000000;
+  border-left:1px solid var(--primary-color);
+  border-top:1px solid var(--primary-color);
+  border-bottom:1px solid var(--primary-color);
   border-radius: 2px
 }
 .navbar-list{
@@ -26,16 +27,16 @@ a{
   text-align: center;
   padding-top: 10px;
   padding-bottom:10px;
-  border-right:1px solid #000000;
+  border-right:1px solid var(--primary-color);
 }
 .navbar-item.active{
   background: var(--primary-color);
   color: var(--primary-textover-color) !important;
-  border-bottom:3px solid #000000;
+  border-bottom:3px solid var(--primary-dark-color);
   font-weight: bold;
 }
 .navbar-item.last{
-  border-left:1px solid #000000;
+  border-left:1px solid var(--primary-color);
 }
 
 .navbar-item.home{

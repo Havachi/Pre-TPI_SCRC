@@ -25,3 +25,10 @@
 .login-fieldGroup-input:focus{
   border-color: var(--primary-color) !important;
 }
+.login-noaccount{
+  text-align: center;
+}
+.login-noaccount-link{
+  color: var(--primary-color);
+  font-weight: bold;
+}

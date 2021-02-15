@@ -24,3 +24,20 @@
 .register-fieldGroup-label{
   text-align: right;
 }
+.register-fieldGroup-input{
+  height: 30px;
+  border-radius: 2px;
+  border-style: solid;
+  border-width: 1px;
+  outline: none
+}
+.register-fieldGroup-input:focus{
+  border-color: var(--primary-color) !important;
+}
+.register-hasaccount{
+  text-align: center;
+}
+.register-hasaccount-link{
+  color: var(--primary-color);
+  font-weight: bold;
+}
