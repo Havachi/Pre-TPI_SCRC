@@ -27,7 +27,7 @@ $title = "Concours";
       <button class="secondaryButton" type="button" name="btnTry">Vérifier</button>
     </div>
     <div class="concours-formGroup">
-      <button class="submitButton" type="submit" >Valider</button>
+      <button class="submitButton" type="submit">Valider</button>
     </div>
   </form>
 </div>
