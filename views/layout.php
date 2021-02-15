@@ -32,6 +32,16 @@
                 <a href="index.php?action=classement">Classement</a>
               </div>
             </div>
+
+            <div class="navbar-item logout <?=($title=="Logout")?"active":""?>">
+              <div>
+                <?php if (isset($_SESSION['isLogged'])): ?>
+                  <a href="index.php?action=logout">Déconnexion</a>
+                <?php endif; ?>
+
+              </div>
+            </div>
+
             <div class="navbar-item login last <?=($title=="Login"||$title=="Register")?"active":""?>">
               <div>
                 <?php if (isset($_SESSION['isLogged'])): ?>
@@ -41,8 +51,8 @@
                 <?php endif; ?>
 
               </div>
-            </div>
 
+            </div>
           </div>
         </div>
       </div>

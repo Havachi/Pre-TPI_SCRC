@@ -36,4 +36,3 @@ function createSession($userEmailAddress){
     $_SESSION['userEmailAddress'] = $userEmailAddress;
     $_SESSION['userRole'] = $userData[0]['userRole'];
 }
- ?>

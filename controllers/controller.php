@@ -48,6 +48,8 @@ function register($userRegisterData)
   if(isset($userRegisterData['inputUserLastName']) && isset($userRegisterData['inputUserFirstName']) && isset($userRegisterData['inputUserEmail']) && isset($userRegisterData['inputUserPassword']) && isset($userRegisterData['inputUserPasswordConf'])){
     if ($userRegisterData['inputUserPassword'] === $userRegisterData['inputUserPasswordConf']) {
       registerInDB($userRegisterData);
+      $_GET['action'] = "home";
+      require "views/Home.php";
     }else {
       $_GET['error'] = "err:invdb";
       displayRegister();
@@ -55,4 +57,9 @@ function register($userRegisterData)
   }else {
     displayRegister();
   }
+}
+function logout(){
+  session_destroy();
+  $_GET['action'] = 'home';
+  require 'views/home.php';
 }
