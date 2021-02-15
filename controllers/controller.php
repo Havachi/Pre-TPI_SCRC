@@ -14,9 +14,9 @@ function displayRegister()
 {
   require "views/register.php";
 }
-function displayConcours()
+function displayConcoursFirst()
 {
-  require "views/concours.php";
+  require "views/concoursLogged.php";
 }
 
 /*End of Display only part*/
@@ -68,7 +68,10 @@ function register($userRegisterData)
     displayRegister();
   }
 }
+function displayConcoursLevel(){
+  $imageToShow="";
 
+}
 
 
 /*End of Model access functions*/

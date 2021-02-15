@@ -12,7 +12,16 @@ if (isset($_GET['action'])) {
       break;
 
     case 'concours':
-        displayConcours();
+      if (isset($_SESSION['isLogged'])) {
+        if (isset($_SESSION['currentScore'])) {
+          displayConcoursLevel($_SESSION['currentLevel']);
+        }else {
+          displayConcoursFirst();
+        }
+      }else {
+        displayConcoursFirst();
+      }
+
       break;
 
     case 'login':
