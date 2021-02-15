@@ -10,6 +10,11 @@ if (isset($_GET['action'])) {
     case 'home':
       displayHome();
       break;
+
+    case 'concours':
+        displayConcours();
+      break;
+
     case 'login':
       if (isset($_POST)) {
         login($_POST);

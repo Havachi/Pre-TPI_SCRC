@@ -2,6 +2,7 @@
 require "models/login.php";
 require "models/register.php";
 
+/*Display only part*/
 function displayHome()
 {
   require "views/home.php";
@@ -13,6 +14,15 @@ function displayRegister()
 {
   require "views/register.php";
 }
+function displayConcours()
+{
+  require "views/concours.php";
+}
+
+/*End of Display only part*/
+
+
+/*Model access functions*/
 
 /**
  * This function firstly check if every fields of the form was set,
@@ -58,8 +68,14 @@ function register($userRegisterData)
     displayRegister();
   }
 }
+
+
+
+/*End of Model access functions*/
+/* Other */
 function logout(){
   session_destroy();
   $_GET['action'] = 'home';
   require 'views/home.php';
 }
+/*End of Other*/
