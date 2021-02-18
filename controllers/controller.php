@@ -1,6 +1,7 @@
 <?php
 require "models/login.php";
 require "models/register.php";
+require "models/concours.php";
 
 /*Display only part*/
 function displayHome()
@@ -16,7 +17,7 @@ function displayRegister()
 }
 function displayConcours()
 {
-  require "views/concours.php";
+  require "views/concoursLogged.php";
 }
 
 /*End of Display only part*/
@@ -68,7 +69,16 @@ function register($userRegisterData)
     displayRegister();
   }
 }
-
+function displayConcoursNotLogged(){
+  echo "non";
+}
+function displayConcoursLevel($currentLevel){
+  concoursInit($currentLevel);
+  require "views/concoursLogged.php";
+}
+function displayConcoursNext($currentLevel){
+  $_SESSION['currentLevel'] = $_SESSION['currentLevel']+1;
+}
 
 
 /*End of Model access functions*/

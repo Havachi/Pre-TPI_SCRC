@@ -12,7 +12,24 @@ if (isset($_GET['action'])) {
       break;
 
     case 'concours':
-        displayConcours();
+      if (isset($_SESSION['isLogged'])) {
+        if (isset($_POST['btnNext'])) {
+          if (isset($_POST['userInputLatitude']) && isset($_POST['userInputLongitude'])) {
+            coucoursValidate($_POST['userInputLatitude'],$_POST['userInputLongitude']);
+          }
+        }elseif (isset($_POST['btnTry'])) {
+          coucoursAttempt();
+        }else {
+          if (isset($_SESSION['currentLevel'])) {
+            displayConcoursLevel($_SESSION['currentLevel']);
+          }else {
+            displayConcoursLevel('1');
+          }
+        }
+      }else {
+        displayConcoursNotLogged();
+      }
+
       break;
 
     case 'login':

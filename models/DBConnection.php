@@ -1,5 +1,5 @@
 <?php
-require_once "exceptions/DatabaseError.php";
+//require_once "exceptions/DatabaseError.php";
 /**
  * This function will open a new connection with the database
  *
@@ -8,7 +8,6 @@ require_once "exceptions/DatabaseError.php";
  */
 // TODO: remove Hardcoded database username and password (can't help you on how)
 function openDBConnexion(){
-    $useLocal = true;
     $localConnectionData = array('hostname' => 'localhost' ,'username' => 'SCRCConnector', 'password' => 'Pa$$w0rd', 'dbname' => 'scrc' );
 
     $hostname = $localConnectionData['hostname'];
