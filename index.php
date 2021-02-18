@@ -14,7 +14,9 @@ if (isset($_GET['action'])) {
     case 'concours':
       if (isset($_SESSION['isLogged'])) {
         if (isset($_POST['btnNext'])) {
-          coucoursValidate();
+          if (isset($_POST['userInputLatitude']) && isset($_POST['userInputLongitude'])) {
+            coucoursValidate($_POST['userInputLatitude'],$_POST['userInputLongitude']);
+          }
         }elseif (isset($_POST['btnTry'])) {
           coucoursAttempt();
         }else {

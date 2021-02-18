@@ -1,21 +1,130 @@
 <?php
-function concoursInit($currentLevel){
 
-  $_SESSION['pathToImage']="/content/images/".$currentLevel.".jpg";
-
-  if (!isset($_SESSION['attempsNumber'])) {
-    $attempsNumber=0;
-    $_SESSION['attempsNumber']=0;
-  }
+/**
+ * This function is run every time the user enter the contest
+ * It sets every used variable to their initial values
+ * @author Alessandro Rossi
+ */
+function concoursInit(){
   $_SESSION['currentLevel']=1;
+  $_SESSION['pathToImage']="/content/images/".$_SESSION['currentLevel'].".jpg";
+  $_SESSION['attempsNumber']=0;
+  $_SESSION['userScore'] = array(
+  'lvl1' => 0 ,'lvl2' => 0 ,
+  'lvl3' => 0 ,'lvl4' => 0 ,
+  'lvl5' => 0 ,'lvl6' => 0 ,
+  'lvl7' => 0 ,'lvl8' => 0 ,
+  'lvl9' => 0 ,'lvl10' => 0);
+  $_SESSION['tryScores'] = array('Try1' => 0,'Try2' => 0,'Try3' => 0);
 }
+/**
+ * This function is run every time the user go to the next level
+ * It setup the variables for the next level
+ * @author Alessandro Rossi
+ */
+function nextLevel(){
+  $_SESSION['currentLevel']=$_SESSION['currentLevel']+1;
+  $_SESSION['pathToImage']="/content/images/".$_SESSION['currentLevel'].".jpg";
+  $_SESSION['attempsNumber']=0;
+  $_SESSION['tryScores'] = array('Try1' => 0,'Try2' => 0,'Try3' => 0);
+}
+
+/**
+ * This function is run every time the user press the try button
+ * It calculate the distance between the user answer and the solution
+ * and the calculate the score to finally show it to the user
+ * @author Alessandro Rossi
+ */
 function coucoursAttempt(){
-  if (isset($_SESSION['attempsNumber'])) {
-
-    $_SESSION['attempsNumber']=$_SESSION['attempsNumber']+1;
+  if ($_SESSION['attempsNumber'] !== 3) {
+    if (isset($_SESSION['attempsNumber'])) {
+      $_SESSION['attempsNumber'] = $_SESSION['attempsNumber']+1;
+      $dbSolution = fetchSolution($_SESSION['currentLevel']);
+      $dbLat = $dbSolution[0]['imagePosLat'];
+      $dbLon = $dbSolution[0]['imagePosLon'];
+      $result = calculateDistance($_POST['userInputLatitude'],$_POST['userInputLongitude'],$dbLat,$dbLon);
+      $_SESSION['tryScores']["Try".$_SESSION['attempsNumber']] = calculateImageScore($result);
+      require "views\concoursLogged.php";
+    }
   }
-  require "views\concoursLogged.php";
 }
-function coucoursValidate(){
 
+/**
+ * This function is run every time the user press the Next Button
+ * It calculate the distance between the user answer and the solution
+ * and the calculate the score to store it in an array
+ * @author Alessandro Rossi
+ */
+function coucoursValidate($inputLat,$inputLon){
+  $dbSolution = fetchSolution($_SESSION['currentLevel']);
+  $dbLat = $dbSolution['imagePosLat'];
+  $dbLon = $dbSolution['imagePosLon'];
+  $result = calculateDistance($inputLat,$inputLon,$dbLat,$dbLon);
+  $score = calculateImageScore($result);
+  $_SESSION['userScores']['lvl'.$_SESSION['currentLevel']] = $score;
+  nextLevel();
+}
+function fetchSolution($level){
+  require_once "DBConnection.php";
+  $query = "SELECT imagePosLat, imagePosLon FROM images where imageID =".$level.";";
+  $solution = executeQuerySelectAssoc($query);
+  return $solution;
+}
+
+/**
+ * Calculates the great-circle distance between two points, with
+ * the Haversine formula.
+ * @param float $inputLat Latitude of start point in [deg decimal]
+ * @param float $inputLon Longitude of start point in [deg decimal]
+ * @param float $dbLat Latitude of target point in [deg decimal]
+ * @param float $dbLon Longitude of target point in [deg decimal]
+ * @return float Distance between points in [m] (same as earthRadius)
+ * @author martinstoeckli @ https://stackoverflow.com/questions/10053358/measuring-the-distance-between-two-coordinates-in-php
+ */
+function calculateDistance($inputLat,$inputLon,$dbLat,$dbLon){
+  $inputLatRad = deg2rad($inputLat);
+  $inputLonRad = deg2rad($inputLon);
+  $dbLatRad = deg2rad($dbLat);
+  $dbLonRad = deg2rad($dbLon);
+  $earthRadius = 6371000;//in meter
+
+  $latDelta =  $dbLatRad - $inputLatRad;
+  $lonDelta =  $dbLonRad - $inputLonRad;
+
+  $angle = 2*asin(sqrt(pow(sin($latDelta / 2),2) +
+  cos($inputLatRad) * cos($dbLatRad) * pow(sin($lonDelta / 2),2)));
+  return $angle * $earthRadius;
+}
+
+/**
+ * Calculate the score from the difference in Meter of the user input and the solution in DB
+ *
+ * @param float $diff the difference in Meter of the user input and the solution in DB
+ * @return int The score of the user
+ * @author Alessandro Rossi
+ */
+function calculateImageScore($diff){
+  $score = 0;
+  if ($diff <= 125) {
+    $score = 10;
+  }elseif ($diff >= 126 && $diff <= 250) {
+    $score = 9;
+  }elseif ($diff >= 251 && $diff <= 500) {
+    $score = 8;
+  }elseif ($diff >= 501 && $diff <= 1000) {
+    $score = 7;
+  }elseif ($diff >= 1001 && $diff <= 2000) {
+    $score = 6;
+  }elseif ($diff >= 2001 && $diff <= 4000) {
+    $score = 5;
+  }elseif ($diff >= 4001 && $diff <= 8000) {
+    $score = 4;
+  }elseif ($diff >= 8001 && $diff <= 16000) {
+    $score = 3;
+  }elseif ($diff >= 16001 && $diff <= 32000) {
+    $score = 2;
+  }elseif($diff > 32000){
+    $score = 1;
+  }
+  return $score;
 }
