@@ -13,13 +13,19 @@ if (isset($_GET['action'])) {
 
     case 'concours':
       if (isset($_SESSION['isLogged'])) {
-        if (isset($_SESSION['currentScore'])) {
-          displayConcoursLevel($_SESSION['currentLevel']);
+        if (isset($_POST['btnNext'])) {
+          coucoursValidate();
+        }elseif (isset($_POST['btnTry'])) {
+          coucoursAttempt();
         }else {
-          displayConcoursFirst();
+          if (isset($_SESSION['currentLevel'])) {
+            displayConcoursLevel($_SESSION['currentLevel']);
+          }else {
+            displayConcoursLevel('1');
+          }
         }
       }else {
-        displayConcoursFirst();
+        displayConcoursNotLogged();
       }
 
       break;

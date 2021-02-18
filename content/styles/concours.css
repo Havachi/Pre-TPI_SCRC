@@ -50,3 +50,14 @@ margin-top: 20px;
   justify-self:center;
   padding: 4px;
 }
+.secondaryButton.disabled{
+  background-color: grey;
+  border-color: grey;
+  border-top: none;
+  border-left:none;
+  border-radius: 3px;
+  color: black;
+  width: 50%;
+  justify-self:center;
+  padding: 4px;
+}
