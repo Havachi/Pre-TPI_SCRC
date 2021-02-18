@@ -9,7 +9,7 @@ function concoursInit(){
   $_SESSION['currentLevel']=1;
   $_SESSION['pathToImage']="/content/images/".$_SESSION['currentLevel'].".jpg";
   $_SESSION['attempsNumber']=0;
-  $_SESSION['userScore'] = array(
+  $_SESSION['userScores'] = array(
   'lvl1' => 0 ,'lvl2' => 0 ,
   'lvl3' => 0 ,'lvl4' => 0 ,
   'lvl5' => 0 ,'lvl6' => 0 ,
@@ -23,10 +23,15 @@ function concoursInit(){
  * @author Alessandro Rossi
  */
 function nextLevel(){
-  $_SESSION['currentLevel']=$_SESSION['currentLevel']+1;
-  $_SESSION['pathToImage']="/content/images/".$_SESSION['currentLevel'].".jpg";
-  $_SESSION['attempsNumber']=0;
-  $_SESSION['tryScores'] = array('Try1' => 0,'Try2' => 0,'Try3' => 0);
+  if ($_SESSION['currentLevel'] == 10) {
+    endConcours();
+  }else {
+    $_SESSION['currentLevel']=$_SESSION['currentLevel']+1;
+    $_SESSION['pathToImage']="/content/images/".$_SESSION['currentLevel'].".jpg";
+    $_SESSION['attempsNumber']=0;
+    $_SESSION['tryScores'] = array('Try1' => 0,'Try2' => 0,'Try3' => 0);
+    require 'views/concoursLogged.php';
+  }
 }
 
 /**
@@ -57,9 +62,9 @@ function coucoursAttempt(){
  */
 function coucoursValidate($inputLat,$inputLon){
   $dbSolution = fetchSolution($_SESSION['currentLevel']);
-  $dbLat = $dbSolution['imagePosLat'];
-  $dbLon = $dbSolution['imagePosLon'];
-  $result = calculateDistance($inputLat,$inputLon,$dbLat,$dbLon);
+  $dbLat = $dbSolution[0]['imagePosLat'];
+  $dbLon = $dbSolution[0]['imagePosLon'];
+  $result = calculateDistance($_POST['userInputLatitude'],$_POST['userInputLongitude'],$dbLat,$dbLon);
   $score = calculateImageScore($result);
   $_SESSION['userScores']['lvl'.$_SESSION['currentLevel']] = $score;
   nextLevel();
@@ -69,6 +74,12 @@ function fetchSolution($level){
   $query = "SELECT imagePosLat, imagePosLon FROM images where imageID =".$level.";";
   $solution = executeQuerySelectAssoc($query);
   return $solution;
+}
+function fetchPB(){
+  require_once "DBConnection.php";
+  $query = "SELECT userPBScore FROM users where userID = ". $_SESSION['userID'];
+  $pb = executeQuerySelectSingle($query);
+  return $pb;
 }
 
 /**
@@ -127,4 +138,20 @@ function calculateImageScore($diff){
     $score = 1;
   }
   return $score;
+}
+
+function endConcours(){
+  $totalScore = 0;
+  foreach ($_SESSION['userScores'] as $lvl => $score) {
+    $totalScore = $totalScore + $score;
+  }
+  $_SESSION['totalScore'] = $totalScore;
+  $userPB = fetchPB()[0];
+
+  if ($userPB < $totalScore){
+    //// TODO: Sa mec faut finir
+    $query = "UPDATE users SET userPBScore =". $totalScore ." WHERE userID = ". $_SESSION['userID'];
+    executeQuery($query);
+  }
+  require "views/finalScore.php";
 }
