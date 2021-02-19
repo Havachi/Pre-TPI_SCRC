@@ -32,3 +32,14 @@
   color: var(--primary-color);
   font-weight: bold;
 }
+@media only screen and (max-width: 950px){
+  .login-fieldGroup-label{
+    display: inline-block;
+  }
+  .login-fieldGroup-input{
+    display: block;
+  }
+  .login-fieldGroup{
+    display: inline-grid;
+  }
+}

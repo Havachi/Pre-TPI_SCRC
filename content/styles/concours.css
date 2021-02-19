@@ -39,6 +39,18 @@ margin-top: 20px;
   display: block;
   margin-bottom: 10px;
 }
+.concours-submitBtn{
+  background-color: var(--primary-color);
+  border-color: var(--primary-dark-color);
+  border-top: none;
+  border-left:none;
+  border-radius: 3px;
+  color: var(--primary-textover-color);
+  width: 20%;
+  min-width: 85px;
+  height: 25px;
+  justify-self:center;
+}
 .secondaryButton{
   background-color: var(--secondary-dark-color);
   border-color: var(--secondary-light-color);
@@ -47,6 +59,8 @@ margin-top: 20px;
   border-radius: 3px;
   color: var(--secondary-textover-color);
   width: 20%;
+  min-width: 85px;
+  height: 25px;
   justify-self:center;
   padding: 4px;
 }
@@ -54,4 +68,11 @@ margin-top: 20px;
   background-color: grey;
   border-color: grey;
   color: black;
+}
+
+@media only screen and (max-width: 950px){
+  .concours-image{
+    max-width: 50%;
+    max-height: 50%;
+  }
 }

@@ -41,7 +41,7 @@ $title = "Concours";
       <button class="secondaryButton <?php if ($_SESSION['attempsNumber']>=3){echo 'disabled';} ?>" type="submit" name="btnTry"<?php if ($_SESSION['attempsNumber']>=3){echo 'disabled';} ?>>Vérifier</button>
     </div>
     <div class="concours-formGroup">
-      <button class="submitButton" type="submit" name="btnNext" >Suivant</button>
+      <button class="concours-submitBtn" type="submit" name="btnNext" >Suivant</button>
     </div>
   </form>
 </div>

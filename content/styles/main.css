@@ -16,14 +16,29 @@
 html{
   font-family: SourceSansPro;
 }
-
+body{
+  padding: 0;
+  margin: 0;
+  background-color: #e8eaf6;
+}
 /*Classes*/
 .container{
   margin-left: 25%;
   margin-right: 25%;
-
 }
+@media only screen and (max-width: 950px){
+  .container{
+    margin-left: 0;
+    margin-right:0;
+  }
+}
+
 .page-title{
   padding-top: 10px;
   text-align: center;
 }
+/*Material icons*/
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
