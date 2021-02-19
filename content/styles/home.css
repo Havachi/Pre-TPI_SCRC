@@ -1,0 +1,21 @@
+.home-textContainer{
+  text-align: center;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 50px;
+}
+.home-goodLuck{
+  text-align: center;
+  color: var(--primary-color);
+  margin-top: 50px;
+}
+@media only screen and (max-width: 950px){
+  .home-textContainer{
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 50px;
+  }
+  .home-goodLuck{
+    margin-top: 10px;
+  }
+}
