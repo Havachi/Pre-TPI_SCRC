@@ -1,9 +1,18 @@
 <?php
 
 require "controllers/controller.php";
-
+require "models/general.php";
 
 session_start();
+if (isset($_POST)) {
+  try {
+    inputVerifier($_POST);
+  } catch (illegalCharDetected $e) {
+    echo $e->getMessage();
+    require "views/home.php";
+  }
+}
+
 if (isset($_GET['action'])) {
   $action = $_GET['action'];
   switch ($action) {

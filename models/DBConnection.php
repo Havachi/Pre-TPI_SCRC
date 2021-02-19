@@ -82,3 +82,13 @@ function executeQuerySelectAssoc($query){
     throw $e;
   }
 }
+function prepareQuery($query){
+  $db=openDBConnexion();
+  $statement = $db->prepare($query);
+  return $statement;
+}
+function executeStatement($statement,$values){
+  $statement->execute($values);
+  $result = $statement->fetchAll();
+  return $result;
+}

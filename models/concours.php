@@ -64,22 +64,32 @@ function coucoursValidate($inputLat,$inputLon){
   $dbSolution = fetchSolution($_SESSION['currentLevel']);
   $dbLat = $dbSolution[0]['imagePosLat'];
   $dbLon = $dbSolution[0]['imagePosLon'];
-  $result = calculateDistance($_POST['userInputLatitude'],$_POST['userInputLongitude'],$dbLat,$dbLon);
-  $score = calculateImageScore($result);
+  try {
+    $result = calculateDistance($_POST['userInputLatitude'],$_POST['userInputLongitude'],$dbLat,$dbLon);
+    $score = calculateImageScore($result);
+  } catch (\Exception $e) {
+
+  }
   $_SESSION['userScores']['lvl'.$_SESSION['currentLevel']] = $score;
   nextLevel();
 }
 function fetchSolution($level){
   require_once "DBConnection.php";
-  $query = "SELECT imagePosLat, imagePosLon FROM images where imageID =".$level.";";
-  $solution = executeQuerySelectAssoc($query);
-  return $solution;
+  $query = "SELECT imagePosLat, imagePosLon FROM images where imageID = :imageID";
+  $values=array(':imageID' => $level);
+  $statement = prepareQuery($query);
+  $result = executeStatement($statement,$values);
+  //$solution = executeQuerySelectAssoc($query);
+  return $result;
 }
 function fetchPB(){
   require_once "DBConnection.php";
-  $query = "SELECT userPBScore FROM users where userID = ". $_SESSION['userID'];
-  $pb = executeQuerySelectSingle($query);
-  return $pb;
+  $query = "SELECT userPBScore FROM users where userID = :userID" ;
+  $values=array(':userID' => $_SESSION['userID']);
+  $statement = prepareQuery($query);
+  $result = executeStatement($statement,$values);
+  //$pb = executeQuerySelectSingle($query);
+  return $result;
 }
 
 /**
@@ -93,10 +103,15 @@ function fetchPB(){
  * @author martinstoeckli @ https://stackoverflow.com/questions/10053358/measuring-the-distance-between-two-coordinates-in-php
  */
 function calculateDistance($inputLat,$inputLon,$dbLat,$dbLon){
-  $inputLatRad = deg2rad($inputLat);
-  $inputLonRad = deg2rad($inputLon);
-  $dbLatRad = deg2rad($dbLat);
-  $dbLonRad = deg2rad($dbLon);
+  if (isset($inputLat) && isset($inputLon) && isset($dbLat) && isset($dbLon)) {
+  try {
+    $inputLatRad = deg2rad($inputLat);
+    $inputLonRad = deg2rad($inputLon);
+    $dbLatRad = deg2rad($dbLat);
+    $dbLonRad = deg2rad($dbLon);
+  } catch (invalidInputException $e) {
+    throw new $e;
+  }
   $earthRadius = 6371000;//in meter
 
   $latDelta =  $dbLatRad - $inputLatRad;
@@ -105,6 +120,7 @@ function calculateDistance($inputLat,$inputLon,$dbLat,$dbLon){
   $angle = 2*asin(sqrt(pow(sin($latDelta / 2),2) +
   cos($inputLatRad) * cos($dbLatRad) * pow(sin($lonDelta / 2),2)));
   return $angle * $earthRadius;
+  }
 }
 
 /**
