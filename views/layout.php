@@ -11,6 +11,13 @@
     <link rel="stylesheet" href="content/styles/login.css">
     <link rel="stylesheet" href="content/styles/register.css">
     <link rel="stylesheet" href="content/styles/concours.css">
+    <link rel="stylesheet" href="content/styles/home.css">
+    <link rel="stylesheet" href="content/styles/sidebar.css">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="content\scripts\theonlyone.js" charset="utf-8"></script>
   </head>
   <body>
     <header>
@@ -55,7 +62,27 @@
 
             </div>
           </div>
+
         </div>
+      </div>
+      <div class="container-side">
+        <button type="button" name="sidebar-icon" class="sidebar-btnCollapse">
+          <span class="material-icons md-48 menu-icon">menu</span>
+        </button>
+          <div class="sidebar">
+                <button type="button" class="sidebar-quit "><span class="material-icons md-36">clear</span></button>
+                <a href="index.php?action=home">Accueil</a>
+                <a href="index.php?action=concours">Concours</a>
+                <a href="index.php?action=classement">Classement</a>
+                <?php if (isset($_SESSION['isLogged'])): ?>
+                  <a href="index.php?action=logout">Déconnexion</a>
+                <?php endif; ?>
+                <?php if (isset($_SESSION['isLogged'])): ?>
+                  <a href="index.php?action=profile"><?php echo $_SESSION['userFirstName'] ?> <?php echo $_SESSION['userLastName'] ?></a>
+                <?php else: ?>
+                  <a href="index.php?action=login">Se connecter</a>
+                <?php endif; ?>
+            </div>
       </div>
     </header>
     <div class="container">

@@ -3,13 +3,10 @@ a{
   color: inherit;
   display: block;
 }
-
 .container-nav{
   margin-left: 25%;
   margin-right: 25%;
-
 }
-
 .navbar{
   background: white;
 
@@ -27,16 +24,12 @@ a{
   text-align: center;
   padding-top: 10px;
   padding-bottom:10px;
-  border-right:1px solid var(--primary-color);
+  background-color: var(--primary-light-color);
+  color: var(--primary-textover-color)
 }
 .navbar-item.active{
-  background: var(--primary-color);
-  color: var(--primary-textover-color) !important;
   border-bottom:3px solid var(--primary-dark-color);
   font-weight: bold;
-}
-.navbar-item.last{
-  /*border-left:1px solid var(--primary-color);*/
 }
 
 .navbar-item.home{
@@ -53,4 +46,10 @@ a{
 }
 .navbar-item.login{
   grid-column: 5/6;
+}
+
+@media only screen and (max-width: 950px) {
+  .container-nav{
+    display: none;
+  }
 }
