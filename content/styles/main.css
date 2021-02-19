@@ -26,6 +26,7 @@ body{
   margin-left: 25%;
   margin-right: 25%;
 }
+
 @media only screen and (max-width: 950px){
   .container{
     margin-left: 0;
@@ -36,6 +37,28 @@ body{
 .page-title{
   padding-top: 10px;
   text-align: center;
+}
+.alert-text{
+  color: red;
+}
+.text-center{
+  text-align: center;
+}
+.image-container{
+  margin-top: 20%;
+  text-align: center;
+  border-radius: 2px;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+
+}
+.image-container:hover{
+
+}
+.image-container img{
+  max-width: 40%;
+  max-height: 40%;
 }
 /*Material icons*/
 .material-icons.md-18 { font-size: 18px; }

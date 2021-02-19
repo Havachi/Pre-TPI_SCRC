@@ -1,5 +1,4 @@
 <?php
-//require_once "exceptions/DatabaseError.php";
 /**
  * This function will open a new connection with the database
  *
@@ -18,10 +17,6 @@ function openDBConnexion(){
 
     $dbconnect = new PDO($dsn, $userName, $userPwd);
 
-    /*
-    if ($dbconnect->connect_error) {
-        die("Database connection failed: " . $dbconnect->connect_error);
-    }*/
     return $dbconnect;
 }
 
@@ -66,6 +61,15 @@ function executeQuerySelectSingle($query){
     throw $e;
   }
 }
+
+/**
+ * Execute a querry that return more than one value, in an assoc array
+ * This function use transaction, for more safety, and rollback at any exceptions
+ * @param     string $query The query to execute
+ * @return    array The result of the query, as an associative array
+ * @author    Alessandro Rossi w/ https://zetcode.com/php/pdo/ for the transaction part
+ *
+ */
 function executeQuerySelectAssoc($query){
   $db=openDBConnexion();
   try {
@@ -77,6 +81,4 @@ function executeQuerySelectAssoc($query){
     $db->rollback();
     throw $e;
   }
-
-
 }

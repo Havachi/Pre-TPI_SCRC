@@ -24,6 +24,13 @@ function isLoginCorrect($userLoginData)
       return false;
     }
 }
+/**
+ * This function create the user Session and add some value to it
+ *
+ * @param string $userEmailAddress The user E-mail Address
+ * @return void
+ * @author Alessandro Rossi
+ */
 function createSession($userEmailAddress){
     $_SESSION['isLogged'] = true;
     //// TODO: add the user type to the session and userID

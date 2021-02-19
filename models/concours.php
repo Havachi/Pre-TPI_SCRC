@@ -139,7 +139,13 @@ function calculateImageScore($diff){
   }
   return $score;
 }
-
+/**
+ * This function is used only at the end of the concours,
+ * it add-up all score and check if the PB in DB is greater or not,
+ * and keeps the best of the two.
+ *
+ * @author Alessandro Rossi
+ */
 function endConcours(){
   $totalScore = 0;
   foreach ($_SESSION['userScores'] as $lvl => $score) {
@@ -149,7 +155,6 @@ function endConcours(){
   $userPB = fetchPB()[0];
 
   if ($userPB < $totalScore){
-    //// TODO: Sa mec faut finir
     $query = "UPDATE users SET userPBScore =". $totalScore ." WHERE userID = ". $_SESSION['userID'];
     executeQuery($query);
   }

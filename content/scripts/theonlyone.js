@@ -1,3 +1,10 @@
+/*
+* This file contain css from another project, from another dev that deserve credit
+* Author : @muhammadawaisshaikh
+* repo link : https://github.com/muhammadawaisshaikh/interactive-sidemenu
+*
+*/
+
 $(document).ready(function () {
 	$(".sidebar-btnCollapse" ).click(function() {
     $('.sidebar').toggleClass('width-toggle');

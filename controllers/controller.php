@@ -19,7 +19,9 @@ function displayConcours()
 {
   require "views/concoursLogged.php";
 }
-
+function displayConcoursNotLogged(){
+  require "views/concoursUnlogged.php";
+}
 /*End of Display only part*/
 
 
@@ -69,16 +71,12 @@ function register($userRegisterData)
     displayRegister();
   }
 }
-function displayConcoursNotLogged(){
-  echo "non";
-}
+
 function displayConcoursLevel($currentLevel){
   concoursInit($currentLevel);
   require "views/concoursLogged.php";
 }
-function displayConcoursNext($currentLevel){
-  $_SESSION['currentLevel'] = $_SESSION['currentLevel']+1;
-}
+
 
 
 /*End of Model access functions*/

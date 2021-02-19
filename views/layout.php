@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="Description" content="SCRC, the cool image localization contest website">
     <title><?php echo $title; ?></title>
+    <link rel="icon" type="image/png" href="content\icones\favicon.png" sizes="16x16">
+
     <link rel="stylesheet" href="content/styles/main.css">
     <link rel="stylesheet" href="content/styles/navbar.css">
     <link rel="stylesheet" href="content/styles/color.css">
