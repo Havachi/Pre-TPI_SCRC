@@ -10,7 +10,7 @@ $title = "Concours";
 </div>
 
 <div class="image-container">
-<img src="content\images\4.jpg" alt="">
+<img src="content\images\<?= rand(1,10); ?>.jpg" alt="">
 </div>
 
 <?php
