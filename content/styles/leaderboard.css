@@ -1,0 +1,26 @@
+.leaderboard-container{
+  text-align: center;
+}
+.leaderboard-table {
+  border-collapse: collapse;
+width: 100%;
+}
+.leaderboard-table-headerRow{
+
+}
+.leaderboard-table-headerRow > th{
+  font-weight: bold;
+  border: 1px solid black;
+  border-top: 1px solid black;
+  border-bottom: 3px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+}
+
+.leaderboard-table-row > td{
+  border: 1px solid black;
+  padding: 15px;
+}
+.current{
+  background-color: lightyellow;
+}

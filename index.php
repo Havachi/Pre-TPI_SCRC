@@ -40,7 +40,9 @@ if (isset($_GET['action'])) {
       }
 
       break;
-
+    case 'leaderboard':
+      displayLeaderboard();
+      break;
     case 'login':
       if (isset($_POST)) {
         login($_POST);

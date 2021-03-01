@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="content/styles/home.css">
     <link rel="stylesheet" href="content/styles/sidebar.css">
     <link rel="stylesheet" href="content/styles/cards.css">
-
+    <link rel="stylesheet" href="content/styles/leaderboard.css">
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -41,7 +41,7 @@
             </div>
             <div class="navbar-item classement <?=$title=="Classement"?"active":""?>">
               <div>
-                <a href="index.php?action=classement">Classement</a>
+                <a href="index.php?action=leaderboard">Classement</a>
               </div>
             </div>
 

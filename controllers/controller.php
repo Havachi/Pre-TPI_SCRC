@@ -22,6 +22,9 @@ function displayConcours()
 function displayConcoursNotLogged(){
   require "views/concoursUnlogged.php";
 }
+function displayLeaderboard(){
+  require "views/leaderboard.php";
+}
 /*End of Display only part*/
 
 
