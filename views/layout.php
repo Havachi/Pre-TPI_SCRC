@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="content/styles/concours.css">
     <link rel="stylesheet" href="content/styles/home.css">
     <link rel="stylesheet" href="content/styles/sidebar.css">
+    <link rel="stylesheet" href="content/styles/cards.css">
+
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
