@@ -7,13 +7,12 @@
   grid-row: 1/2;
 }
 .concours-imageContainer{
-margin-top: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .concours-image{
   grid-row: 2/3;
-  outline-color: var(--primary-color);
-  outline-width: 1px;
-  outline-style: double;
+  max-height: 500px;
 }
 
 .concours-form{
@@ -69,7 +68,6 @@ margin-top: 20px;
   border-color: grey;
   color: black;
 }
-
 @media only screen and (max-width: 950px){
   .concours-image{
     max-width: 50%;
