@@ -7,12 +7,19 @@
  */
 // TODO: remove Hardcoded database username and password (can't help you on how)
 function openDBConnexion(){
-    $localConnectionData = array('hostname' => 'localhost' ,'username' => 'SCRCConnector', 'password' => 'Pa$$w0rd', 'dbname' => 'scrc' );
+    $TestConnectionData = array('hostname' => 'localhost' ,'username' => 'SCRCConnector', 'password' => 'Pa$$w0rd', 'dbname' => 'scrc' );
+    $swisscenterConnectionData = array('hostname' => 'localhost' ,'username' => 'scrc21_Connector', 'password' => 'jQDarw2Csj!A2A^jytT+', 'dbname' => 'scrc21_SCRCDB' );
 
-    $hostname = $localConnectionData['hostname'];
-    $userName = $localConnectionData['username'];
-    $userPwd = $localConnectionData['password'];
-    $dbname = $localConnectionData['dbname'];
+    if($GLOBALS['DEBUG_DB'] === true){
+      $connectionData = $TestConnectionData;
+    }else {
+      $connectionData = $swisscenterConnectionData;
+    }
+
+    $hostname = $connectionData['hostname'];
+    $userName = $connectionData['username'];
+    $userPwd = $connectionData['password'];
+    $dbname = $connectionData['dbname'];
     $dsn = "mysql:host=".$hostname.";dbname=".$dbname;
 
     $dbconnect = new PDO($dsn, $userName, $userPwd);

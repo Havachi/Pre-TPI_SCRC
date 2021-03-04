@@ -1,7 +1,9 @@
 <?php
-
+require 'models/globals.php';
 require "controllers/controller.php";
 require "models/general.php";
+
+
 
 session_start();
 if (isset($_POST)) {
