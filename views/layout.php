@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="content/styles/sidebar.css">
     <link rel="stylesheet" href="content/styles/cards.css">
     <link rel="stylesheet" href="content/styles/leaderboard.css">
+    <link rel="stylesheet" href="content/styles/profile.css">
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
