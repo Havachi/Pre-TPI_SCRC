@@ -2,6 +2,7 @@
 require "models/login.php";
 require "models/register.php";
 require "models/concours.php";
+require "models/leaderboard.php";
 
 /*Display only part*/
 function displayHome()
@@ -80,6 +81,10 @@ function displayConcoursLevel($currentLevel){
   require "views/concoursLogged.php";
 }
 
+function prepareLeaderboard(){
+  $leaderboard = fetchLeaderboard();
+  require "views/leaderboard.php";
+}
 
 
 /*End of Model access functions*/

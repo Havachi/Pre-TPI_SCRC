@@ -43,7 +43,7 @@ if (isset($_GET['action'])) {
 
       break;
     case 'leaderboard':
-      displayLeaderboard();
+      prepareLeaderboard();
       break;
     case 'login':
       if (isset($_POST)) {

@@ -1,11 +1,7 @@
 <?php
 ob_start();
 $title = "Classement";
-$leaderboard = array(
-  array('position' => '3','userFirstName' => 'jean-paul', 'userLastName' => 'chervet', 'userPBScore' => '2'),
-  array('position' => '2','userFirstName' => 'Samuel', 'userLastName' => 'Bryan', 'userPBScore' => '13'),
-  array('position' => '1','userFirstName' => 'Paul-Alexandre', 'userLastName' => 'De Gauthier', 'userPBScore' => '50'),
-);
+$pos=1;
 ?>
 <div class="page-title">
   <h1>Classement</h1>
@@ -19,14 +15,18 @@ $leaderboard = array(
       <th>Prénom</th>
       <th>Score</th>
     </tr>
-    <tr class="leaderboard-table-row">
-      <td>1</td>
-      <td>test</td>
-      <td>test</td>
-      <td>100</td>
-    </tr>
     <?php foreach ($leaderboard as $user): ?>
-      <tr class="leaderboard-table-row">
+      <?php if (isset($_SESSION['isLogged'])): ?>
+        <?php if ($user['userFirstName'] == $_SESSION['userFirstName'] && $user['userLastName'] == $_SESSION['userLastName'] ): ?>
+          <tr class="leaderboard-table-row current">
+        <?php else: ?>
+          <tr class="leaderboard-table-row ">
+        <?php endif; ?>
+      <?php else: ?>
+        <tr class="leaderboard-table-row ">
+      <?php endif; ?>
+        <td><?php echo $pos ?></td>
+        <?php $pos++; ?>
       <?php foreach ($user as $value): ?>
         <td><?php echo $value ?></td>
       <?php endforeach; ?>

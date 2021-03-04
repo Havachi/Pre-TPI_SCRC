@@ -89,11 +89,24 @@ function executeQuerySelectAssoc($query){
     throw $e;
   }
 }
+
+/**
+ * This function prepare a query, it is used only whenever userinput interact with DB
+ *
+ * @param string $query the query to prepare
+ * @return PDO::Statement The statement used later in the process
+ */
 function prepareQuery($query){
   $db=openDBConnexion();
   $statement = $db->prepare($query);
   return $statement;
 }
+/**
+ * This function execute the statement previously created, it is used only whenever userinput interact with DB
+ *
+ * @param PDO::Statement $query the statement to execute
+ * @return mixed The results, can be anything really
+ */
 function executeStatement($statement,$values){
   $statement->execute($values);
   $result = $statement->fetchAll();
