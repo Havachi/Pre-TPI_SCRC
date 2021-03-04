@@ -43,13 +43,50 @@
   font-weight: bold;
   text-align: center;
   grid-row: 1/2;
-  grid-column: 2/3;
+  grid-column: 1/2;
 }
 .profile-PB{
-  font-size: 50px;
+  font-size: 45px;
   font-weight: bold;
   text-align: center;
   grid-row: 2/3;
-  grid-column: 2/3;
+  grid-column: 1/2;
 
+}
+
+.profile-PosLabel{
+  font-weight: bold;
+  text-align: center;
+  grid-row: 1/2;
+  grid-column: 3/4;
+}
+.profile-Pos{
+  font-size: 45px;
+  font-weight: bold;
+  text-align: center;
+  grid-row: 2/3;
+  grid-column: 3/4;
+}
+.profile-Pos.first{
+  color: #ffd700;
+}
+.profile-Pos.second{
+  color: #C0C0C0;
+}
+.profile-Pos.third{
+ color: #cd7f32
+}
+
+.profile-fieldgroup.tertiary{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-template-rows: repeat(2,1fr);
+}
+.profile-lastGame{
+
+}
+.profile-lastGame-label{
+  font-weight: bold;
+  font-size: 25px;
+  white-space: nowrap;
 }

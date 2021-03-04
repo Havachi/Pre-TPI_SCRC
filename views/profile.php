@@ -23,7 +23,36 @@ require "models/gravatar.php";
       Votre meilleur score:
     </div>
     <div class="profile-PB">
-      100
+      <?php echo $PB; ?>
+
+    </div>
+    <div class="profile-PosLabel">
+      Votre classement:
+    </div>
+    <?php if ($Pos == 1): ?>
+      <div class="profile-Pos first">
+        <?php echo $Pos."<sup>er</sup>"; ?>
+      </div>
+    <?php elseif($Pos == 2): ?>
+      <div class="profile-Pos second">
+        <?php echo $Pos."<sup>ème</sup>"; ?>
+      </div>
+    <?php elseif($Pos == 3): ?>
+      <div class="profile-Pos third">
+        <?php echo $Pos."<sup>ème</sup>"; ?>
+      </div>
+    <?php else: ?>
+      <div class="profile-Pos">
+        <?php echo $Pos."<sup>ème</sup>"; ?>
+      </div>
+    <?php endif; ?>
+  </div>
+
+  <div class="profile-fieldgroup tertiary card">
+    <div class="profile-lastGame">
+      <div class="profile-lastGame-label">
+        Votre dernière partie:
+      </div>
     </div>
   </div>
 </div>

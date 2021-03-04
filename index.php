@@ -60,7 +60,11 @@ if (isset($_GET['action'])) {
       }
       break;
     case 'profile':
-      displayProfile();
+      if (isset($_SESSION['isLogged'])) {
+        displayProfile();
+      }else {
+        displayHome();
+      }
       break;
     case 'logout':
       logout();

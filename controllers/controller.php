@@ -26,9 +26,7 @@ function displayConcoursNotLogged(){
 function displayLeaderboard(){
   require "views/leaderboard.php";
 }
-function displayProfile(){
-  require "views/profile.php";
-}
+
 /*End of Display only part*/
 
 
@@ -88,7 +86,12 @@ function prepareLeaderboard(){
   $leaderboard = fetchLeaderboard();
   require "views/leaderboard.php";
 }
-
+function displayProfile(){
+  $PB=fetchPB();
+  $PB = $PB[0][0];
+  $Pos=getUserPos();
+  require "views/profile.php";
+}
 
 /*End of Model access functions*/
 /* Other */
