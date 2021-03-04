@@ -11,8 +11,8 @@ $pos=1;
   <table class="leaderboard-table">
     <tr class="leaderboard-table-headerRow">
       <th>Position</th>
-      <th>Nom</th>
       <th>Prénom</th>
+      <th>Nom</th>
       <th>Score</th>
     </tr>
     <?php foreach ($leaderboard as $user): ?>
