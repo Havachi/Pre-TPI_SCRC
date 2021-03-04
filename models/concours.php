@@ -174,5 +174,31 @@ function endConcours(){
     $query = "UPDATE users SET userPBScore =". $totalScore ." WHERE userID = ". $_SESSION['userID'];
     executeQuery($query);
   }
+  saveLastGame();
   require "views/finalScore.php";
+}
+
+function saveLastGame(){
+  $filename="games/lastGameUser".$_SESSION['userID'];
+  if (file_exists($filename)) {
+    file_put_contents($filename,"");
+  }
+  foreach ($_SESSION['userScores'] as $lvl => $score) {
+    file_put_contents($filename,$score.";",FILE_APPEND);
+  }
+}
+function loadLastGame(){
+  $filename="games/lastGameUser".$_SESSION['userID'];
+  if (file_exists($filename)) {
+    $lastGame = file_get_contents($filename);
+    $lastGameArray = explode(';',$lastGame);
+    unset($lastGameArray[10]);
+    $result = array();
+    foreach ($lastGameArray as $key => $score) {
+      $result["lvl".$key+1] = $score;
+    }
+    return $result;
+  }else {
+    return null;
+  }
 }

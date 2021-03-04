@@ -1,3 +1,4 @@
 <?php
 require "..\models\concours.php";
-endConcours();
+$result=loadLastGame();
+var_dump($result);

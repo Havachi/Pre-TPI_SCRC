@@ -90,6 +90,7 @@ function displayProfile(){
   $PB=fetchPB();
   $PB = $PB[0][0];
   $Pos=getUserPos();
+  $lastGame = loadLastGame();
   require "views/profile.php";
 }
 
@@ -98,7 +99,7 @@ function displayProfile(){
 function logout(){
   session_unset();
   session_destroy();
-  header("Location:   /");
+  header("Location:/");
   exit();
 }
 /*End of Other*/

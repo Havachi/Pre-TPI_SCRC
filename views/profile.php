@@ -2,6 +2,7 @@
 ob_start();
 $title = "Profile";
 require "models/gravatar.php";
+$level=1;
 ?>
 <div class="page-title">
   <h1>Profile</h1>
@@ -49,9 +50,23 @@ require "models/gravatar.php";
   </div>
 
   <div class="profile-fieldgroup tertiary card">
+    <div class="profile-lastGame-label">
+      Votre dernière partie:
+    </div>
     <div class="profile-lastGame">
-      <div class="profile-lastGame-label">
-        Votre dernière partie:
+      <div class="profile-lastGame-values">
+        <?php if ($lastGame !== null): ?>
+        <?php foreach ($lastGame as $score): ?>
+
+          <div class="profile-lastGame-value <?php if ($level > 5){echo "l2";}?>">
+            Image <?php echo $level ?> : <?php if($score == 10){echo "<b>".$score."</b>";}else{echo $score;} ?>pts
+          </div><wbr>
+
+          <?php $level++;  ?>
+        <?php endforeach; ?>
+        <?php else: ?>
+          <?php echo "Aucune dernière partie." ?>
+        <?php endif; ?>
       </div>
     </div>
   </div>

@@ -69,7 +69,7 @@ if (isset($_GET['action'])) {
     case 'logout':
       logout();
       break;
-
+    
     default:
       displayHome();
       break;
