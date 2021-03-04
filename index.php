@@ -59,6 +59,9 @@ if (isset($_GET['action'])) {
         displayRegister();
       }
       break;
+    case 'profile':
+      displayProfile();
+      break;
     case 'logout':
       logout();
       break;
