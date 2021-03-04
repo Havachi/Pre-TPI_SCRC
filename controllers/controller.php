@@ -90,8 +90,9 @@ function prepareLeaderboard(){
 /*End of Model access functions*/
 /* Other */
 function logout(){
+  session_unset();
   session_destroy();
-  $_GET['action'] = 'home';
-  require 'views/home.php';
+  header("Location:   /");
+  exit();
 }
 /*End of Other*/
