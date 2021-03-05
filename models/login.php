@@ -12,19 +12,21 @@ function isLoginCorrect($userLoginData)
   $email=$userLoginData['inputUserEmail'];
   $psw=$userLoginData['inputUserPassword'];
   $strSep = '\'';
-  $query = "SELECT userPasswordHash FROM users WHERE userEmail = :email";
-  $values = array(":email" => $email)
+  $query = "SELECT userPasswordHash FROM users WHERE userEmail = ".$strSep.$email.$strSep;
   try {
-    $statement = prepareQuery($query);
-    $result = executeStatement($statement,$values)
+  $result = executeQuerySelectSingle($query);
   } catch (databaseError $e) {
     throw $e;
   }
-    if (password_verify($psw,$userDBPSW[0])) {
+  if (!empty($result)) {
+    if (password_verify($psw,$result[0])) {
       return true;
     }else {
       return false;
     }
+  }else {
+    throw new loginError;
+  }
 }
 /**
  * This function create the user Session and add some value to it

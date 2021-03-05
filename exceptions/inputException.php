@@ -12,3 +12,7 @@ class alreadyInUseEmail extends Exception
 {
     protected $message = "Cette adresse email est deja en cours d'utilisation";
 }
+class loginError extends Exception
+{
+  protected $message = "Adresse E-mail ou mot de passe incorrecte, veuillez réessayer";
+}

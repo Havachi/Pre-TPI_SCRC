@@ -41,12 +41,21 @@ function displayLeaderboard(){
  */
 function login($userLoginData){
   if(isset($userLoginData['inputUserEmail']) && isset($userLoginData['inputUserPassword'])){
-    if (isLoginCorrect($userLoginData)) {
+    $isLoginCorrect = false;
+    try {
+      $isLoginCorrect=isLoginCorrect($userLoginData);
+    } catch (loginError $e) {
+      $error = array('loginError' => $e->getMessage());
+      displayLogin();
+    }catch (databaseError $e){
+      throw $e;
+    }
+    if ($isLoginCorrect === true) {
       createSession($userLoginData['inputUserEmail']);
       $_GET['action'] = "home";
       require "views/Home.php";
     }else {
-      $_GET['error'] = "err:invlog";
+      throw new loginError;
     }
   }else {
     displayLogin();

@@ -120,6 +120,7 @@ function prepareQuery($query){
  * @return mixed The results, can be anything really
  */
 function executeStatement($statement,$values){
+  $db=openDBConnexion();
   try {
     $db->beginTransaction();
     $statement->execute($values);

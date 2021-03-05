@@ -105,6 +105,15 @@
           <?php endforeach; ?>
           </div>
         <?php endif; ?>
+        <?php if (isset($GLOBALS['ERRORS'])): ?>
+          <div class="errorContainer">
+          <?php foreach ($GLOBALS['ERRORS'] as $errorID => $errorMessage): ?>
+            <div class="error">
+            <?php echo $errorMessage ?>
+            </div>
+          <?php endforeach; ?>
+          </div>
+        <?php endif; ?>
     </header>
     <div class="container">
       <?php echo $content ?>
