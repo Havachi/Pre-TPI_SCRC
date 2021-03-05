@@ -1,6 +1,6 @@
 <?php
 ob_start();
-$title = "Acceuil";
+$title = "Accueil";
 ?>
 
 <div class="page-title">
