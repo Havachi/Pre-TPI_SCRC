@@ -65,7 +65,13 @@ function register($userRegisterData)
 {
   if(isset($userRegisterData['inputUserLastName']) && isset($userRegisterData['inputUserFirstName']) && isset($userRegisterData['inputUserEmail']) && isset($userRegisterData['inputUserPassword']) && isset($userRegisterData['inputUserPasswordConf'])){
     if ($userRegisterData['inputUserPassword'] === $userRegisterData['inputUserPasswordConf']) {
-      registerInDB($userRegisterData);
+      try {
+        registerInDB($userRegisterData);
+      } catch (alreadyInUseEmail $e) {
+        displayRegister();
+
+      }
+
       $_GET['action'] = "home";
       require "views/Home.php";
     }else {

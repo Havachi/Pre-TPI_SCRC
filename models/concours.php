@@ -79,7 +79,6 @@ function fetchSolution($level){
   $values=array(':imageID' => $level);
   $statement = prepareQuery($query);
   $result = executeStatement($statement,$values);
-  //$solution = executeQuerySelectAssoc($query);
   return $result;
 }
 function fetchPB(){
@@ -88,7 +87,6 @@ function fetchPB(){
   $values=array(':userID' => $_SESSION['userID']);
   $statement = prepareQuery($query);
   $result = executeStatement($statement,$values);
-  //$pb = executeQuerySelectSingle($query);
   return $result;
 }
 

@@ -22,8 +22,11 @@ function openDBConnexion(){
     $dbname = $connectionData['dbname'];
     $dsn = "mysql:host=".$hostname.";dbname=".$dbname;
 
-    $dbconnect = new PDO($dsn, $userName, $userPwd);
-
+    try {
+      $dbconnect = new PDO($dsn, $userName, $userPwd);
+    } catch (Exception $e) {
+      throw new databaseError(); ;
+    }
     return $dbconnect;
 }
 
@@ -45,7 +48,7 @@ function executeQuery($query)
     return $result;
   } catch (Exception $e) {
     $db->rollback();
-    throw $e;
+    throw new databaseError();
   }
 }
 /**
@@ -65,7 +68,7 @@ function executeQuerySelectSingle($query){
     return $result;
   } catch (Exception $e) {
     $db->rollback();
-    throw $e;
+    throw new databaseError();
   }
 }
 
@@ -86,7 +89,7 @@ function executeQuerySelectAssoc($query){
     return $data;
   } catch (Exception $e) {
     $db->rollback();
-    throw $e;
+    throw new databaseError();
   }
 }
 
@@ -98,8 +101,17 @@ function executeQuerySelectAssoc($query){
  */
 function prepareQuery($query){
   $db=openDBConnexion();
-  $statement = $db->prepare($query);
-  return $statement;
+  try {
+    $db->beginTransaction();
+    $statement = $db->prepare($query);
+    $db->commit();
+    return $statement;
+  } catch (\Exception $e) {
+    $db->rollback();
+    throw new databaseError();
+  }
+
+
 }
 /**
  * This function execute the statement previously created, it is used only whenever userinput interact with DB
@@ -108,7 +120,16 @@ function prepareQuery($query){
  * @return mixed The results, can be anything really
  */
 function executeStatement($statement,$values){
-  $statement->execute($values);
-  $result = $statement->fetchAll();
-  return $result;
+  try {
+    $db->beginTransaction();
+    $statement->execute($values);
+    $result = $statement->fetchAll();
+    $db->commit();
+    return $result;
+  } catch (Exception $e) {
+    $db->rollback();
+    throw new databaseError();
+  }
+
+
 }

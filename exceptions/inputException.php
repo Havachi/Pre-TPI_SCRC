@@ -8,3 +8,7 @@ class invalidInputException extends Exception
 {
     protected $message = "Saisie invalide, veuillez vérifer votre saisie";
 }
+class alreadyInUseEmail extends Exception
+{
+    protected $message = "Cette adresse email est deja en cours d'utilisation";
+}

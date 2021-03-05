@@ -12,10 +12,12 @@ function isLoginCorrect($userLoginData)
   $email=$userLoginData['inputUserEmail'];
   $psw=$userLoginData['inputUserPassword'];
   $strSep = '\'';
-  $query = "SELECT userPasswordHash FROM users WHERE userEmail =".$strSep.$email.$strSep;
+  $query = "SELECT userPasswordHash FROM users WHERE userEmail = :email";
+  $values = array(":email" => $email)
   try {
-    $userDBPSW = executeQuerySelectSingle($query);
-  } catch (Exception $e) {
+    $statement = prepareQuery($query);
+    $result = executeStatement($statement,$values)
+  } catch (databaseError $e) {
     throw $e;
   }
     if (password_verify($psw,$userDBPSW[0])) {
@@ -33,7 +35,6 @@ function isLoginCorrect($userLoginData)
  */
 function createSession($userEmailAddress){
     $_SESSION['isLogged'] = true;
-    //// TODO: add the user type to the session and userID
     $strSep = '\'';
     $query = "SELECT * FROM users WHERE userEmail =".$strSep.$userEmailAddress.$strSep;
     $userData=executeQuerySelectAssoc($query);
