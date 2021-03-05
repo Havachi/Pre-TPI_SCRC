@@ -1,12 +1,16 @@
 .profile-container{
 
 }
+.profile-fieldgroup{
+  margin-bottom: 50px;
+}
 .profile-fieldgroup.primary{
   display: grid;
   grid-template-columns: repeat(2,1fr);
+  grid-column-gap: 10px;
   padding: 30px;
   padding-right: 50px;
-  margin-bottom: 50px;
+
 }
 .profile-picture{
   grid-column: 1/2;
@@ -37,7 +41,6 @@
   grid-template-rows: repeat(2,1fr);
   padding: 30px;
   padding-right: 50px;
-  margin-bottom: 50px;
 }
 .profile-bestscore{
   font-weight: bold;
@@ -80,7 +83,6 @@
 .profile-fieldgroup.tertiary{
   padding: 30px;
   padding-right: 50px;
-  margin-bottom: 50px;
 }
 .profile-lastGame{
 
@@ -106,4 +108,9 @@
 }
 .profile-lastGame-value.l2{
   flex: 0 0 50%;
+}
+@media only screen and (max-width: 950px){
+  .profile-fieldgroup{
+    margin-bottom: 10px;
+  }
 }

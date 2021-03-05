@@ -32,6 +32,17 @@
   color: var(--primary-color);
   font-weight: bold;
 }
+.submitButton{
+  grid-column-start: 2;
+  background-color: var(--primary-color);
+  border-color: var(--primary-dark-color);
+  border-top: none;
+  border-left:none;
+  border-radius: 3px;
+  color: var(--primary-textover-color);
+  width: 50%;
+  justify-self:center;
+}
 @media only screen and (max-width: 950px){
   .login-fieldGroup-label{
     display: inline-block;
@@ -41,5 +52,8 @@
   }
   .login-fieldGroup{
     display: inline-grid;
+  }
+  .submitButton{
+    width: auto;
   }
 }

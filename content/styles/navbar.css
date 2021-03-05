@@ -2,6 +2,7 @@ a{
   text-decoration: none;
   color: inherit;
   display: block;
+
 }
 .container-nav{
   margin-left: 25%;
@@ -25,7 +26,8 @@ a{
   padding-top: 10px;
   padding-bottom:10px;
   background-color: var(--primary-light-color);
-  color: var(--primary-textover-color)
+  color: var(--primary-textover-color);
+  font-size: 18px;
 }
 .navbar-item.active{
   border-bottom:3px solid var(--primary-dark-color);
