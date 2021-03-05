@@ -1,6 +1,7 @@
 <?php
 ob_start();
 $title = "Score";
+cacheControle();
 ?>
 <h1>Votre score final: <?php echo $_SESSION['totalScore'] ?></h1>
 <h3>Score Détailé: </h3>

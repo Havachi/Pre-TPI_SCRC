@@ -2,16 +2,19 @@
 require 'models/globals.php';
 require "controllers/controller.php";
 require "models/general.php";
+require "exceptions/handlers.php";
+require "models/cachecontrol.php";
 
-
-
+set_exception_handler('exception_handler');
+header("Cache-Control: max-age=31536000");
 session_start();
 if (isset($_POST)) {
   try {
     inputVerifier($_POST);
   } catch (illegalCharDetected $e) {
-    echo $e->getMessage();
+    $error = array('illegalCharDetected' => $e->getMessage() );
     require "views/home.php";
+    exit();
   }
 }
 
@@ -69,7 +72,7 @@ if (isset($_GET['action'])) {
     case 'logout':
       logout();
       break;
-    
+
     default:
       displayHome();
       break;

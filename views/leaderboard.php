@@ -1,6 +1,7 @@
 <?php
 ob_start();
 $title = "Classement";
+cacheControle();
 $pos=1;
 ?>
 <div class="page-title">

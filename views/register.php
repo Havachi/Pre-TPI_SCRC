@@ -1,6 +1,7 @@
 <?php
 ob_start();
 $title = "Register";
+cacheControle();
 ?>
 
 <div class="page-title">

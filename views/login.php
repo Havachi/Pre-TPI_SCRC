@@ -1,6 +1,7 @@
 <?php
 ob_start();
 $title = "Login";
+cacheControle();
 ?>
 
 <div class="page-title">

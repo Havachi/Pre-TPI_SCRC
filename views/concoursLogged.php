@@ -1,6 +1,7 @@
 <?php
 ob_start();
 $title = "Concours";
+cacheControle();
 ?>
 
 <div class="page-title">
