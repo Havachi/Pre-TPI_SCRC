@@ -1,7 +1,7 @@
 <?php
 ob_start();
 $title = "Concours";
-cacheControle();
+cacheControl($_SERVER['SCRIPT_FILENAME'], filemtime($_SERVER['SCRIPT_FILENAME']));
 if (isset($error)) {
   $error[] = ['unlogged'=> "Vous devez vous connectez pour participer au concours"];
 }else {

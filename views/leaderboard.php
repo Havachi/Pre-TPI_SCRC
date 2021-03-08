@@ -1,7 +1,7 @@
 <?php
 ob_start();
 $title = "Classement";
-cacheControle();
+cacheControl($_SERVER['SCRIPT_FILENAME'], filemtime($_SERVER['SCRIPT_FILENAME']));
 $pos=1;
 ?>
 <div class="page-title">

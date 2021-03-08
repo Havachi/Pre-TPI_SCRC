@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This function is run every time the user enter the contest
  * It sets every used variable to their initial values

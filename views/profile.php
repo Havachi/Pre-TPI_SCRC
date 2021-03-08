@@ -2,7 +2,7 @@
 ob_start();
 $title = "Profile";
 require "models/gravatar.php";
-cacheControle();
+cacheControl($_SERVER['SCRIPT_FILENAME'], filemtime($_SERVER['SCRIPT_FILENAME']));
 $level=1;
 ?>
 <div class="page-title">

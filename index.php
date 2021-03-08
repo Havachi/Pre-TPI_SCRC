@@ -6,7 +6,6 @@ require "exceptions/handlers.php";
 require "models/cachecontrol.php";
 
 set_exception_handler('exception_handler');
-header("Cache-Control: max-age=31536000");
 session_start();
 if (isset($_POST)) {
   try {

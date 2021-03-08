@@ -1,3 +1,4 @@
+<?php cacheControl($_SERVER['SCRIPT_FILENAME'], filemtime($_SERVER['SCRIPT_FILENAME'])); ?>
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
   <head>

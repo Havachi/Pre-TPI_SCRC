@@ -1,7 +1,7 @@
 <?php
 ob_start();
 $title = "Score";
-cacheControle();
+cacheControl($_SERVER['SCRIPT_FILENAME'], filemtime($_SERVER['SCRIPT_FILENAME']));
 ?>
 <h1>Votre score final: <?php echo $_SESSION['totalScore'] ?></h1>
 <h3>Score Détailé: </h3>

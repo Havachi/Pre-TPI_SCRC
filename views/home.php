@@ -1,7 +1,7 @@
 <?php
 ob_start();
 $title = "Accueil";
-cacheControle();
+cacheControl($_SERVER['SCRIPT_FILENAME'], filemtime($_SERVER['SCRIPT_FILENAME']));
 ?>
 
 <div class="page-title">
