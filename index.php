@@ -28,19 +28,21 @@ if (isset($_GET['action'])) {
       if (isset($_SESSION['isLogged'])) {
         if (isset($_POST['btnNext'])) {
           if (isset($_POST['userInputLatitude']) && isset($_POST['userInputLongitude'])) {
-            coucoursValidate($_POST['userInputLatitude'],$_POST['userInputLongitude']);
-          }
+            if (!$_POST['userInputLatitude'] === "" && !$_POST['userInputLongitude'] === "") {
+              coucoursValidate($_POST['userInputLatitude'],$_POST['userInputLongitude']);
+            }elseif (isset($_SESSION['tryScores']['Try1']) || isset($_SESSION['tryScores']['Try2']) || isset($_SESSION['tryScores']['Try3'])) {
+              $bestAttemptsCoordinates=calculateBestAttempt();
+              coucoursValidate($bestAttemptsCoordinates['Lat'],$bestAttemptsCoordinates['Long']);
+            }}
         }elseif (isset($_POST['btnTry'])) {
           coucoursAttempt();
         }elseif(isset($_GET['hint'])){
           if ($_GET['hint'] <= 3 || $_GET['hint'] >= 0) {
             useHint();
-          }else {
-              
           }
         }else {
           if (isset($_SESSION['currentLevel'])) {
-            displayConcoursLevel($_SESSION['currentLevel']);
+            displayConcours();
           }else {
             displayConcoursLevel('1');
           }

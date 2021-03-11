@@ -5,7 +5,7 @@ require "models/concours.php";
 require "models/leaderboard.php";
 
 /*Display only part*/
-function displayHome(){ 
+function displayHome(){
   require "views/home.php";
 }
 function displayLogin(){
