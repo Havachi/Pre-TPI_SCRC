@@ -1,20 +1,26 @@
-.card{
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  background-color: #F1F2F9;
+  background-color: #f1f2f9;
 }
 
 .card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
+
 .card-header {
   padding: 2px 10px;
 }
-.card-sep{
+
+.card-sep {
   margin: 0;
   padding: 0;
 }
 
-.card-separator{
-  border-top: 2px dotted #bbb
+.card-separator {
+  border-top: 2px dotted #bbb;
+}
+
+.card-textLine {
+  padding: 1px 0px;
 }

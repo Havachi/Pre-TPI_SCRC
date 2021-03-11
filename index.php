@@ -5,7 +5,7 @@ require "models/general.php";
 require "exceptions/handlers.php";
 require "models/cachecontrol.php";
 
-set_exception_handler('exception_handler');
+//set_exception_handler('exception_handler');
 session_start();
 if (isset($_POST)) {
   try {
@@ -32,6 +32,12 @@ if (isset($_GET['action'])) {
           }
         }elseif (isset($_POST['btnTry'])) {
           coucoursAttempt();
+        }elseif(isset($_GET['hint'])){
+          if ($_GET['hint'] <= 3 || $_GET['hint'] >= 0) {
+            useHint();
+          }else {
+              
+          }
         }else {
           if (isset($_SESSION['currentLevel'])) {
             displayConcoursLevel($_SESSION['currentLevel']);

@@ -1,0 +1,25 @@
+
+.RainBow {
+    background: linear-gradient(91deg, #ff0000, #ff7300, #eeff00, #00ff15, #00ffeb, #001cff, #c500ff, #ff00c8);
+    background-size: 1600% 1600%;
+
+    -webkit-animation: RainBow 2s ease infinite;
+    -moz-animation: RainBow 2s ease infinite;
+    animation: RainBow 2s ease infinite;
+}
+
+@-webkit-keyframes RainBow {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes RainBow {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes RainBow {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}

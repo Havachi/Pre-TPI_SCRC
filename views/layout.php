@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="content/styles/color.css">
     <link rel="stylesheet" href="content/styles/navbar.css">
     <link rel="stylesheet" href="content/styles/sidebar.css">
+    <link rel="stylesheet" href="content/styles/rainbow.css">
     <?php if ($title=='Accueil'): ?>
       <link rel="stylesheet" href="content/styles/home.css">
     <?php elseif($title=='Login'): ?>

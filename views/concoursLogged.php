@@ -20,6 +20,77 @@ cacheControl($_SERVER['SCRIPT_FILENAME'], filemtime($_SERVER['SCRIPT_FILENAME'])
     <div class="card-sep">
       <hr class="card-separator">
     </div>
+<!-- Hints Section Start -->
+    <div class="card-textLine concours-hintContainer">
+
+      <?php if ($_SESSION['hints'] == 3): ?>
+        <div class="concours-hintBtnContainer hint0">
+          <a class="concours-hintBtn RainBow" href="index.php?action=concours&hint=1">Indice</a>
+        </div>
+      <?php elseif($_SESSION['hints'] == 2): ?>
+        <div class="concours-hint hint1">
+          <div class="concours-hintLabel">
+            Indice n° 1/3
+          </div>
+          <div class="concours-hintText">
+            <?php echo $_SESSION['levelHints'][0] ?>
+          </div>
+        </div>
+        <div class="concours-hintBtnContainer hint1">
+          <a class="concours-hintBtn RainBow" href="index.php?action=concours&hint=2">Indice</a>
+        </div>
+
+      <?php elseif($_SESSION['hints'] == 1): ?>
+        <div class="concours-hint hint1">
+          <div class="concours-hintLabel">
+            Indice n° 1/3
+          </div>
+          <div class="concours-hintText">
+            <?php echo $_SESSION['levelHints'][0] ?>
+          </div>
+        </div>
+        <div class="concours-hint hint2">
+          <div class="concours-hintLabel">
+            Indice n° 1/3
+          </div>
+          <div class="concours-hintText">
+            <?php echo $_SESSION['levelHints'][1] ?>
+          </div>
+        </div>
+        <div class="concours-hintBtnContainer hint2">
+          <a class="concours-hintBtn RainBow" href="index.php?action=concours&hint=3">Indice</a>
+        </div>
+
+      <?php elseif($_SESSION['hints'] == 0): ?>
+        <div class="concours-hint hint1">
+          <div class="concours-hintLabel">
+            Indice n° 1/3
+          </div>
+          <div class="concours-hintText">
+            <?php echo $_SESSION['levelHints'][0] ?>
+          </div>
+        </div>
+        <div class="concours-hint hint2">
+          <div class="concours-hintLabel">
+            Indice n° 2/3
+          </div>
+          <div class="concours-hintText">
+            <?php echo $_SESSION['levelHints'][1] ?>
+          </div>
+        </div>
+        <div class="concours-hint hint3">
+          <div class="concours-hintLabel">
+            Indice n° 3/3
+          </div>
+          <div class="concours-hintText">
+            <?php echo $_SESSION['levelHints'][2] ?>
+          </div>
+        </div>
+      <?php endif; ?>
+
+
+    </div>
+<!-- Hints Section End -->
     <div class="concours-imageContainer">
       <img class="concours-image"src="<?php echo $_SESSION['pathToImage'] ?>" alt="">
     </div>
@@ -29,11 +100,13 @@ cacheControl($_SERVER['SCRIPT_FILENAME'], filemtime($_SERVER['SCRIPT_FILENAME'])
 
     <div class="concours-formGroup">
       <label class="concours-formLabel" for="userInputLatitude">Latitude (X.xxxxx)</label>
-      <input class="concours-formInput" type="text" name="userInputLatitude" value="" required>
+      <input class="concours-formInput" type="text" name="userInputLatitude" value="" <?php if ($_SESSION['attempsNumber']<1){echo "required";} ?>>
+
+
     </div>
     <div class="concours-formGroup">
       <label class="concours-formLabel" for="userInputLongitude">Longitude (Y.yyyyy)</label>
-      <input class="concours-formInput" type="text" name="userInputLongitude" value="" required>
+      <input class="concours-formInput" type="text" name="userInputLongitude" value=""  <?php if ($_SESSION['attempsNumber']<1){echo "required";} ?>>
     </div>
       <?php if ($_SESSION['attempsNumber'] == 0): ?>
 

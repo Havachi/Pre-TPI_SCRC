@@ -15,6 +15,9 @@ function concoursInit(){
   'lvl7' => 0 ,'lvl8' => 0 ,
   'lvl9' => 0 ,'lvl10' => 0);
   $_SESSION['tryScores'] = array('Try1' => 0,'Try2' => 0,'Try3' => 0);
+  $_SESSION['attempts'] = array('Try1' => array('Lat' => 0,'Long' => 0),'Try2' => array('Lat' => 0,'Long' => 0),'Try3' => array('Lat' => 0,'Long' => 0));
+  $_SESSION['hints'] = 3;
+  $_SESSION['levelHints'] = array();
 }
 /**
  * This function is run every time the user go to the next level
@@ -29,6 +32,26 @@ function nextLevel(){
     $_SESSION['pathToImage']="/content/images/".$_SESSION['currentLevel'].".jpg";
     $_SESSION['attempsNumber']=0;
     $_SESSION['tryScores'] = array('Try1' => 0,'Try2' => 0,'Try3' => 0);
+    $_SESSION['attempts'] = array('Try1' => array('Lat' => 0,'Long' => 0),'Try2' => array('Lat' => 0,'Long' => 0),'Try3' => array('Lat' => 0,'Long' => 0));
+    $_SESSION['hints'] = 3;
+    $_SESSION['levelHints'] = array();
+    require 'views/concoursLogged.php';
+  }
+}
+
+function useHint(){
+  $strSep='\'';
+  if ($_SESSION['hints'] == 3) {
+    $query = "SELECT hint1 FROM hints WHERE imageID =". $strSep . $_SESSION['currentLevel'] . $strSep;
+  }elseif ($_SESSION['hints'] == 2) {
+    $query = "SELECT hint2 FROM hints WHERE imageID =". $strSep . $_SESSION['currentLevel'] . $strSep;
+  }elseif ($_SESSION['hints'] == 1) {
+    $query = "SELECT hint3 FROM hints WHERE imageID =". $strSep . $_SESSION['currentLevel'] . $strSep;
+  }
+  if (isset($query)) {
+    $hint=executeQuerySelectSingle($query);
+    $_SESSION['hints']--;
+    $_SESSION['levelHints'][] = $hint[0];
     require 'views/concoursLogged.php';
   }
 }
@@ -48,6 +71,8 @@ function coucoursAttempt(){
       $dbLon = $dbSolution[0]['imagePosLon'];
       $result = calculateDistance($_POST['userInputLatitude'],$_POST['userInputLongitude'],$dbLat,$dbLon);
       $_SESSION['tryScores']["Try".$_SESSION['attempsNumber']] = calculateImageScore($result);
+      $_SESSION['attemps']["Try".$_SESSION['attempsNumber']]['Lat'] = $_POST['userInputLatitude'];
+      $_SESSION['attemps']["Try".$_SESSION['attempsNumber']]['Long'] = $_POST['userInputLongitude'];
       require "views\concoursLogged.php";
     }
   }
@@ -72,6 +97,7 @@ function coucoursValidate($inputLat,$inputLon){
   $_SESSION['userScores']['lvl'.$_SESSION['currentLevel']] = $score;
   nextLevel();
 }
+
 function fetchSolution($level){
   require_once "DBConnection.php";
   $query = "SELECT imagePosLat, imagePosLon FROM images where imageID = :imageID";

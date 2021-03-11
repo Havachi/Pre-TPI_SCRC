@@ -5,19 +5,16 @@ require "models/concours.php";
 require "models/leaderboard.php";
 
 /*Display only part*/
-function displayHome()
-{
+function displayHome(){ 
   require "views/home.php";
 }
 function displayLogin(){
   require "views/login.php";
 }
-function displayRegister()
-{
+function displayRegister(){
   require "views/register.php";
 }
-function displayConcours()
-{
+function displayConcours(){
   require "views/concoursLogged.php";
 }
 function displayConcoursNotLogged(){
