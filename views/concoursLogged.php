@@ -100,13 +100,13 @@ cacheControl($_SERVER['SCRIPT_FILENAME'], filemtime($_SERVER['SCRIPT_FILENAME'])
 
     <div class="concours-formGroup">
       <label class="concours-formLabel" for="userInputLatitude">Latitude (X.xxxxx)</label>
-      <input class="concours-formInput" type="number" min="-180" max="180" name="userInputLatitude" value="" <?php if ($_SESSION['attemptsNumber']<1){echo "required";} ?>>
+      <input class="concours-formInput" type="number" min="-180" max="180" step="any" name="userInputLatitude" value="" <?php if ($_SESSION['attemptsNumber']<1){echo "required";} ?>>
 
 
     </div>
     <div class="concours-formGroup">
       <label class="concours-formLabel" for="userInputLongitude">Longitude (Y.yyyyy)</label>
-      <input class="concours-formInput" type="number" min="-180" max="180" name="userInputLongitude" value=""  <?php if ($_SESSION['attemptsNumber']<1){echo "required";} ?>>
+      <input class="concours-formInput" type="number" min="-180" max="180" step="any" name="userInputLongitude" value=""  <?php if ($_SESSION['attemptsNumber']<1){echo "required";} ?>>
     </div>
       <?php if ($_SESSION['attemptsNumber'] == 0): ?>
 
