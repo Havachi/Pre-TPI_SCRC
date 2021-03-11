@@ -51,7 +51,7 @@ cacheControl($_SERVER['SCRIPT_FILENAME'], filemtime($_SERVER['SCRIPT_FILENAME'])
         </div>
         <div class="concours-hint hint2">
           <div class="concours-hintLabel">
-            Indice n° 1/3
+            Indice n° 2/3
           </div>
           <div class="concours-hintText">
             <?php echo $_SESSION['levelHints'][1] ?>
@@ -100,27 +100,27 @@ cacheControl($_SERVER['SCRIPT_FILENAME'], filemtime($_SERVER['SCRIPT_FILENAME'])
 
     <div class="concours-formGroup">
       <label class="concours-formLabel" for="userInputLatitude">Latitude (X.xxxxx)</label>
-      <input class="concours-formInput" type="text" name="userInputLatitude" value="" <?php if ($_SESSION['attempsNumber']<1){echo "required";} ?>>
+      <input class="concours-formInput" type="number" min="-180" max="180" name="userInputLatitude" value="" <?php if ($_SESSION['attemptsNumber']<1){echo "required";} ?>>
 
 
     </div>
     <div class="concours-formGroup">
       <label class="concours-formLabel" for="userInputLongitude">Longitude (Y.yyyyy)</label>
-      <input class="concours-formInput" type="text" name="userInputLongitude" value=""  <?php if ($_SESSION['attempsNumber']<1){echo "required";} ?>>
+      <input class="concours-formInput" type="number" min="-180" max="180" name="userInputLongitude" value=""  <?php if ($_SESSION['attemptsNumber']<1){echo "required";} ?>>
     </div>
-      <?php if ($_SESSION['attempsNumber'] == 0): ?>
+      <?php if ($_SESSION['attemptsNumber'] == 0): ?>
 
-      <?php elseif ($_SESSION['attempsNumber'] == 1): ?>
+      <?php elseif ($_SESSION['attemptsNumber'] == 1): ?>
         <div class="concours-tryScores">
           <span class="concours-buttonLabel">Tentative 1 : <?php echo $_SESSION['tryScores']['Try1'] ?></span>
         </div>
 
-      <?php elseif($_SESSION['attempsNumber'] == 2): ?>
+      <?php elseif($_SESSION['attemptsNumber'] == 2): ?>
         <div class="concours-tryScores">
           <span class="concours-buttonLabel">Tentative 1 : <?php echo $_SESSION['tryScores']['Try1'] ?></span>
           <span class="concours-buttonLabel">Tentative 2 : <?php echo $_SESSION['tryScores']['Try2'] ?></span>
         </div>
-      <?php elseif($_SESSION['attempsNumber'] == 3): ?>
+      <?php elseif($_SESSION['attemptsNumber'] == 3): ?>
         <div class="concours-tryScores">
           <span class="concours-buttonLabel">Tentative 1 : <?php echo $_SESSION['tryScores']['Try1'] ?></span>
           <span class="concours-buttonLabel">Tentative 2 : <?php echo $_SESSION['tryScores']['Try2'] ?></span>
@@ -128,8 +128,8 @@ cacheControl($_SERVER['SCRIPT_FILENAME'], filemtime($_SERVER['SCRIPT_FILENAME'])
         </div>
       <?php endif; ?>
     <div class="concours-formGroup">
-      <label class="concours-buttonLabel" for="btnTry">Tentative <?php echo $_SESSION['attempsNumber'] ?>/3</label>
-      <button class="secondaryButton <?php if ($_SESSION['attempsNumber']>=3){echo 'disabled';} ?>" type="submit" name="btnTry"<?php if ($_SESSION['attempsNumber']>=3){echo 'disabled';} ?>>Vérifier</button>
+      <label class="concours-buttonLabel" for="btnTry">Tentative <?php echo $_SESSION['attemptsNumber'] ?>/3</label>
+      <button class="secondaryButton <?php if ($_SESSION['attemptsNumber']>=3){echo 'disabled';} ?>" type="submit" name="btnTry"<?php if ($_SESSION['attemptsNumber']>=3){echo 'disabled';} ?>>Vérifier</button>
     </div>
     <div class="concours-formGroup">
       <button class="concours-submitBtn" type="submit" name="btnNext" >Suivant</button>

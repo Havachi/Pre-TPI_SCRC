@@ -7,7 +7,7 @@
 function concoursInit(){
   $_SESSION['currentLevel']=1;
   $_SESSION['pathToImage']="/content/images/".$_SESSION['currentLevel'].".jpg";
-  $_SESSION['attempsNumber']=0;
+  $_SESSION['attemptsNumber']=0;
   $_SESSION['userScores'] = array(
   'lvl1' => 0 ,'lvl2' => 0 ,
   'lvl3' => 0 ,'lvl4' => 0 ,
@@ -19,6 +19,7 @@ function concoursInit(){
   $_SESSION['hints'] = 3;
   $_SESSION['levelHints'] = array();
 }
+
 /**
  * This function is run every time the user go to the next level
  * It setup the variables for the next level
@@ -30,15 +31,22 @@ function nextLevel(){
   }else {
     $_SESSION['currentLevel']=$_SESSION['currentLevel']+1;
     $_SESSION['pathToImage']="/content/images/".$_SESSION['currentLevel'].".jpg";
-    $_SESSION['attempsNumber']=0;
+    $_SESSION['attemptsNumber']=0;
     $_SESSION['tryScores'] = array('Try1' => 0,'Try2' => 0,'Try3' => 0);
     $_SESSION['attempts'] = array('Try1' => array('Lat' => 0,'Long' => 0),'Try2' => array('Lat' => 0,'Long' => 0),'Try3' => array('Lat' => 0,'Long' => 0));
     $_SESSION['hints'] = 3;
     $_SESSION['levelHints'] = array();
-    require 'views/concoursLogged.php';
+    Header("Location : /index.php?action=concours");
+    require "views/concoursLogged.php";
+    exit();
   }
 }
-
+/**
+ * This function get the next hint for this image from the database
+ *
+ * @return void
+ * @author Alessandro Rossi
+ */
 function useHint(){
   $strSep='\'';
   if ($_SESSION['hints'] == 3) {
@@ -63,21 +71,40 @@ function useHint(){
  * @author Alessandro Rossi
  */
 function coucoursAttempt(){
-  if ($_SESSION['attempsNumber'] !== 3) {
-    if (isset($_SESSION['attempsNumber'])) {
-      $_SESSION['attempsNumber'] = $_SESSION['attempsNumber']+1;
+  if ($_SESSION['attemptsNumber'] !== 3) {
+    if (isset($_SESSION['attemptsNumber'])) {
+      $_SESSION['attemptsNumber'] = $_SESSION['attemptsNumber']+1;
+      $_SESSION['attempts']["Try".$_SESSION['attemptsNumber']]['Lat'] = $_POST['userInputLatitude'];
+      $_SESSION['attempts']["Try".$_SESSION['attemptsNumber']]['Long'] = $_POST['userInputLongitude'];
       $dbSolution = fetchSolution($_SESSION['currentLevel']);
       $dbLat = $dbSolution[0]['imagePosLat'];
       $dbLon = $dbSolution[0]['imagePosLon'];
       $result = calculateDistance($_POST['userInputLatitude'],$_POST['userInputLongitude'],$dbLat,$dbLon);
-      $_SESSION['tryScores']["Try".$_SESSION['attempsNumber']] = calculateImageScore($result);
-      $_SESSION['attemps']["Try".$_SESSION['attempsNumber']]['Lat'] = $_POST['userInputLatitude'];
-      $_SESSION['attemps']["Try".$_SESSION['attempsNumber']]['Long'] = $_POST['userInputLongitude'];
+      $_SESSION['tryScores']["Try".$_SESSION['attemptsNumber']] = calculateImageScore($result);
+
       require "views\concoursLogged.php";
     }
   }
 }
 
+function calculateBestAttempt(){
+  $Try1 = $_SESSION['tryScores']['Try1'];
+  $Try2 = $_SESSION['tryScores']['Try2'];
+  $Try3 = $_SESSION['tryScores']['Try3'];
+  if ( $Try1 >= $Try2 && $Try1 >= $Try3 ) {
+    $bestAttemps['Lat'] = floatval($_SESSION['attempts']['Try1']['Lat']);
+    $bestAttemps['Long'] = floatval($_SESSION['attempts']['Try1']['Long']);
+  }
+  elseif ( $Try2 >= $Try1 && $Try2 >= $Try3 ) {
+    $bestAttemps['Lat'] = floatval($_SESSION['attempts']['Try2']['Lat']);
+    $bestAttemps['Long'] = floatval($_SESSION['attempts']['Try2']['Long']);
+  }
+  elseif ( $Try3 >= $Try1 && $Try3 >= $Try2 ) {
+    $bestAttemps['Lat'] =floatval($_SESSION['attempts']['Try3']['Lat']);
+    $bestAttemps['Long'] =floatval($_SESSION['attempts']['Try3']['Long']);
+  }
+  return $bestAttemps;
+}
 /**
  * This function is run every time the user press the Next Button
  * It calculate the distance between the user answer and the solution
@@ -89,7 +116,7 @@ function coucoursValidate($inputLat,$inputLon){
   $dbLat = $dbSolution[0]['imagePosLat'];
   $dbLon = $dbSolution[0]['imagePosLon'];
   try {
-    $result = calculateDistance($_POST['userInputLatitude'],$_POST['userInputLongitude'],$dbLat,$dbLon);
+    $result = calculateDistance($inputLat,$inputLon,$dbLat,$dbLon);
     $score = calculateImageScore($result);
   } catch (\Exception $e) {
 
@@ -98,6 +125,13 @@ function coucoursValidate($inputLat,$inputLon){
   nextLevel();
 }
 
+/**
+ * This function fetch the solution for this image from database, and return it
+ *
+ * @param int $level : The level which solutino need to be fetched
+ * @return array : The solution, composed of latitude and longitude coordinates
+ * @author Alessandro Rossi
+ */
 function fetchSolution($level){
   require_once "DBConnection.php";
   $query = "SELECT imagePosLat, imagePosLon FROM images where imageID = :imageID";
@@ -106,6 +140,12 @@ function fetchSolution($level){
   $result = executeStatement($statement,$values);
   return $result;
 }
+/**
+ * This function fetch the Personal Best Score of an specific user from database, and return it
+ *
+ * @return int : The Personal Best Score of the selectec user
+ * @author Alessandro Rossi
+ */
 function fetchPB(){
   require_once "DBConnection.php";
   $query = "SELECT userPBScore FROM users where userID = :userID" ;
@@ -200,7 +240,12 @@ function endConcours(){
   saveLastGame();
   require "views/finalScore.php";
 }
-
+/**
+ * This function save the last played game of an user in a file on the server
+ * This feature is used by the profile for showing the last game
+ * @return    void
+ * @author Alessandro Rossi
+ */
 function saveLastGame(){
   $filename="games/lastGameUser".$_SESSION['userID'];
   if (file_exists($filename)) {
@@ -210,6 +255,13 @@ function saveLastGame(){
     file_put_contents($filename,$score.";",FILE_APPEND);
   }
 }
+
+/**
+ * This function load the last played game of an user from a file on the server
+ * This feature is used by the profile for showing the last game
+ * @return    void
+ * @author Alessandro Rossi
+ */
 function loadLastGame(){
   $filename="games/lastGameUser".$_SESSION['userID'];
   if (file_exists($filename)) {
