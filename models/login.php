@@ -1,5 +1,6 @@
 <?php
 require 'models/DBConnection.php';
+require 'models/BetterDBConnection.php';
 /**
  * This function check if the user inputed values for login are correct and correspond to an account
  *
@@ -12,14 +13,17 @@ function isLoginCorrect($userLoginData)
   $email=$userLoginData['inputUserEmail'];
   $psw=$userLoginData['inputUserPassword'];
   $strSep = '\'';
-  $query = "SELECT userPasswordHash FROM users WHERE userEmail = ".$strSep.$email.$strSep;
+  $query = "";
   try {
-  $result = executeQuerySelectSingle($query);
-  } catch (databaseError $e) {
+    $db = new DBConnection;
+    $dbpsw = $db->query("SELECT userPasswordHash FROM users WHERE userEmail = :userEmail",array("userEmail"=>$email));
+    $dbpsw = $dbpsw[0]['userPasswordHash'];
+  }
+  catch (PDOException $e) {
     throw $e;
   }
-  if (!empty($result)) {
-    if (password_verify($psw,$result[0])) {
+  if (!empty($dbpsw)) {
+    if (password_verify($psw,$dbpsw)) {
       return true;
     }else {
       return false;
@@ -37,9 +41,13 @@ function isLoginCorrect($userLoginData)
  */
 function createSession($userEmailAddress){
     $_SESSION['isLogged'] = true;
-    $strSep = '\'';
-    $query = "SELECT * FROM users WHERE userEmail =".$strSep.$userEmailAddress.$strSep;
-    $userData=executeQuerySelectAssoc($query);
+    try {
+      $db = new DBConnection;
+      $userData = $db->query("SELECT * FROM users WHERE userEmail = :userEmail",array("userEmail"=>$userEmailAddress));
+    }
+    catch (PDOException $e) {
+      throw $e;
+    }
     $_SESSION['userID'] = $userData[0]['userID'];
     $_SESSION['userFirstName'] = $userData[0]['userFirstName'];
     $_SESSION['userLastName'] = $userData[0]['userLastName'];

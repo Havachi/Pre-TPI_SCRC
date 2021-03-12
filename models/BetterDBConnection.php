@@ -52,6 +52,7 @@ class DBConnection
     $this->userName = $this->settings['user'];
     $this->pass = $this->settings['password'];
     $this->dsn = "mysql:host=".$this->settings['host'].";dbname=".$this->settings['dbname'];
+    $this->parameters = array();
     $this->openConnection();
   }
 
@@ -65,7 +66,7 @@ class DBConnection
       $db = new PDO($this->dsn,$this->userName,$this->pass);
       $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-      //$this->pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
+      $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
       $this->pdo = $db ;
       $this->Connected = true;
     }
@@ -97,12 +98,21 @@ class DBConnection
       $this->statement = $this->pdo->prepare($query);
       $this->bindMore($parameters);
       if (!empty($this->parameters)) {
-        foreach ($this->parameters as $param) {
-          $parameters = explode('\x7F', $param);
-          $this->statement->bindParam($parameters[0],$parameters[1]);
+        foreach ($this->parameters as $param => $value) {
+          if(is_int($value[1])) {
+              $type = PDO::PARAM_INT;
+          } else if(is_bool($value[1])) {
+              $type = PDO::PARAM_BOOL;
+          } else if(is_null($value[1])) {
+              $type = PDO::PARAM_NULL;
+          } else {
+              $type = PDO::PARAM_STR;
+          }
+          // Add type when binding the values to the column
+          $this->statement->bindValue($value[0], $value[1], $type);
         }
       }
-        $this->success = $this->statement->execute();
+        $this->statement->execute();
     } catch (PDOException $e) {
       echo "Aie, aie, aie, problème de connexion avec la base de donnée";
       throw $e;
@@ -117,7 +127,7 @@ class DBConnection
   */
   public function bind($para, $value)
   {
-    $this->parameters[sizeof($this->parameters)] = ":" . $para . "\x7F" . utf8_encode($value);
+    $this->parameters[sizeof($this->parameters)] = [":" . $para , $value];
   }
 
   /**
@@ -127,11 +137,11 @@ class DBConnection
   */
   public function bindMore($parray)
 	{
-		if(empty($this->parameters) && is_array($parray)) {
-			$columns = array_keys($parray);
-			foreach($columns as $i => &$column)	{
-				$this->bind($column, $parray[$column]);
-			}
+    if (empty($this->parameters) && is_array($parray)) {
+      $columns = array_keys($parray);
+      foreach ($columns as $i => &$column) {
+          $this->bind($column, $parray[$column]);
+      }
 		}
 	}
   /**
@@ -148,7 +158,7 @@ class DBConnection
   {
     $query = trim($query);
     $this->Init($query,$params);
-    $rawSqlCommand = explode(" ", $query);
+    $rawSqlCommand = explode(" ", preg_replace("/\s+|\t+|\n+/", " ", $query));
     $sqlCommand = strtolower($rawSqlCommand[0]);
     if ($sqlCommand === 'select') {
       return $this->statement->fetchAll($fetchmode);

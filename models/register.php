@@ -22,11 +22,15 @@ function registerInDB($registerData)
 
   if (verifyEmailAddress($userEmailAddress)) {
     $registerQuery = "INSERT INTO users (userFirstname, userLastname, userEmail, userPasswordHash) VALUES (:userFirstname,:userLastname,:userEmail,:userPasswordHash)";
-    $values = array(':userFirstname'=> $userFirstname,':userLastname'=> $userLastname,':userEmail'=>$userEmailAddress ,':userPasswordHash'=>$userPasswordHash);
+    $values = array('userFirstname'=> $userFirstname,'userLastname'=> $userLastname,'userEmail'=>$userEmailAddress ,'userPasswordHash'=>$userPasswordHash);
     try {
-      $statement = prepareQuery($registerQuery);
-      $result = executeStatement($statement,$values);
-    } catch (databaseError $e) {
+      $db = new DBConnection;
+      $results = $db->query($registerQuery,$values);
+      if ($results===0) {
+        throw new databaseError();
+      }
+    }
+    catch (PDOException $e) {
       throw $e;
     }
   }else {
@@ -44,14 +48,15 @@ function registerInDB($registerData)
  */
 function verifyEmailAddress($emailToVerify){
   $query = "SELECT userID FROM users WHERE userEmail = :email" ;
-  $value = [':email' => $emailToVerify];
+  $values = array('email' => $emailToVerify);
   try {
-    $statement = prepareQuery($query);
-    $result = executeStatement($statement,$values);
-  } catch (databaseError $e) {
+    $db = new DBConnection;
+    $userData = $db->query($query,$values);
+  }
+  catch (PDOException $e) {
     throw $e;
   }
-  if ($result === null) {
+  if ($userData === null || $userData === "" || empty($userData)) {
     return true;
   }
   return false;

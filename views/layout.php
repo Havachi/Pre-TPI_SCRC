@@ -39,7 +39,7 @@
         <div class="navbar">
 
           <div class="navbar-list">
-            <div class="navbar-item home <?=$title=="Acceuil"?"active":""?>">
+            <div class="navbar-item home <?=$title=="Accueil"?"active":""?>">
               <div>
                 <a href="index.php?action=home">Accueil</a>
               </div>
@@ -64,7 +64,7 @@
               </div>
             </div>
 
-            <div class="navbar-item login last <?=($title=="Login"||$title=="Register")?"active":""?>">
+            <div class="navbar-item login last <?=($title=="Login"||$title=="Register"||$title=="Profile")?"active":"dfghjk"?>">
               <div>
                 <?php if (isset($_SESSION['isLogged'])): ?>
                   <a href="index.php?action=profile"><?php echo $_SESSION['userFirstName'] ?> <?php echo $_SESSION['userLastName'] ?></a>

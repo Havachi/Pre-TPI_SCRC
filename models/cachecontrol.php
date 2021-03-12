@@ -1,6 +1,7 @@
-<?php
+  <?php
 
 function cacheControl ($file, $timestamp) {
+  if (isset($_SESSION['isLogged'])) {
     $gmt_mtime = gmdate('r', $timestamp);
     header('ETag: "'.md5($timestamp.$file).'"');
     header('Last-Modified: '.$gmt_mtime);
@@ -11,4 +12,5 @@ function cacheControl ($file, $timestamp) {
             header('HTTP/1.1 304 Not Modified');
         }
     }
+  }
 }

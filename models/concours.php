@@ -50,14 +50,20 @@ function nextLevel(){
 function useHint(){
   $strSep='\'';
   if ($_SESSION['hints'] == 3) {
-    $query = "SELECT hint1 FROM hints WHERE imageID =". $strSep . $_SESSION['currentLevel'] . $strSep;
+    $query = "SELECT hint1 FROM hints WHERE imageID = :imageID";
   }elseif ($_SESSION['hints'] == 2) {
-    $query = "SELECT hint2 FROM hints WHERE imageID =". $strSep . $_SESSION['currentLevel'] . $strSep;
+    $query = "SELECT hint2 FROM hints WHERE imageID = :imageID";
   }elseif ($_SESSION['hints'] == 1) {
-    $query = "SELECT hint3 FROM hints WHERE imageID =". $strSep . $_SESSION['currentLevel'] . $strSep;
+    $query = "SELECT hint3 FROM hints WHERE imageID = :imageID";
   }
   if (isset($query)) {
-    $hint=executeQuerySelectSingle($query);
+    try {
+      $db = new DBConnection;
+      $hint = $db->query($query,array("imageID"=>$_SESSION['currentLevel']));
+    }
+    catch (PDOException $e) {
+      throw $e;
+    }
     $_SESSION['hints']--;
     $_SESSION['levelHints'][] = $hint[0];
     require 'views/concoursLogged.php';
@@ -136,8 +142,13 @@ function fetchSolution($level){
   require_once "DBConnection.php";
   $query = "SELECT imagePosLat, imagePosLon FROM images where imageID = :imageID";
   $values=array(':imageID' => $level);
-  $statement = prepareQuery($query);
-  $result = executeStatement($statement,$values);
+  try {
+    $db = new DBConnection;
+    $result = $db->query($query,$values);
+  }
+  catch (PDOException $e) {
+    throw $e;
+  }
   return $result;
 }
 /**
@@ -149,9 +160,14 @@ function fetchSolution($level){
 function fetchPB(){
   require_once "DBConnection.php";
   $query = "SELECT userPBScore FROM users where userID = :userID" ;
-  $values=array(':userID' => $_SESSION['userID']);
-  $statement = prepareQuery($query);
-  $result = executeStatement($statement,$values);
+  $values=array('userID' => $_SESSION['userID']);
+  try {
+    $db = new DBConnection;
+    $result = $db->query($query,$values);
+  }
+  catch (PDOException $e) {
+    throw $e;
+  }
   return $result;
 }
 
@@ -234,8 +250,15 @@ function endConcours(){
   $userPB = fetchPB()[0];
 
   if ($userPB < $totalScore){
-    $query = "UPDATE users SET userPBScore =". $totalScore ." WHERE userID = ". $_SESSION['userID'];
-    executeQuery($query);
+    $query = "UPDATE users SET userPBScore = :totalScore WHERE userID = :userID";
+    $values = array("totalScore" => $totalScore,"userID" => $_SESSION['userID']);
+    try {
+      $db = new DBConnection;
+      $result = $db->query($query,$values);
+    }
+    catch (PDOException $e) {
+      throw $e;
+    }
   }
   saveLastGame();
   require "views/finalScore.php";
