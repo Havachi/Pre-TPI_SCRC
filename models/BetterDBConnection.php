@@ -1,12 +1,13 @@
-parameters<?php
+<?php
 /**
  * This class exist simply to make Database interaction and PDO easier to use in my projects
  * It is supposed to work with any project
  * @author Alessandro Rossi
- * @version 0.1
+ * @version 1.0
  */
-namespace PDOWrapper;
-use \PDO;
+//namespace PDOWrapper;
+require "settings.ini.php";
+//use \PDO;
 
 class DBConnection
 {
@@ -22,18 +23,22 @@ class DBConnection
   /** @var string, Database Hostname + Database Name = dsn*/
   private $dsn;
 
+  /** @var array, The database settings*/
+  private $settings;
+
   /** @var object, Database PDO object*/
   private $pdo;
 
   /** @var object, PDO Statement*/
   private $statement;
 
-  /** @var array, PDO Statement*/
+  /** @var array, Query Parameters*/
   private $parameters;
 
   /** @var bool, true if connected to DB*/
   private $Connected = false;
 
+  private $success;
   /**
    * This is the constructor for the DBConnection object
    *
@@ -42,13 +47,14 @@ class DBConnection
    * @param string $password This is the password used to connect to the DB
    * @param string $dbname This is the database name which you want to connect to
    */
-  public function __construct($hostname,$userName,$password,$dbname )
-  {
-      $this->userName = $userName;
-      $this->pass = $password;
-      $this->dsn = "mysql:host=".$hostname.";dbname=".$dbname;
-      $this->openConnection($dsn, $userName, $userPwd);
+  public function __construct(){
+    $this->settings = parse_ini_file("settings.ini.php");
+    $this->userName = $this->settings['user'];
+    $this->pass = $this->settings['password'];
+    $this->dsn = "mysql:host=".$this->settings['host'].";dbname=".$this->settings['dbname'];
+    $this->openConnection();
   }
+
   /**
    * This method create a new PDO object and open the connection with the database
    *
@@ -56,7 +62,7 @@ class DBConnection
   private function openConnection(){
     try
     {
-      $db = new PDO($this->dsn,$this->login,$this->pass);
+      $db = new PDO($this->dsn,$this->userName,$this->pass);
       $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
       //$this->pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
@@ -65,7 +71,7 @@ class DBConnection
     }
     catch (PDOException $e)
     {
-      echo "Aie, aie, aie, problème de connexion avec la base de donnée"
+      echo "Aie, aie, aie, problème de connexion avec la base de donnée";
       throw $e;
     }
   }
@@ -81,10 +87,9 @@ class DBConnection
   /**
    * This function initialize query, in order to exectue it.
    * More specifically, this function open the connection if it isn't, then it prepare the query, bind parameters to it, and finally excecute the query
-   * @param
-   * @return    void
-   * @author
-   * @copyright
+   * @param string $query The query to initialize
+   * @param array $parameters The parameters to initialize with the query
+   * @author Alessandro Rossi
    */
   private function Init($query,$parameters = ""){
     if (!$this->Connected) {$this->openConnection();}
@@ -97,7 +102,7 @@ class DBConnection
           $this->statement->bindParam($parameters[0],$parameters[1]);
         }
       }
-      $this->success = $this->parameters-execute();
+        $this->success = $this->statement->execute();
     } catch (PDOException $e) {
       echo "Aie, aie, aie, problème de connexion avec la base de donnée";
       throw $e;
@@ -193,6 +198,6 @@ class DBConnection
   public function single($query,$params = null)
     {
       $this->Init($query,$params);
-      return $this->sQuery->fetchColumn();
+      return $this->statement->fetchColumn();
     }
 }
