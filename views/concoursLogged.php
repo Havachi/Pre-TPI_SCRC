@@ -33,7 +33,7 @@ cacheControl($_SERVER['SCRIPT_FILENAME'], filemtime($_SERVER['SCRIPT_FILENAME'])
             Indice n° 1/3
           </div>
           <div class="concours-hintText">
-            <?php echo $_SESSION['levelHints'][0] ?>
+            <?php echo($_SESSION['levelHints'][0]); ?>
           </div>
         </div>
         <div class="concours-hintBtnContainer hint1">
@@ -46,7 +46,7 @@ cacheControl($_SERVER['SCRIPT_FILENAME'], filemtime($_SERVER['SCRIPT_FILENAME'])
             Indice n° 1/3
           </div>
           <div class="concours-hintText">
-            <?php echo $_SESSION['levelHints'][0] ?>
+            <?php echo $_SESSION['levelHints'][0]['hint1'] ?>
           </div>
         </div>
         <div class="concours-hint hint2">
@@ -54,7 +54,7 @@ cacheControl($_SERVER['SCRIPT_FILENAME'], filemtime($_SERVER['SCRIPT_FILENAME'])
             Indice n° 2/3
           </div>
           <div class="concours-hintText">
-            <?php echo $_SESSION['levelHints'][1] ?>
+            <?php echo $_SESSION['levelHints'][1]['hint2'] ?>
           </div>
         </div>
         <div class="concours-hintBtnContainer hint2">
@@ -67,7 +67,7 @@ cacheControl($_SERVER['SCRIPT_FILENAME'], filemtime($_SERVER['SCRIPT_FILENAME'])
             Indice n° 1/3
           </div>
           <div class="concours-hintText">
-            <?php echo $_SESSION['levelHints'][0] ?>
+            <?php var_dump( $_SESSION['levelHints'][0]) ?>
           </div>
         </div>
         <div class="concours-hint hint2">

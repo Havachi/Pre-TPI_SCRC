@@ -59,13 +59,20 @@ function useHint(){
   if (isset($query)) {
     try {
       $db = new DBConnection;
-      $hint = $db->query($query,array("imageID"=>$_SESSION['currentLevel']));
+      $hint = $db->single($query,array("imageID"=>$_SESSION['currentLevel']));
     }
     catch (PDOException $e) {
       throw $e;
     }
+
+    if ($_SESSION['hints']===3) {
+      $_SESSION['levelHints'][0] = $hint[0]['hint1'];
+    }elseif($_SESSION['hints']===2) {
+      $_SESSION['levelHints'][1] = $hint[0]['hint2'];
+    }elseif($_SESSION['hints']===1){
+      $_SESSION['levelHints'][2] = $hint[0]['hint3'];
+    }
     $_SESSION['hints']--;
-    $_SESSION['levelHints'][] = $hint[0];
     require 'views/concoursLogged.php';
   }
 }

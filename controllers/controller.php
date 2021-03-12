@@ -50,7 +50,11 @@ function login($userLoginData){
     if ($isLoginCorrect === true) {
       createSession($userLoginData['inputUserEmail']);
       $_GET['action'] = "home";
-      safe_redirect("/index.php?action=home",false);
+      if (!headers_sent()) {
+        header("Location: /index.php?action=home");
+      }
+
+      require("views/home.php");
     }else {
       throw new loginError;
     }
@@ -75,11 +79,12 @@ function register($userRegisterData)
         registerInDB($userRegisterData);
       } catch (alreadyInUseEmail $e) {
         displayRegister();
-
       }
 
-      $_GET['action'] = "home";
-      require "views/Home.php";
+      $_GET['action'] = "login";
+      header("Location: /index.php?action=login");
+      $infos[]="Compte créé!<br/>Veuillez vous connecter";
+      require "views/login.php";
     }else {
       $_GET['error'] = "err:invdb";
       displayRegister();
@@ -111,34 +116,10 @@ function displayProfile(){
 function logout(){
   session_unset();
   session_destroy();
-  safe_redirect("/index.php");
+  header("Location: /index.php");
   exit();
 }
 
-function safe_redirect($url, $exit=true){
-if(!headers_sent()){
-  header('HTTP/1.1 301 Moved Permanently');
-  header('Location: ' . $url);
-  header("Connection: close");
-}     
 
-
-echo '<html>';
-echo '<head><title>Redirecting you...</title>';
-echo '<meta http-equiv="Refresh" content="0;url='.$url.'" />';
-echo '</head>';
-echo '<body onload="location.replace(\''.$url.'\')">';
- 
-// If the javascript and meta redirect did not work,
-// the user can still click this link
-echo 'You should be redirected to this URL:<br />';
-echo "<a href="$url">$url</a><br /><br />";
- 
-echo 'If you are not, please click on the link above.<br />';
- 
-echo '</body>';
-echo '</html>';
-// Stop the script here (optional)
-if ($exit){exit()};
-}
 /*End of Other*/
+?>

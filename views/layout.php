@@ -116,6 +116,15 @@
           <?php endforeach; ?>
           </div>
         <?php endif; ?>
+        <?php if (isset($infos[0])): ?>
+          <?php foreach ($infos as $info): ?>
+            <div class="info-container">
+              <div class="info">
+                <?php echo $info ?>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        <?php endif; ?>
     </header>
     <div class="container">
       <?php echo $content ?>

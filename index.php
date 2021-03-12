@@ -16,7 +16,10 @@ if (isset($_POST)) {
     exit();
   }
 }
-
+if (isset($_GET['error'])) {
+require "models/httperror.php";
+displayErrorPage($_GET['error']);
+}
 if (isset($_GET['action'])) {
   $action = $_GET['action'];
   switch ($action) {
