@@ -18,23 +18,29 @@ function registerInDB($registerData)
   $userLastname = $registerData['inputUserLastName'];
   $userEmailAddress = $registerData['inputUserEmail'];
 
-  $userPasswordHash = password_hash($registerData['inputUserPassword'], PASSWORD_ARGON2I);
+
 
   if (verifyEmailAddress($userEmailAddress)) {
-    $registerQuery = "INSERT INTO users (userFirstname, userLastname, userEmail, userPasswordHash) VALUES (:userFirstname,:userLastname,:userEmail,:userPasswordHash)";
-    $values = array('userFirstname'=> $userFirstname,'userLastname'=> $userLastname,'userEmail'=>$userEmailAddress ,'userPasswordHash'=>$userPasswordHash);
-    try {
-      $db = new DBConnection;
-      $results = $db->query($registerQuery,$values);
-      if ($results===0) {
-        throw new databaseError();
+    if (verifyPassword($registerData['inputUserPassword'])) {
+      $userPasswordHash = password_hash($registerData['inputUserPassword'], PASSWORD_ARGON2I);
+      $registerQuery = "INSERT INTO users (userFirstname, userLastname, userEmail, userPasswordHash) VALUES (:userFirstname,:userLastname,:userEmail,:userPasswordHash)";
+      $values = array('userFirstname'=> $userFirstname,'userLastname'=> $userLastname,'userEmail'=>$userEmailAddress ,'userPasswordHash'=>$userPasswordHash);
+      try {
+        $db = new DBConnection;
+        $results = $db->query($registerQuery,$values);
+        if ($results===0) {
+          throw new databaseError();
+        }
       }
-    }
-    catch (PDOException $e) {
-      throw $e;
+      catch (PDOException $e) {
+        throw $e;
+      }
+    }else {
+      throw new invalidPassword;
+
     }
   }else {
-    throw new alreadyInUseEmail();
+  throw new alreadyInUseEmail();
   }
 }
 
@@ -57,6 +63,34 @@ function verifyEmailAddress($emailToVerify){
     throw $e;
   }
   if ($userData === null || $userData === "" || empty($userData)) {
+    return true;
+  }
+  return false;
+}
+
+function verifyPassword($passwordToVerify){
+  $containsNum = false;
+  $containsSpe = false;
+  $containsChar = false;
+  $moreThan8 = false;
+
+  $passwordArray = str_split($passwordToVerify);
+  $lenght = count($passwordArray);
+  if ($lenght >= 8) {
+    $moreThan8 = true;
+  }
+  foreach ($passwordArray as $char) {
+    if (is_numeric($char)) {
+      $containsNum = true;
+    }elseif (is_string($char)){
+      if (preg_match('[\^£$%&*()}{@#~?!,|=_+¬.]', $char)) {
+        $containsSpe = true;
+      }else {
+          $containsChar = true;
+      }
+    }
+  }
+  if ($containsNum && $containsSpe && $containsChar && $moreThan8) {
     return true;
   }
   return false;

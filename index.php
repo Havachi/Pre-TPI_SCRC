@@ -43,6 +43,7 @@ if (isset($_GET['action'])) {
         login($_SESSION['postdata']);
         unset($_SESSION['postdata']);
       }else {
+        unset($error);
         displayLogin();
       }
       break;
@@ -51,6 +52,7 @@ if (isset($_GET['action'])) {
         register($_SESSION['postdata']);
         unset($_SESSION['postdata']);
       }else {
+        unset($error);
         displayRegister();
       }
       break;

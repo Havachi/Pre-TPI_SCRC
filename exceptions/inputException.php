@@ -16,3 +16,6 @@ class loginError extends Exception
 {
   protected $message = "Adresse E-mail ou mot de passe incorrecte, veuillez réessayer";
 }
+class invalidPassword extends Exception{
+  protected $message = "Le mot de passe doit contenir au minimum 8 caractères, une lettre, un chiffre et un caractère spécial";
+}

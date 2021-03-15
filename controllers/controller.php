@@ -87,7 +87,16 @@ function register($userRegisterData)
       try {
         registerInDB($userRegisterData);
       } catch (alreadyInUseEmail $e) {
-        displayRegister();
+        $error = array('registerError' => $e->getMessage());
+        header('Location : /index.php?action=register');
+        require("views/register.php");
+        exit();
+      } catch (invalidPassword $e){
+        $error = array('registerError' => $e->getMessage());
+        header('Location : /index.php?action=register');
+        require("views/register.php");
+        unset($_SESSION['postdata']);
+        exit();
       }
 
       $_GET['action'] = "login";
