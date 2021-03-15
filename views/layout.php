@@ -1,4 +1,7 @@
-<?php cacheControl($_SERVER['SCRIPT_FILENAME'], filemtime($_SERVER['SCRIPT_FILENAME'])); ?>
+<?php cacheControl($_SERVER['SCRIPT_FILENAME'], filemtime($_SERVER['SCRIPT_FILENAME']));
+
+
+ ?>
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
   <head>
@@ -67,7 +70,7 @@
             <div class="navbar-item login last <?=($title=="Login"||$title=="Register"||$title=="Profile")?"active":"dfghjk"?>">
               <div>
                 <?php if (isset($_SESSION['isLogged'])): ?>
-                  <a href="index.php?action=profile"><?php echo $_SESSION['userFirstName'] ?> <?php echo $_SESSION['userLastName'] ?></a>
+                  <a href="index.php?action=profile"><?php echo $_SESSION['userdata']['userFirstName'] ?> <?php echo $_SESSION['userdata']['userLastName'] ?></a>
                 <?php else: ?>
                   <a href="index.php?action=login">Se connecter</a>
                 <?php endif; ?>
@@ -92,7 +95,7 @@
                   <a href="index.php?action=logout">Déconnexion</a>
                 <?php endif; ?>
                 <?php if (isset($_SESSION['isLogged'])): ?>
-                  <a href="index.php?action=profile"><?php echo $_SESSION['userFirstName'] ?> <?php echo $_SESSION['userLastName'] ?></a>
+                  <a href="index.php?action=profile"><?php echo $_SESSION['userdata']['userFirstName'] ?> <?php echo $_SESSION['userdata']['userLastName'] ?></a>
                 <?php else: ?>
                   <a href="index.php?action=login">Se connecter</a>
                 <?php endif; ?>

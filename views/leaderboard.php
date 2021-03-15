@@ -18,7 +18,7 @@ $pos=1;
     </tr>
     <?php foreach ($leaderboard as $user): ?>
       <?php if (isset($_SESSION['isLogged'])): ?>
-        <?php if ($user['userFirstName'] == $_SESSION['userFirstName'] && $user['userLastName'] == $_SESSION['userLastName'] ): ?>
+        <?php if ($user['userFirstName'] == $_SESSION['userdata']['userFirstName'] && $user['userLastName'] == $_SESSION['userdata']['userLastName'] ): ?>
           <tr class="leaderboard-table-row current">
         <?php else: ?>
           <tr class="leaderboard-table-row ">

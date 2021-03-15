@@ -1,6 +1,12 @@
 <?php
 require_once 'DBConnection.php';
 
+/**
+ * This function get the entier list of user and sort it.
+ *
+ * @return array
+ * @author Alessandro Rossi
+ */
 function fetchLeaderboard(){
   $query = "SELECT userFirstName, userLastName, userPBScore FROM users ORDER BY userPBScore DESC";
   try {
@@ -12,6 +18,13 @@ function fetchLeaderboard(){
   }
   return $leaderboard;
 }
+
+/**
+ * This function get the current user position in leaderboard
+ *
+ * @return int
+ * @author Alessandro Rossi
+ */
 function getUserPos(){
   $pos=1;
   $query = "SELECT userEmail, userPBScore FROM users ORDER BY userPBScore DESC";
@@ -25,7 +38,7 @@ function getUserPos(){
   foreach ($leaderboard as $user) {
     foreach ($user as $key => $value) {
       if ($key == "userEmail") {
-        if ($value == $_SESSION['userEmailAddress']) {
+        if ($value == $_SESSION['userdata']['userEmail']) {
           return $pos;
         }
       }

@@ -1,23 +1,35 @@
 <?php
+
+function concoursFirstTime(){
+  concoursInit();
+  require "views/concoursLogged.php";
+}
+function concoursComeback(){
+  //TODO : kinda check where the player is
+  require "views/concoursLogged.php";
+  exit();
+}
 /**
  * This function is run every time the user enter the contest
  * It sets every used variable to their initial values
  * @author Alessandro Rossi
  */
 function concoursInit(){
-  $_SESSION['currentLevel']=1;
-  $_SESSION['pathToImage']="/content/images/".$_SESSION['currentLevel'].".jpg";
-  $_SESSION['attemptsNumber']=0;
-  $_SESSION['userScores'] = array(
+  $settings_Concours = array();
+  $settings_Concours['currentLevel']=1;
+  $settings_Concours['pathToImage']="/content/images/".$settings_Concours['currentLevel'].".jpg";
+  $settings_Concours['attemptsNumber']=0;
+  $settings_Concours['userScores'] = array(
   'lvl1' => 0 ,'lvl2' => 0 ,
   'lvl3' => 0 ,'lvl4' => 0 ,
   'lvl5' => 0 ,'lvl6' => 0 ,
   'lvl7' => 0 ,'lvl8' => 0 ,
   'lvl9' => 0 ,'lvl10' => 0);
-  $_SESSION['tryScores'] = array('Try1' => 0,'Try2' => 0,'Try3' => 0);
-  $_SESSION['attempts'] = array('Try1' => array('Lat' => 0,'Long' => 0),'Try2' => array('Lat' => 0,'Long' => 0),'Try3' => array('Lat' => 0,'Long' => 0));
-  $_SESSION['hints'] = 3;
-  $_SESSION['levelHints'] = array();
+  $settings_Concours['tryScores'] = array('Try1' => 0,'Try2' => 0,'Try3' => 0);
+  $settings_Concours['attempts'] = array('Try1' => array('Lat' => 0,'Long' => 0),'Try2' => array('Lat' => 0,'Long' => 0),'Try3' => array('Lat' => 0,'Long' => 0));
+  $settings_Concours['hints'] = 3;
+  $settings_Concours['levelHints'] = array();
+  $_SESSION['Settings']['Concours'] = $settings_Concours;
 }
 
 /**
@@ -26,18 +38,20 @@ function concoursInit(){
  * @author Alessandro Rossi
  */
 function nextLevel(){
-  if ($_SESSION['currentLevel'] == 10) {
+  $settings_Concours = $_SESSION['Settings']['Concours'];
+  if ($settings_Concours['currentLevel'] == 10) {
     endConcours();
   }else {
-    $_SESSION['currentLevel']=$_SESSION['currentLevel']+1;
-    $_SESSION['pathToImage']="/content/images/".$_SESSION['currentLevel'].".jpg";
-    $_SESSION['attemptsNumber']=0;
-    $_SESSION['tryScores'] = array('Try1' => 0,'Try2' => 0,'Try3' => 0);
-    $_SESSION['attempts'] = array('Try1' => array('Lat' => 0,'Long' => 0),'Try2' => array('Lat' => 0,'Long' => 0),'Try3' => array('Lat' => 0,'Long' => 0));
-    $_SESSION['hints'] = 3;
-    $_SESSION['levelHints'] = array();
-    Header("Location : /index.php?action=concours");
+    $settings_Concours['currentLevel']++;
+    $settings_Concours['pathToImage']="/content/images/".$settings_Concours['currentLevel'].".jpg";
+    $settings_Concours['attemptsNumber']=0;
+    $settings_Concours['tryScores'] = array('Try1' => 0,'Try2' => 0,'Try3' => 0);
+    $settings_Concours['attempts'] = array('Try1' => array('Lat' => 0,'Long' => 0),'Try2' => array('Lat' => 0,'Long' => 0),'Try3' => array('Lat' => 0,'Long' => 0));
+    $settings_Concours['hints'] = 3;
+    $settings_Concours['levelHints'] = array();
+    $_SESSION['Settings']['Concours'] = $settings_Concours;
     require "views/concoursLogged.php";
+    clearPostData(2);
     exit();
   }
 }
@@ -49,31 +63,32 @@ function nextLevel(){
  */
 function useHint(){
   $strSep='\'';
-  if ($_SESSION['hints'] == 3) {
+  $settings_Concours = $_SESSION['Settings']['Concours'];
+  if ($settings_Concours['hints'] == 3) {
     $query = "SELECT hint1 FROM hints WHERE imageID = :imageID";
-  }elseif ($_SESSION['hints'] == 2) {
+  }elseif ($settings_Concours['hints'] == 2) {
     $query = "SELECT hint2 FROM hints WHERE imageID = :imageID";
-  }elseif ($_SESSION['hints'] == 1) {
+  }elseif ($settings_Concours['hints'] == 1) {
     $query = "SELECT hint3 FROM hints WHERE imageID = :imageID";
   }
   if (isset($query)) {
     try {
       $db = new DBConnection;
-      $hint = $db->single($query,array("imageID"=>$_SESSION['currentLevel']));
+      $hint = $db->single($query,array("imageID"=>$settings_Concours['currentLevel']));
     }
     catch (PDOException $e) {
       throw $e;
     }
 
-    if ($_SESSION['hints']===3) {
-      $_SESSION['levelHints'][0] = $hint[0]['hint1'];
-    }elseif($_SESSION['hints']===2) {
-      $_SESSION['levelHints'][1] = $hint[0]['hint2'];
-    }elseif($_SESSION['hints']===1){
-      $_SESSION['levelHints'][2] = $hint[0]['hint3'];
+    if ($settings_Concours['hints']===3) {
+      $settings_Concours['levelHints'][0] = $hint;
+    }elseif($settings_Concours['hints']===2) {
+      $settings_Concours['levelHints'][1] = $hint;
+    }elseif($settings_Concours['hints']===1){
+      $settings_Concours['levelHints'][2] = $hint;
     }
-    $_SESSION['hints']--;
-    require 'views/concoursLogged.php';
+    $settings_Concours['hints']--;
+    $_SESSION['Settings']['Concours'] = $settings_Concours;
   }
 }
 
@@ -84,37 +99,43 @@ function useHint(){
  * @author Alessandro Rossi
  */
 function coucoursAttempt(){
-  if ($_SESSION['attemptsNumber'] !== 3) {
-    if (isset($_SESSION['attemptsNumber'])) {
-      $_SESSION['attemptsNumber'] = $_SESSION['attemptsNumber']+1;
-      $_SESSION['attempts']["Try".$_SESSION['attemptsNumber']]['Lat'] = $_POST['userInputLatitude'];
-      $_SESSION['attempts']["Try".$_SESSION['attemptsNumber']]['Long'] = $_POST['userInputLongitude'];
-      $dbSolution = fetchSolution($_SESSION['currentLevel']);
+  $settings_Concours = $_SESSION['Settings']['Concours'];
+  $postdata = $_SESSION['postdata'];
+  if (isset($settings_Concours['attemptsNumber'])) {
+    if ($settings_Concours['attemptsNumber'] !== 3) {
+      $settings_Concours['attemptsNumber']++;
+      $settings_Concours['attempts']["Try".$settings_Concours['attemptsNumber']]['Lat'] = $postdata['userInputLatitude'];
+      $settings_Concours['attempts']["Try".$settings_Concours['attemptsNumber']]['Long'] = $postdata['userInputLongitude'];
+      $dbSolution = fetchSolution($settings_Concours['currentLevel']);
       $dbLat = $dbSolution[0]['imagePosLat'];
       $dbLon = $dbSolution[0]['imagePosLon'];
-      $result = calculateDistance($_POST['userInputLatitude'],$_POST['userInputLongitude'],$dbLat,$dbLon);
-      $_SESSION['tryScores']["Try".$_SESSION['attemptsNumber']] = calculateImageScore($result);
-
+      $result = calculateDistance($postdata['userInputLatitude'],$postdata['userInputLongitude'],$dbLat,$dbLon);
+      $settings_Concours['tryScores']["Try".$settings_Concours['attemptsNumber']] = calculateImageScore($result);
+      $_SESSION['Settings']['Concours'] = $settings_Concours;
+      $_SESSION['postdata'] = $postdata;
       require "views\concoursLogged.php";
     }
   }
 }
 
 function calculateBestAttempt(){
-  $Try1 = $_SESSION['tryScores']['Try1'];
-  $Try2 = $_SESSION['tryScores']['Try2'];
-  $Try3 = $_SESSION['tryScores']['Try3'];
+  $settings_Concours = $_SESSION['Settings']['Concours'];
+  $postdata = $_SESSION['postdata'];
+
+  $Try1 = $settings_Concours['tryScores']['Try1'];
+  $Try2 = $settings_Concours['tryScores']['Try2'];
+  $Try3 = $settings_Concours['tryScores']['Try3'];
   if ( $Try1 >= $Try2 && $Try1 >= $Try3 ) {
-    $bestAttemps['Lat'] = floatval($_SESSION['attempts']['Try1']['Lat']);
-    $bestAttemps['Long'] = floatval($_SESSION['attempts']['Try1']['Long']);
+    $bestAttemps['Lat'] = floatval($settings_Concours['attempts']['Try1']['Lat']);
+    $bestAttemps['Long'] = floatval($settings_Concours['attempts']['Try1']['Long']);
   }
   elseif ( $Try2 >= $Try1 && $Try2 >= $Try3 ) {
-    $bestAttemps['Lat'] = floatval($_SESSION['attempts']['Try2']['Lat']);
-    $bestAttemps['Long'] = floatval($_SESSION['attempts']['Try2']['Long']);
+    $bestAttemps['Lat'] = floatval($settings_Concours['attempts']['Try2']['Lat']);
+    $bestAttemps['Long'] = floatval($settings_Concours['attempts']['Try2']['Long']);
   }
   elseif ( $Try3 >= $Try1 && $Try3 >= $Try2 ) {
-    $bestAttemps['Lat'] =floatval($_SESSION['attempts']['Try3']['Lat']);
-    $bestAttemps['Long'] =floatval($_SESSION['attempts']['Try3']['Long']);
+    $bestAttemps['Lat'] =floatval($settings_Concours['attempts']['Try3']['Lat']);
+    $bestAttemps['Long'] =floatval($settings_Concours['attempts']['Try3']['Long']);
   }
   return $bestAttemps;
 }
@@ -125,7 +146,10 @@ function calculateBestAttempt(){
  * @author Alessandro Rossi
  */
 function coucoursValidate($inputLat,$inputLon){
-  $dbSolution = fetchSolution($_SESSION['currentLevel']);
+  $settings_Concours = $_SESSION['Settings']['Concours'];
+  $postdata = $_SESSION['postdata'];
+
+  $dbSolution = fetchSolution($settings_Concours['currentLevel']);
   $dbLat = $dbSolution[0]['imagePosLat'];
   $dbLon = $dbSolution[0]['imagePosLon'];
   try {
@@ -134,7 +158,9 @@ function coucoursValidate($inputLat,$inputLon){
   } catch (\Exception $e) {
 
   }
-  $_SESSION['userScores']['lvl'.$_SESSION['currentLevel']] = $score;
+  $settings_Concours['userScores']['lvl'.$settings_Concours['currentLevel']] = $score;
+  $_SESSION['Settings']['Concours'] = $settings_Concours;
+  $_SESSION['postdata'] = $postdata;
   nextLevel();
 }
 
@@ -148,7 +174,7 @@ function coucoursValidate($inputLat,$inputLon){
 function fetchSolution($level){
   require_once "DBConnection.php";
   $query = "SELECT imagePosLat, imagePosLon FROM images where imageID = :imageID";
-  $values=array(':imageID' => $level);
+  $values=array('imageID' => $level);
   try {
     $db = new DBConnection;
     $result = $db->query($query,$values);
@@ -165,9 +191,9 @@ function fetchSolution($level){
  * @author Alessandro Rossi
  */
 function fetchPB(){
-  require_once "DBConnection.php";
+  $userData = $_SESSION['userdata'];
   $query = "SELECT userPBScore FROM users where userID = :userID" ;
-  $values=array('userID' => $_SESSION['userID']);
+  $values=array('userID' => $userData['userID']);
   try {
     $db = new DBConnection;
     $result = $db->query($query,$values);
@@ -218,17 +244,17 @@ function calculateDistance($inputLat,$inputLon,$dbLat,$dbLon){
  */
 function calculateImageScore($diff){
   $score = 0;
-  if ($diff <= 125) {
+  if ($diff <= 500) {
     $score = 10;
-  }elseif ($diff >= 126 && $diff <= 250) {
+  }elseif ($diff >= 5001 && $diff <= 1000) {
     $score = 9;
-  }elseif ($diff >= 251 && $diff <= 500) {
-    $score = 8;
-  }elseif ($diff >= 501 && $diff <= 1000) {
-    $score = 7;
   }elseif ($diff >= 1001 && $diff <= 2000) {
+    $score = 8;
+  }elseif ($diff >= 2001 && $diff <= 2500) {
+    $score = 7;
+  }elseif ($diff >= 2501 && $diff <= 3000) {
     $score = 6;
-  }elseif ($diff >= 2001 && $diff <= 4000) {
+  }elseif ($diff >= 3001 && $diff <= 4000) {
     $score = 5;
   }elseif ($diff >= 4001 && $diff <= 8000) {
     $score = 4;
@@ -249,11 +275,14 @@ function calculateImageScore($diff){
  * @author Alessandro Rossi
  */
 function endConcours(){
+  $settings_Concours = $_SESSION['Settings']['Concours'];
+  $postdata = $_SESSION['postdata'];
+
   $totalScore = 0;
-  foreach ($_SESSION['userScores'] as $lvl => $score) {
+  foreach ($settings_Concours['userScores'] as $lvl => $score) {
     $totalScore = $totalScore + $score;
   }
-  $_SESSION['totalScore'] = $totalScore;
+  $settings_Concours['totalScore'] = $totalScore;
   $userPB = fetchPB()[0];
 
   if ($userPB < $totalScore){
@@ -267,6 +296,8 @@ function endConcours(){
       throw $e;
     }
   }
+  $_SESSION['Settings']['Concours'] = $settings_Concours;
+  $_SESSION['postdata'] = $postdata;
   saveLastGame();
   require "views/finalScore.php";
 }
@@ -277,11 +308,13 @@ function endConcours(){
  * @author Alessandro Rossi
  */
 function saveLastGame(){
-  $filename="games/lastGameUser".$_SESSION['userID'];
+  $settings_Concours = $_SESSION['Settings']['Concours'];
+  $userData = $_SESSION['userdata'];
+  $filename="games/lastGameUser".$userData['userID'];
   if (file_exists($filename)) {
     file_put_contents($filename,"");
   }
-  foreach ($_SESSION['userScores'] as $lvl => $score) {
+  foreach ($settings_Concours['userScores'] as $lvl => $score) {
     file_put_contents($filename,$score.";",FILE_APPEND);
   }
 }
@@ -293,7 +326,8 @@ function saveLastGame(){
  * @author Alessandro Rossi
  */
 function loadLastGame(){
-  $filename="games/lastGameUser".$_SESSION['userID'];
+  $userData = $_SESSION['userdata'];
+  $filename="games/lastGameUser".$userData['userID'];
   if (file_exists($filename)) {
     $lastGame = file_get_contents($filename);
     $lastGameArray = explode(';',$lastGame);

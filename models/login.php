@@ -43,14 +43,17 @@ function createSession($userEmailAddress){
     $_SESSION['isLogged'] = true;
     try {
       $db = new DBConnection;
-      $userData = $db->query("SELECT * FROM users WHERE userEmail = :userEmail",array("userEmail"=>$userEmailAddress));
+      $dbData = $db->query("SELECT * FROM users WHERE userEmail = :userEmail",array("userEmail"=>$userEmailAddress));
+      $dbData = $dbData[0];
     }
     catch (PDOException $e) {
       throw $e;
     }
-    $_SESSION['userID'] = $userData[0]['userID'];
-    $_SESSION['userFirstName'] = $userData[0]['userFirstName'];
-    $_SESSION['userLastName'] = $userData[0]['userLastName'];
-    $_SESSION['userEmailAddress'] = $userEmailAddress;
-    $_SESSION['userRole'] = $userData[0]['userRole'];
+    $userData = array();
+    $userData['userID'] = $dbData['userID'];
+    $userData['userFirstName'] = $dbData['userFirstName'];
+    $userData['userLastName'] = $dbData['userLastName'];
+    $userData['userEmailAddress'] = $dbData['userEmail'];
+    $userData['userRole'] = $dbData['userRole'];
+    $_SESSION['userdata'] = $dbData;
 }

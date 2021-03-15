@@ -4,9 +4,10 @@ require "controllers/controller.php";
 require "models/general.php";
 require "exceptions/handlers.php";
 require "models/cachecontrol.php";
+require "models/validateForm.php";
 
 //set_exception_handler('exception_handler');
-session_start();
+if (!isset($_SESSION)) session_start();
 if (isset($_POST)) {
   try {
     inputVerifier($_POST);
@@ -28,46 +29,26 @@ if (isset($_GET['action'])) {
       break;
 
     case 'concours':
-      if (isset($_SESSION['isLogged'])) {
-        if (isset($_POST['btnNext'])) {
-          if (isset($_POST['userInputLatitude']) && isset($_POST['userInputLongitude'])) {
-            if (!$_POST['userInputLatitude'] === "" && !$_POST['userInputLongitude'] === "") {
-              coucoursValidate($_POST['userInputLatitude'],$_POST['userInputLongitude']);
-            }elseif (isset($_SESSION['tryScores']['Try1']) || isset($_SESSION['tryScores']['Try2']) || isset($_SESSION['tryScores']['Try3'])) {
-              $bestAttemptsCoordinates=calculateBestAttempt();
-              coucoursValidate($bestAttemptsCoordinates['Lat'],$bestAttemptsCoordinates['Long']);
-            }}
-        }elseif (isset($_POST['btnTry'])) {
-          coucoursAttempt();
-        }elseif(isset($_GET['hint'])){
-          if ($_GET['hint'] <= 3 || $_GET['hint'] >= 0) {
-            useHint();
-          }
-        }else {
-          if (isset($_SESSION['currentLevel'])) {
-            displayConcours();
-          }else {
-            displayConcoursLevel('1');
-          }
-        }
+      if ($_SESSION['isLogged']) {
+        concoursControle();
       }else {
         displayConcoursNotLogged();
       }
-
       break;
     case 'leaderboard':
       prepareLeaderboard();
       break;
     case 'login':
-      if (isset($_POST)) {
-        login($_POST);
+      if (isset($_SESSION['postdata'])) {
+        login($_SESSION['postdata']);
+        unset($_SESSION['postdata']);
       }else {
         displayLogin();
       }
       break;
     case 'register':
-      if (isset($_POST)) {
-        register($_POST);
+      if (isset($_SESSION['postdata'])) {
+        register($_SESSION['postdata']);
       }else {
         displayRegister();
       }

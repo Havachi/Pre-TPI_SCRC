@@ -1,7 +1,7 @@
   <?php
 
 function cacheControl ($file, $timestamp) {
-  if (isset($_SESSION['isLogged'])) {
+  if (!isset($_SESSION['isLogged'])) {
     if (!headers_sent()) {
       $gmt_mtime = gmdate('r', $timestamp);
       header('ETag: "'.md5($timestamp.$file).'"');

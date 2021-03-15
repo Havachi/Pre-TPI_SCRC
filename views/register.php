@@ -39,7 +39,7 @@ cacheControl($_SERVER['SCRIPT_FILENAME'], filemtime($_SERVER['SCRIPT_FILENAME'])
     </div>
     <!--Submit button -->
     <div class="register-fieldGroup submit">
-      <button class="submitButton" type="submit">Valider</button>
+      <button class="submitButton" type="submit" name="submitType" value="register">Valider</button>
     </div>
     <div class="register-hasaccount">
       <p>Déja un compte? Connectez-vous <a class="register-hasaccount-link" href="index.php?action=login">ICI</a></p>

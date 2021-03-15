@@ -52,6 +52,7 @@ function login($userLoginData){
       $_GET['action'] = "home";
       if (!headers_sent()) {
         header("Location: /index.php?action=home");
+        $_POST['submitType'] = 'confirm';
       }
 
       require("views/home.php");
@@ -94,9 +95,83 @@ function register($userRegisterData)
   }
 }
 
+function concoursControle(){
+  //Checks if the client already has settings, if not it initialize the settings
+  $flags = array();
+  $flags['hint'] = false;
+  if (empty($_SESSION['Settings']['Concours'])) {
+    $flags['init'] = "NOTOK";
+  }else {
+    $Settings_Concours = $_SESSION['Settings']['Concours'];
+    $flags['init'] = "OK";
+  }
+
+
+  if (!empty($_SESSION['postdata'])) {
+    if ($_SESSION['postdata']['userInputLatitude'] !== "" && $_SESSION['postdata']['userInputLongitude'] !== "") {
+      $postdata = $_SESSION['postdata'];
+      $flags['postdata'] = "set";
+      if (isset($postdata['submitType'])) {
+        if ($postdata['submitType'] === "validate") {
+          $flags['submitType'] = "validate";
+        }elseif ($postdata['submitType'] === "try") {
+          $flags['submitType'] = "try";
+        }else {
+          $flags['submitType'] = "none";
+        }
+      }
+    }else {
+      $flags['postdata'] = "unset";
+    }
+  }else {
+    $flags['postdata'] = "unset";
+  }
+
+
+  if (isset($_GET['hint'])) {
+    if ($_GET['hint'] <= 3 || $_GET['hint'] >= 0) {
+      useHint();
+      $flags['hint'] = true;
+    }
+  }
+  if ($flags['init'] === "OK") {
+    if ($flags['postdata'] === "set") {
+      if ($flags['submitType'] === "validate") {
+        if ((isset($_SESSION['postdata']['userInputLatitude']) && isset($_SESSION['postdata']['userInputLongitude'])) && ($_SESSION['postdata']['userInputLatitude'] !== "" && $_SESSION['postdata']['userInputLongitude'] !== "" )) {
+          $_SESSION['postdata']['submitType'] = "delete";
+          coucoursValidate($_SESSION['postdata']['userInputLatitude'],$_SESSION['postdata']['userInputLongitude']);
+          clearPostData(0);
+        }elseif($_SESSION['Settings']['Concours']['attemptsNumber'] !== 0) {
+          $bestAttemptsCoordinates=calculateBestAttempt();
+          coucoursValidate($bestAttemptsCoordinates['Lat'],$bestAttemptsCoordinates['Long']);
+          clearPostData(0);
+        }else {
+          $flags['postdata'] = 'unset';
+        }
+      }elseif ($flags['submitType'] === "try") {
+        coucoursAttempt($_SESSION['postdata']['userInputLatitude'],$_SESSION['postdata']['userInputLongitude']);
+        clearPostData(0);
+      }
+    }elseif ($flags['postdata'] === "unset") {
+      if ($flags['hint']) {
+        concoursComeback();
+      }else {
+        concoursFirstTime();
+      }
+    }
+  }elseif ($flags['init'] === "NOTOK") {
+    if ($flags['postdata'] === "unset") {
+      concoursFirstTime();
+    }
+  }
+
+
+
+}
 function displayConcoursLevel($currentLevel){
   concoursInit($currentLevel);
   require "views/concoursLogged.php";
+
 }
 
 function prepareLeaderboard(){
@@ -108,6 +183,7 @@ function displayProfile(){
   $PB = $PB[0]['userPBScore'];
   $Pos=getUserPos();
   $lastGame = loadLastGame();
+  //header("Location: /index.php?action=profile"); //Make the server die
   require "views/profile.php";
 }
 
