@@ -29,7 +29,7 @@ if (isset($_GET['action'])) {
       break;
 
     case 'concours':
-      if ($_SESSION['isLogged']) {
+      if (!empty($_SESSION['isLogged'])) {
         concoursControle();
       }else {
         displayConcoursNotLogged();
@@ -49,6 +49,7 @@ if (isset($_GET['action'])) {
     case 'register':
       if (isset($_SESSION['postdata'])) {
         register($_SESSION['postdata']);
+        unset($_SESSION['postdata']);
       }else {
         displayRegister();
       }

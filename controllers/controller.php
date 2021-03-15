@@ -43,9 +43,14 @@ function login($userLoginData){
       $isLoginCorrect=isLoginCorrect($userLoginData);
     } catch (loginError $e) {
       $error = array('loginError' => $e->getMessage());
-      displayLogin();
+      header('Location : /index.php?action=login');
+      require("views/login.php");
+      exit();
     }catch (databaseError $e){
-      throw $e;
+      $error = array('databaseError' => $e->getMessage());
+      header('Location : /index.php?action=login');
+      require("views/login.php");
+      exit();
     }
     if ($isLoginCorrect === true) {
       createSession($userLoginData['inputUserEmail']);
@@ -57,7 +62,10 @@ function login($userLoginData){
 
       require("views/home.php");
     }else {
-      throw new loginError;
+      $error = array('loginError' => 'Adresse E-Mail ou mot de passe incorrect, veuillez reéssayer');
+      header('Location : /index.php?action=login');
+      require("views/login.php");
+      exit();
     }
   }else {
     displayLogin();
@@ -95,10 +103,17 @@ function register($userRegisterData)
   }
 }
 
+/**
+ * This function controle how the concours react based on user interaction
+ *
+ * @author Alessandro Rossi
+ */
 function concoursControle(){
   //Checks if the client already has settings, if not it initialize the settings
   $flags = array();
   $flags['hint'] = false;
+
+  $flags['reset'] = false;
   if (empty($_SESSION['Settings']['Concours'])) {
     $flags['init'] = "NOTOK";
   }else {
@@ -121,12 +136,19 @@ function concoursControle(){
         }
       }
     }else {
-      $flags['postdata'] = "unset";
+      if ($Settings_Concours['attemptsNumber'] !== 0) {
+        $flags['postdata'] = "setattempts";
+        $flags['submitType'] = "attempts";
+      }else {
+        $flags['postdata'] = "unset";
+      }
     }
   }else {
     $flags['postdata'] = "unset";
   }
-
+    if (isset($_GET['reset'])) {
+      $flags['reset'] = $_GET['reset'];
+    }
 
   if (isset($_GET['hint'])) {
     if ($_GET['hint'] <= 3 || $_GET['hint'] >= 0) {
@@ -135,13 +157,16 @@ function concoursControle(){
     }
   }
   if ($flags['init'] === "OK") {
-    if ($flags['postdata'] === "set") {
-      if ($flags['submitType'] === "validate") {
+    if ($flags['postdata'] === "set" || $flags['postdata'] === "setattempts") {
+      if ($flags['reset']) {
+        concoursFirstTime();
+      }
+      if ($flags['submitType'] === "validate" || $flags['submitType'] === "attempts") {
         if ((isset($_SESSION['postdata']['userInputLatitude']) && isset($_SESSION['postdata']['userInputLongitude'])) && ($_SESSION['postdata']['userInputLatitude'] !== "" && $_SESSION['postdata']['userInputLongitude'] !== "" )) {
           $_SESSION['postdata']['submitType'] = "delete";
           coucoursValidate($_SESSION['postdata']['userInputLatitude'],$_SESSION['postdata']['userInputLongitude']);
           clearPostData(0);
-        }elseif($_SESSION['Settings']['Concours']['attemptsNumber'] !== 0) {
+        }elseif($flags['postdata'] === "setattempts") {
           $bestAttemptsCoordinates=calculateBestAttempt();
           coucoursValidate($bestAttemptsCoordinates['Lat'],$bestAttemptsCoordinates['Long']);
           clearPostData(0);
@@ -153,10 +178,13 @@ function concoursControle(){
         clearPostData(0);
       }
     }elseif ($flags['postdata'] === "unset") {
+      if ($flags['reset']){
+        concoursFirstTime();
+      }else {
+        concoursComeback();
+      }
       if ($flags['hint']) {
         concoursComeback();
-      }else {
-        concoursFirstTime();
       }
     }
   }elseif ($flags['init'] === "NOTOK") {
@@ -165,14 +193,8 @@ function concoursControle(){
     }
   }
 
-
-
 }
-function displayConcoursLevel($currentLevel){
-  concoursInit($currentLevel);
-  require "views/concoursLogged.php";
 
-}
 
 function prepareLeaderboard(){
   $leaderboard = fetchLeaderboard();

@@ -17,7 +17,11 @@ function isLoginCorrect($userLoginData)
   try {
     $db = new DBConnection;
     $dbpsw = $db->query("SELECT userPasswordHash FROM users WHERE userEmail = :userEmail",array("userEmail"=>$email));
-    $dbpsw = $dbpsw[0]['userPasswordHash'];
+    if (!empty($dbpsw)) {
+      $dbpsw = $dbpsw[0]['userPasswordHash'];
+    }else {
+      throw new loginError;
+    }
   }
   catch (PDOException $e) {
     throw $e;

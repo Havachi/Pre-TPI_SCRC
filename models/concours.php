@@ -3,6 +3,10 @@
 function concoursFirstTime(){
   concoursInit();
   require "views/concoursLogged.php";
+  if (isset($_GET['reset'])) {
+    unset($_GET['reset']);
+  }
+  exit();
 }
 function concoursComeback(){
   //TODO : kinda check where the player is

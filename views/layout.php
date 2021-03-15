@@ -49,7 +49,7 @@
             </div>
             <div class="navbar-item concours <?=$title=="Concours"?"active":""?>">
               <div >
-                <a href="index.php?action=concours">Concours</a>
+                <a href="index.php?action=concours&reset=true" >Concours</a>
               </div>
             </div>
             <div class="navbar-item classement <?=$title=="Classement"?"active":""?>">
