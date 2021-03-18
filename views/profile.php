@@ -2,7 +2,7 @@
 ob_start();
 $title = "Profile";
 require "models/gravatar.php";
-cacheControl($_SERVER['SCRIPT_FILENAME'], filemtime($_SERVER['SCRIPT_FILENAME']));
+//cacheControl($_SERVER['SCRIPT_FILENAME'], filemtime($_SERVER['SCRIPT_FILENAME']));
 $level=1;
 ?>
 <div class="page-title">
@@ -20,6 +20,16 @@ $level=1;
       <?php echo $_SESSION['userdata']['userEmail'] ?>
     </div>
   </div>
+  <?php if ($_SESSION['userdata']['userRole'] == 1): ?>
+    <div class="profile-fieldgroup admin card">
+      <div class="profile-admin-title">
+        Accès Administration
+      </div>
+      <div class="profile-admin-link">
+        <a href="index.php?action=admin">Page admin</a>
+      </div>
+    </div>
+  <?php endif; ?>
   <div class="profile-fieldgroup secondary card">
     <div class="profile-bestscore">
       Votre meilleur score:

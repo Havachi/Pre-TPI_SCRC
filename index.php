@@ -74,7 +74,6 @@ if (isset($_GET['action'])) {
       if (isset($_SESSION['postdata']) && !empty($_SESSION['postdata'])) {
         upload();
       }else {
-        //unset($_FILES);
       }
       break;
     default:
