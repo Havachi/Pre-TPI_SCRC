@@ -8,7 +8,7 @@ require "models/validateForm.php";
 
 //set_exception_handler('exception_handler');
 if (!isset($_SESSION)) session_start();
-if (isset($_POST)) {
+if (!empty($_POST)) {
   try {
     inputVerifier($_POST);
   } catch (illegalCharDetected $e) {
@@ -67,6 +67,16 @@ if (isset($_GET['action'])) {
       logout();
       break;
 
+    case 'admin':
+      displayAdminPage();
+      break;
+    case 'upload':
+      if (isset($_SESSION['postdata']) && !empty($_SESSION['postdata'])) {
+        upload();
+      }else {
+        //unset($_FILES);
+      }
+      break;
     default:
       displayHome();
       break;

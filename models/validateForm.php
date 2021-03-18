@@ -15,6 +15,7 @@ if (isset($_SERVER['REQUEST_METHOD']) || isset($_SESSION['postdata']['submitType
 
 
   if (isset($submitCode)) {
+    $exit = true;
     switch ($submitCode) {
       case 'try':
         $_SESSION['postdata'] = $_POST;
@@ -36,6 +37,13 @@ if (isset($_SERVER['REQUEST_METHOD']) || isset($_SESSION['postdata']['submitType
         unset($_POST);
         header("Location: ".$_SERVER['REQUEST_URI'],true,303);
         break;
+      case 'upload':
+        $exit = false;
+        $_SESSION['postdata'] = $_POST;
+        $_SESSION['files'] = $_FILES;
+        unset($_POST);
+        header("Location: /index.php?action=upload ",true,303);
+        break;
       case 'delete':
         unset($_SESSION['postdata']);
         header("Location: ".$_SERVER['REQUEST_URI'],true,303);
@@ -45,7 +53,8 @@ if (isset($_SERVER['REQUEST_METHOD']) || isset($_SESSION['postdata']['submitType
         header("Location: ".$_SERVER['REQUEST_URI'],true,303);
         break;
     }
-    exit;
+    if($exit){exit;}
+
   }
 
 }

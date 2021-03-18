@@ -30,6 +30,8 @@
     <?php elseif($title=='Profile'): ?>
       <link rel="stylesheet" href="content/styles/profile.css">
       <link rel="stylesheet" href="content/styles/cards.css">
+    <?php elseif($title=="Administration"): ?>
+      <link rel="stylesheet" href="content/styles/admin.css">
     <?php endif; ?>
 
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">

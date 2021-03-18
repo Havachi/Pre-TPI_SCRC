@@ -13,7 +13,7 @@ function displayLogin(){
 }
 function displayRegister(){
   require "views/register.php";
-}
+} 
 function displayConcours(){
   require "views/concoursLogged.php";
 }
@@ -22,6 +22,9 @@ function displayConcoursNotLogged(){
 }
 function displayLeaderboard(){
   require "views/leaderboard.php";
+}
+function displayAdminPage(){
+  require "views/admin.php";
 }
 
 /*End of Display only part*/
@@ -227,6 +230,9 @@ function logout(){
   exit();
 }
 
+function upload(){
+  require "models/upload.php";
+}
 
 /*End of Other*/
 ?>
