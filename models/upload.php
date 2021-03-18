@@ -21,16 +21,12 @@ if (isset($_SESSION) || !empty($_SESSION)) {
               $queryUploadImage = $db->query("INSERT INTO hints (imageID, hint1, hint2, hint3) VALUES (:imageID, :hint1, :hint2, :hint3)",$hintsValues);
             }
           } catch (PDOException $e) {
-
+            throw $e;
           }
 
-
-
       } else {
-
           echo "<pre>Le fichier n'as pas pu être téléchargé\r\n";
-          echo "Erreur : ". $GLOBALS['UPLOAD_ERROR_MESSAGE'][$_SESSION['files']['input-image']['error']]."</pre>";
-          sleep(4);
+          echo "Erreur : ". $GLOBALS['UPLOAD_ERROR_MESSAGE'][$_SESSION['files']['input-image']['error']]."</pre>";S
       }
 
       header("Location: /index.php?action=admin");
