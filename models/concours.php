@@ -117,7 +117,7 @@ function coucoursAttempt(){
       $settings_Concours['tryScores']["Try".$settings_Concours['attemptsNumber']] = calculateImageScore($result);
       $_SESSION['Settings']['Concours'] = $settings_Concours;
       $_SESSION['postdata'] = $postdata;
-      require "views/concoursLogged.php";
+      require "/views/concoursLogged.php";
     }
   }
 }
