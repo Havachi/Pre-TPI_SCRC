@@ -54,9 +54,7 @@ function nextLevel(){
     $settings_Concours['hints'] = 3;
     $settings_Concours['levelHints'] = array();
     $_SESSION['Settings']['Concours'] = $settings_Concours;
-    require "views/concoursLogged.php";
     clearPostData(2);
-    exit();
   }
 }
 /**
@@ -117,7 +115,6 @@ function coucoursAttempt(){
       $settings_Concours['tryScores']["Try".$settings_Concours['attemptsNumber']] = calculateImageScore($result);
       $_SESSION['Settings']['Concours'] = $settings_Concours;
       $_SESSION['postdata'] = $postdata;
-      require "/views/concoursLogged.php";
     }
   }
 }

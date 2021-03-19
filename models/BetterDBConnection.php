@@ -163,7 +163,7 @@ class DBConnection
     if ($sqlCommand === 'select') {
       return $this->statement->fetchAll($fetchmode);
     }
-    elseif ( $sqlCommand === 'insert' ||  $ssqlCommand === 'update' || $sqlCommand === 'delete' ) {
+    elseif ( $sqlCommand === 'insert' ||  $sqlCommand === 'update' || $sqlCommand === 'delete' ) {
       return $this->statement->rowCount();
     }
     else {

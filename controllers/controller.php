@@ -187,16 +187,19 @@ function concoursControle(){
           $_SESSION['postdata']['submitType'] = "delete";
           coucoursValidate($_SESSION['postdata']['userInputLatitude'],$_SESSION['postdata']['userInputLongitude']);
           clearPostData(0);
+          require "views/concoursLogged.php";
         }elseif($flags['postdata'] === "setattempts") {
           $bestAttemptsCoordinates=calculateBestAttempt();
           coucoursValidate($bestAttemptsCoordinates['Lat'],$bestAttemptsCoordinates['Long']);
           clearPostData(0);
+          require "views/concoursLogged.php";
         }else {
           $flags['postdata'] = 'unset';
         }
       }elseif ($flags['submitType'] === "try") {
         coucoursAttempt($_SESSION['postdata']['userInputLatitude'],$_SESSION['postdata']['userInputLongitude']);
         clearPostData(0);
+        require "views/concoursLogged.php";
       }
     }elseif ($flags['postdata'] === "unset") {
       if ($flags['reset']){
