@@ -93,6 +93,9 @@ function verifyPassword($passwordToVerify){
   if ($containsNum && $containsSpe && $containsChar && $moreThan8) {
     return true;
   }
+  if ($containsNum && $containsChar && $moreThan8) {
+    return true;
+  }
   return false;
 }
  ?>

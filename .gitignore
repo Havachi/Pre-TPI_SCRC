@@ -2,3 +2,9 @@
 .serenata/
 
 games/
+
+vendor/
+
+.phplint-cache
+
+composer.lock
