@@ -1,0 +1,19 @@
+name: Check Syntax
+
+on:
+  push:
+    branches: 
+      - main
+      - release/*
+      - develop
+      
+jobs:
+ Linter:
+  name: Syntax Checking
+  runs-on: ubuntu-latest
+  steps:
+  - name: use phpLint
+    uses: overtrue/phplint@master 
+    with:
+      path: ./
+      options: --exclude=vendor
