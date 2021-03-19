@@ -226,7 +226,7 @@ function displayProfile(){
   $PB = $PB[0]['userPBScore'];
   $Pos=getUserPos();
   $lastGame = loadLastGame();
-  header("Location: /index.php?action=profile"); //Make the server die
+  //header("Location: /index.php?action=profile"); //Make the server die
   require "views/profile.php";
 }
 

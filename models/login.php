@@ -17,9 +17,7 @@ function isLoginCorrect($userLoginData)
   try {
     $db = new DBConnection;
     $dbpsw = $db->single("SELECT userPasswordHash FROM users WHERE userEmail = :userEmail",array("userEmail"=>$email));
-    if (!empty($dbpsw)) {
-      $dbpsw = $dbpsw['userPasswordHash'];
-    }else {
+    if (empty($dbpsw)) {
       throw new loginError;
     }
   }
