@@ -16,4 +16,5 @@ jobs:
     uses: overtrue/phplint@master 
     with:
       path: ./
-      options: --exclude=vendor
+      options: --configuration=./.phplint.yml
+   
