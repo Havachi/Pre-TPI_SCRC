@@ -15,4 +15,7 @@ jobs:
   - name: use phpLint
     uses: overtrue/phplint@master
     with:
-      path: .
+      path: /home/runner/work/Pre-TPI_SCRC/Pre-TPI_SCRC
+      options:
+        --configuration=/home/runner/work/Pre-TPI_SCRC/Pre-TPI_SCRC/.phplint.yml
+        --cache=/home/runner/work/Pre-TPI_SCRC/Pre-TPI_SCRC/.phplint-cache
