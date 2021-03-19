@@ -6,8 +6,8 @@ function inputVerifier($haysacks){
   foreach ($haysacks as $haysack) {
     foreach ($illegalChars as $illegalChar) {
       if (str_contains($haysack,$illegalChar)) {
+        
 
-        throw new illegalCharDetected();
         exit();
       }
     }
