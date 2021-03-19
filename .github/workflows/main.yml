@@ -1,16 +1,22 @@
-on: push
-name: 🚀 Deploy website on push
+on: 
+  push:
+    branches:
+    - main
+    - release/*
+    
+name: Deploy website on push
 jobs:
   web-deploy:
-    name: 🎉 Deploy
+    name: Deploy
     runs-on: ubuntu-latest
     steps:
-    - name: 🚚 Get latest code
+    - name: Get latest code
       uses: actions/checkout@v2.3.2
     
-    - name: 📂 Sync files
+    - name: Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.0.0
       with:
         server: scrc.mycpnv.ch
         username: scrc21_git
         password: ${{ secrets.FTP_PASSWORD }}
+        dry-run: true
