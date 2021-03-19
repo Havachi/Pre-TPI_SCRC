@@ -12,7 +12,7 @@ if (isset($_SESSION) || !empty($_SESSION)) {
       if (move_uploaded_file($_SESSION['files']['input-image']['tmp_name'], $uploadfile)) {
           echo $GLOBALS['UPLOAD_ERROR_MESSAGE'][0];
           echo "Il y a maintenant ". $GLOBALS['COUNT_IMAGE']+1 . " images sur le serveur";
-          $imageValues = array("relativePath" => "content/images/".$GLOBALS['COUNT_IMAGE']+1 . ".jpg", "imagePosLat" => $_SESSION['postdata']['inputLat'],"imagePosLon" => $_SESSION['postdata']['inputLon'])
+          $imageValues = array("relativePath" => "content/images/".$GLOBALS['COUNT_IMAGE']+1 . ".jpg", "imagePosLat" => $_SESSION['postdata']['inputLat'],"imagePosLon" => $_SESSION['postdata']['inputLon']);
           try {
             $db = new DBConnection;
             $queryUploadImage = $db->query("INSERT INTO images (imageRelativePath, imagePosLat, imagePosLon) VALUES (:relativePath, :imagePosLat, :imagePosLon)",$imageValues);
@@ -26,7 +26,7 @@ if (isset($_SESSION) || !empty($_SESSION)) {
 
       } else {
           echo "<pre>Le fichier n'as pas pu être téléchargé\r\n";
-          echo "Erreur : ". $GLOBALS['UPLOAD_ERROR_MESSAGE'][$_SESSION['files']['input-image']['error']]."</pre>";S
+          echo "Erreur : ". $GLOBALS['UPLOAD_ERROR_MESSAGE'][$_SESSION['files']['input-image']['error']]."</pre>";
       }
 
       header("Location: /index.php?action=admin");

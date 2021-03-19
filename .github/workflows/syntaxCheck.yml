@@ -15,5 +15,4 @@ jobs:
   - name: use phpLint
     uses: overtrue/phplint@master
     with:
-      path: ./
-      options: --configuration=/.phplint.yml
+      path: .
