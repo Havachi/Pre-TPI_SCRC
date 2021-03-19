@@ -13,7 +13,7 @@ function displayLogin(){
 }
 function displayRegister(){
   require "views/register.php";
-} 
+}
 function displayConcours(){
   require "views/concoursLogged.php";
 }
@@ -46,11 +46,13 @@ function login($userLoginData){
       $isLoginCorrect=isLoginCorrect($userLoginData);
     } catch (loginError $e) {
       $error = array('loginError' => $e->getMessage());
+      unset($_SESSION['postdata']);
       header('Location : /index.php?action=login');
       require("views/login.php");
       exit();
     }catch (databaseError $e){
       $error = array('databaseError' => $e->getMessage());
+      unset($_SESSION['postdata']);
       header('Location : /index.php?action=login');
       require("views/login.php");
       exit();
@@ -59,6 +61,7 @@ function login($userLoginData){
       createSession($userLoginData['inputUserEmail']);
       $_GET['action'] = "home";
       if (!headers_sent()) {
+        unset($_SESSION['postdata']);
         header("Location: /index.php?action=home");
         $_POST['submitType'] = 'confirm';
       }
@@ -66,6 +69,7 @@ function login($userLoginData){
       require("views/home.php");
     }else {
       $error = array('loginError' => 'Adresse E-Mail ou mot de passe incorrect, veuillez reéssayer');
+      unset($_SESSION['postdata']);
       header('Location : /index.php?action=login');
       require("views/login.php");
       exit();
@@ -91,24 +95,29 @@ function register($userRegisterData)
         registerInDB($userRegisterData);
       } catch (alreadyInUseEmail $e) {
         $error = array('registerError' => $e->getMessage());
+        unset($_SESSION['postdata']);
         header('Location : /index.php?action=register');
         require("views/register.php");
         exit();
       } catch (invalidPassword $e){
         $error = array('registerError' => $e->getMessage());
+        unset($_SESSION['postdata']);
         header('Location : /index.php?action=register');
         require("views/register.php");
-        unset($_SESSION['postdata']);
         exit();
       }
 
       $_GET['action'] = "login";
+      $infos = array('loginOK' => "Compte créé!<br/>Veuillez vous connecter");
+      unset($_SESSION['postdata']);
       header("Location: /index.php?action=login");
-      $infos[]="Compte créé!<br/>Veuillez vous connecter";
       require "views/login.php";
     }else {
-      $_GET['error'] = "err:invdb";
-      displayRegister();
+      $error = array('passwordError' => "Les mots de passe de correspondent pas");
+      unset($_SESSION['postdata']);
+      header('Location : /index.php?action=register');
+      require("views/register.php");
+      exit();
     }
   }else {
     displayRegister();
@@ -217,7 +226,7 @@ function displayProfile(){
   $PB = $PB[0]['userPBScore'];
   $Pos=getUserPos();
   $lastGame = loadLastGame();
-  //header("Location: /index.php?action=profile"); //Make the server die
+  header("Location: /index.php?action=profile"); //Make the server die
   require "views/profile.php";
 }
 

@@ -16,15 +16,15 @@ function isLoginCorrect($userLoginData)
   $query = "";
   try {
     $db = new DBConnection;
-    $dbpsw = $db->query("SELECT userPasswordHash FROM users WHERE userEmail = :userEmail",array("userEmail"=>$email));
+    $dbpsw = $db->single("SELECT userPasswordHash FROM users WHERE userEmail = :userEmail",array("userEmail"=>$email));
     if (!empty($dbpsw)) {
-      $dbpsw = $dbpsw[0]['userPasswordHash'];
+      $dbpsw = $dbpsw['userPasswordHash'];
     }else {
       throw new loginError;
     }
   }
   catch (PDOException $e) {
-    throw $e;
+    throw new loginError;
   }
   if (!empty($dbpsw)) {
     if (password_verify($psw,$dbpsw)) {
@@ -51,7 +51,7 @@ function createSession($userEmailAddress){
       $dbData = $dbData[0];
     }
     catch (PDOException $e) {
-      throw $e;
+      throw new loginError;
     }
     $userData = array();
     $userData['userID'] = $dbData['userID'];

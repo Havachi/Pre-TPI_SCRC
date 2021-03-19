@@ -1,4 +1,4 @@
-<?php cacheControl($_SERVER['SCRIPT_FILENAME'], filemtime($_SERVER['SCRIPT_FILENAME']));
+<?php //cacheControl($_SERVER['SCRIPT_FILENAME'], filemtime($_SERVER['SCRIPT_FILENAME']));
 
 
  ?>
@@ -103,7 +103,7 @@
                 <?php endif; ?>
             </div>
       </div>
-        <?php if (isset($error)): ?>
+        <?php if (isset($error) && is_array($error)): ?>
           <div class="errorContainer">
           <?php foreach ($error as $errorID => $errorMessage): ?>
             <div class="error">

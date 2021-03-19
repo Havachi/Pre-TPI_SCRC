@@ -11,6 +11,8 @@ if (isset($_SERVER['REQUEST_METHOD']) || isset($_SESSION['postdata']['submitType
     }else {
       $submitCode="pass";
     }
+  }elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    $submitCode="get";
   }
 
 
@@ -47,6 +49,10 @@ if (isset($_SERVER['REQUEST_METHOD']) || isset($_SESSION['postdata']['submitType
       case 'delete':
         unset($_SESSION['postdata']);
         header("Location: ".$_SERVER['REQUEST_URI'],true,303);
+        break;
+      case 'get':
+        $exit = false;
+        header("Location: ".$_SERVER['REQUEST_URI'],true,200);
         break;
       case 'pass':
       default:
