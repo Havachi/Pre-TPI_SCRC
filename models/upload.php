@@ -7,7 +7,7 @@ if (isset($_SESSION) || !empty($_SESSION)) {
       if ($_SERVER['SERVER_NAME']==="localhost") {
         $uploaddir = $_SERVER['DOCUMENT_ROOT']."\\content\\images\\";
       }
-      $uploadfile = $uploaddir . $GLOBALS['COUNT_IMAGE']+1 .".jpg");
+      $uploadfile = $uploaddir . $GLOBALS['COUNT_IMAGE']+1 . ".jpg";
 
       if (move_uploaded_file($_SESSION['files']['input-image']['tmp_name'], $uploadfile)) {
           echo $GLOBALS['UPLOAD_ERROR_MESSAGE'][0];
