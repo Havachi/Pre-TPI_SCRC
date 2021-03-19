@@ -20,3 +20,6 @@ jobs:
         username: scrc21_git
         password: ${{ secrets.FTP_PASSWORD }}
         dry-run: true
+        exclude: .git*
+          - .phplint.yml
+          - composer.json
