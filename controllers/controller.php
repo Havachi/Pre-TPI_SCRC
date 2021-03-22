@@ -247,4 +247,20 @@ function upload(){
 }
 
 /*End of Other*/
+
+/*Test*/
+function setTestEnv()
+{
+  $userData = array();
+
+  $userData['userID'] = 999;
+  $userData['userFirstName'] = "Alessandro";
+  $userData['userLastName'] = "Rossi";
+  $userData['userEmailAddress'] = "alessandro.rossi7610@gmail.com";
+  $userData['userRole'] = "1";
+  $_SESSION['userdata'] = $userData;
+  $_SESSION['isLogged'] = true; 
+  require 'views/home.php';
+}
+
 ?>
