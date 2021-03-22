@@ -21,7 +21,8 @@ function concoursComeback(){
 function concoursInit(){
   $settings_Concours = array();
   $settings_Concours['currentLevel']=1;
-  $settings_Concours['pathToImage']="/content/images/".$settings_Concours['currentLevel'].".jpg";
+  $settings_Concours['currentImage']=randomImage();
+  $settings_Concours['pathToImage']="/content/images/".$settings_Concours['currentImage'].".jpg";
   $settings_Concours['attemptsNumber']=0;
   $settings_Concours['userScores'] = array(
   'lvl1' => 0 ,'lvl2' => 0 ,
@@ -47,7 +48,11 @@ function nextLevel(){
     endConcours();
   }else {
     $settings_Concours['currentLevel']++;
-    $settings_Concours['pathToImage']="/content/images/".$settings_Concours['currentLevel'].".jpg";
+    do {
+      $nextLevel = randomImage();
+    } while ($nextLevel === $settings_Concours['currentImage']);
+
+    $settings_Concours['pathToImage']="/content/images/".$settings_Concours['currentImage'].".jpg";
     $settings_Concours['attemptsNumber']=0;
     $settings_Concours['tryScores'] = array('Try1' => 0,'Try2' => 0,'Try3' => 0);
     $settings_Concours['attempts'] = array('Try1' => array('Lat' => 0,'Long' => 0),'Try2' => array('Lat' => 0,'Long' => 0),'Try3' => array('Lat' => 0,'Long' => 0));
@@ -76,7 +81,7 @@ function useHint(){
   if (isset($query)) {
     try {
       $db = new DBConnection;
-      $hint = $db->single($query,array("imageID"=>$settings_Concours['currentLevel']));
+      $hint = $db->single($query,array("imageID"=>$settings_Concours['currentImage']));
     }
     catch (PDOException $e) {
       throw $e;
@@ -108,7 +113,7 @@ function coucoursAttempt(){
       $settings_Concours['attemptsNumber']++;
       $settings_Concours['attempts']["Try".$settings_Concours['attemptsNumber']]['Lat'] = $postdata['userInputLatitude'];
       $settings_Concours['attempts']["Try".$settings_Concours['attemptsNumber']]['Long'] = $postdata['userInputLongitude'];
-      $dbSolution = fetchSolution($settings_Concours['currentLevel']);
+      $dbSolution = fetchSolution($settings_Concours['currentImage']);
       $dbLat = $dbSolution[0]['imagePosLat'];
       $dbLon = $dbSolution[0]['imagePosLon'];
       $result = calculateDistance($postdata['userInputLatitude'],$postdata['userInputLongitude'],$dbLat,$dbLon);
@@ -150,7 +155,7 @@ function coucoursValidate($inputLat,$inputLon){
   $settings_Concours = $_SESSION['Settings']['Concours'];
   $postdata = $_SESSION['postdata'];
 
-  $dbSolution = fetchSolution($settings_Concours['currentLevel']);
+  $dbSolution = fetchSolution($settings_Concours['currentImage']);
   $dbLat = $dbSolution[0]['imagePosLat'];
   $dbLon = $dbSolution[0]['imagePosLon'];
   try {
@@ -341,4 +346,29 @@ function loadLastGame(){
   }else {
     return null;
   }
+}
+function randomImage(){
+  if (!isset($_SESSION['Settings']['Concours']['exclutionList'])) {
+    $_SESSION['Settings']['Concours']['exclutionList'] = array(0 => 1);
+  }
+  $exclutionList = $_SESSION['Settings']['Concours']['exclutionList'];
+  $nextLevelOk = false;
+  if (!empty($exclutionList)) {
+    do {
+      $nextLevel = rand(1,$GLOBALS['COUNT_IMAGE']);
+
+      foreach ($exclutionList as $passedLevel) {
+        if ($nextLevel === $passedLevel) {
+          $nextLevelOk = false;
+        }elseif ($nextLevel !== $passedLevel) {
+          $nextLevelOk = true;
+        }
+      }
+    } while ($nextLevelOk !== true);
+  }else {
+    $nextLevel = rand(1,$GLOBALS['COUNT_IMAGE']);
+  }
+  $exclutionList[] = $nextLevel;
+  $_SESSION['Settings']['Concours']['exclutionList'] = $exclutionList;
+  return $nextLevel;
 }
