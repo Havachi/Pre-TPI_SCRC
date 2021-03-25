@@ -1,0 +1,128 @@
+.image-container{
+  padding-top: 5  vh;
+  text-align: center;
+  img{
+    max-width: 50vw;
+    height: auto;
+    @include elevation;
+  }
+}
+
+.concours-currentLevel {
+  grid-row: 1/2;
+}
+.concours-container {
+  display: grid;
+  grid-template-rows: 55% 5% 40%;
+  text-align: center;
+  .card{
+    max-height: 100vh;
+  }
+
+  .concours-hintBtnContainer {
+    &.hint0 {
+      grid-column: 3/4;
+    }
+    &.hint1 {
+      grid-column: 3/4;
+    }
+
+    &.hint2 {
+      grid-column: 5/6;
+    }
+    &.hint3 {
+      display: none;
+    }
+    .concours-hintBtn {
+      color: black !important;
+      font-weight: bold;
+      border-color: black;
+      border-style: solid;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+  }
+  .concours-imageContainer {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    .concours-image {
+      grid-row: 2/3;
+      max-width: 50vw;
+      height: auto;
+      @include elevation;
+    }
+  }
+  .concours-form {
+    grid-row: 3/4;
+    display: grid;
+    grid-template-rows: repeat(5, 1fr);
+    text-align: center;
+    .concours-formGroup {
+      padding-top: 25px;
+      .coucours-formInput {
+
+        &:focus {
+          outline: none;
+          background-color: red;
+
+          outline: $primary-color !important;
+        }
+      }
+      .concours-formLabel {
+        display: block;
+        margin-bottom: 10px;
+      }
+      .concours-buttonLabel {
+        display: block;
+        margin-bottom: 10px;
+      }
+
+
+      .concours-submitBtn {
+        grid-column-start: 2;
+        background-color: $primary-color;
+        border: none;
+        border-radius: 2px;
+        color: $primary-textover-color;
+        padding: 0.6rem;
+        justify-self:center;
+        @include elevation;
+        margin-bottom: 1vh;
+        font-size: 1rem;
+        font-weight: 600;
+      }
+
+      .secondaryButton {
+        grid-column-start: 2;
+        background-color: $secondary-color;
+        border: none;
+        border-radius: 2px;
+        color: $secondary-textover-color;
+        padding: 0.6rem;
+        justify-self:center;
+        @include elevation;
+        margin-bottom: 1vh;
+        font-size: 1rem;
+        font-weight: 600;
+        &.disabled {
+          background-color: grey;
+          border-color: grey;
+          color: black;
+        }
+      }
+    }
+  }
+  .concours-hintContainer {
+    display: flex;
+    justify-content: center;
+    gap: 25vw;
+    .concours-hint {
+      display: inline;
+      .concours-hintLabel {}
+      .concours-hintText {
+        font-weight: bold;
+      }
+    }
+  }
+  }
+}

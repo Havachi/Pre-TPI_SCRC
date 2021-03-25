@@ -10,16 +10,16 @@ $title = "Login";
 
 <div class="login-container">
   <form class="login-form" action="index.php?action=login" method="post">
-    <div class="login-fieldGroup email">
+    <div class="login-fieldGroup">
       <label class="login-fieldGroup-label" for="inputUserEmail">Adresse E-Mail</label>
       <input class="login-fieldGroup-input" type="email" id="inputUserEmail" name="inputUserEmail" value="">
     </div>
-    <div class="login-fieldGroup password">
+    <div class="login-fieldGroup">
       <label class="login-fieldGroup-label" for="inputUserPassword">Mot de passe</label>
       <input class="login-fieldGroup-input" type="password" id="inputUserPassword" name="inputUserPassword" value="">
     </div>
 
-    <div class="login-fieldGroup submit">
+    <div class="login-fieldGroup">
       <button class="submitButton" type="submit" name="submitType" value="login">Connexion</button>
     </div>
     <div class="login-noaccount">

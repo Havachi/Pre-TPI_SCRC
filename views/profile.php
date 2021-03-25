@@ -1,4 +1,6 @@
 <?php
+
+
 ob_start();
 $title = "Profile";
 require "models/gravatar.php";

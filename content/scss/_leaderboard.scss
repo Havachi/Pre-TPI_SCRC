@@ -1,0 +1,32 @@
+.leaderboard-container{
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  .leaderboard-table {
+    border-collapse: collapse;
+    width: 90vw;
+    &-headerRow{
+      th{
+        font-weight: bold;
+        border: 1px solid black;
+        border-top: 1px solid black;
+        border-bottom: 3px solid black;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+      }
+    }
+    &-row{
+      &.current{
+        background-color: lightyellow;
+      }
+      >td{
+        border: 1px solid black;
+        padding: 15px;
+      }
+    }
+  }
+}
+
+.current{
+
+}

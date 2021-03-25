@@ -1,0 +1,26 @@
+.card {
+  @include elevation;
+  @include transition-ease;
+  background-color: #f1f2f9;
+}
+
+.card:hover {
+  @include elevationHover;
+}
+
+.card-header {
+  padding: 2px 10px;
+}
+
+.card-sep {
+  margin: 0;
+  padding: 0;
+}
+
+.card-separator {
+  border-top: 2px dotted #bbb;
+}
+
+.card-textLine {
+  padding: 4px 0px;
+}
