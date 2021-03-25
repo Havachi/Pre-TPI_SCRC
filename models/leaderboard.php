@@ -38,7 +38,7 @@ function getUserPos(){
   foreach ($leaderboard as $user) {
     foreach ($user as $key => $value) {
       if ($key == "userEmail") {
-        if ($value == $_SESSION['userdata']['userEmail']) {
+        if ($value == $_SESSION['userdata']['userEmailAddress']) {
           return $pos;
         }
       }

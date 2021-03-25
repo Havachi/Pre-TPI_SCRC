@@ -11,13 +11,13 @@ $level=1;
 <div class="profile-container">
   <div class="profile-fieldgroup primary card">
     <div class="profile-picture">
-      <img class="profile-gravatar" src="<?php echo get_gravatar($_SESSION['userdata']['userEmail']); ?>" alt="">
+      <img class="profile-gravatar" src="<?php echo get_gravatar($_SESSION['userdata']['userEmailAddress']); ?>" alt="">
     </div>
     <div class="profile-FullName">
       <?php echo $_SESSION['userdata']['userFirstName']." ".$_SESSION['userdata']['userLastName']; ?>
     </div>
     <div class="profile-email">
-      <?php echo $_SESSION['userdata']['userEmail'] ?>
+      <?php echo $_SESSION['userdata']['userEmailAddress'] ?>
     </div>
   </div>
   <?php if ($_SESSION['userdata']['userRole'] == 1): ?>
