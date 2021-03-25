@@ -15,6 +15,10 @@
   display: grid;
   grid-template-rows: 55% 5% 40%;
   text-align: center;
+  .card{
+    max-height: 100vh;
+  }
+
   .concours-hintBtnContainer {
     &.hint0 {
       grid-column: 3/4;
@@ -119,5 +123,6 @@
         font-weight: bold;
       }
     }
+  }
   }
 }
