@@ -10,7 +10,7 @@
     <meta name="Description" content="SCRC, the cool image localization contest website">
     <title><?php echo $title; ?></title>
     <link rel="icon" type="image/png" href="content\icones\favicon.png" sizes="16x16">
-
+<!--
     <link rel="stylesheet" href="content/styles/main.css">
     <link rel="stylesheet" href="content/styles/color.css">
     <link rel="stylesheet" href="content/styles/navbar.css">
@@ -33,8 +33,9 @@
     <?php elseif($title=="Administration"): ?>
       <link rel="stylesheet" href="content/styles/admin.css">
     <?php endif; ?>
-
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+-->
+    <link rel="stylesheet" href="content/styles/master.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="content\scripts\theonlyone.js" charset="utf-8"></script>
   </head>

@@ -1,6 +1,95 @@
 @use "sass:color";
 @import "config";
+@import "fonts";
+@import "cards";
+
+@import "home";
+@import "concours";
+@import "leaderboard";
+@import "login";
+@import "register";
+@import "profile";
+
+@import "navbar";
+@import "responsive";
 
 body{
-  color.scale($primary-color, $lightness: -35%)
+  background-color: color.scale($primary-color, $lightness: +90%);
+  color: setTextColor($primary-color);
+  height: 100vh;
+  font-family: open_sansregular;
+  line-height: 1;
+}
+h1, h2, h3{
+  font-weight: 400;
+}
+a{
+  color: setTextColor($primary-color);
+  text-decoration: none;
+}
+.text-secondary{
+  color: $secondary-color;
+}
+header{
+  position: fixed;
+  z-index: 2;
+  width: 100%;
+  padding: 0rem;
+}
+main{
+  height: 100%;
+  width: 100%;
+
+  .social-icons{
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+
+    a{
+      padding: 0.4rem;
+      @include transition-ease;
+      &:hover {
+        color: $secondary-color;
+
+      }
+    }
+  }
+}
+footer {
+  font-size: 1rem;
+  position: fixed;
+  bottom: 0.4rem;
+  right: 1rem;
+  text-align: right;
+  padding: 1rem;
+  color: setTextColor($primary-color);
+}
+
+.page-title{
+  padding-top: 15vh;
+  padding-bottom: 1rem;
+  text-align: center;
+  h1{
+    font-weight: 700 !important;
+    font-size: 3rem;
+  }
+}
+.errorContainer{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10vh;
+}
+.error{
+  text-align: center;
+  padding: 10px;
+  color: white;
+  border-color: #b00020;
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  margin-top: 5px;
+  width: 25%;
+  caret-color: auto;
+  background-color: #b00020 ;
+  align-self: center;
 }

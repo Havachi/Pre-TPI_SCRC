@@ -19,28 +19,39 @@ $secondary-textover-color: #000000;
 }
 @function setTextColor($color) {
   @if (lightness($color) > 40%) {
-    @return #000;
+    @return $secondary-textover-color;
   } @else {
-    @return #fff;
+    @return $primary-textover-color;
   }
 }
 @mixin media-sm {
-  @media screen and (max-width:450px){
+  @media screen and (max-width:768px) {
     @content;
   }
 }
 @mixin media-md {
-  @media screen and (min-width: 768px) and (max-width:850px){
+  @media screen and (min-width: 768px) and (max-width: 1024px) {
     @content;
   }
 }
 @mixin media-lg {
-  @media screen and (min-width: 850px) and (max-width:1600px){
+  @media screen and (min-width: 1024px) and (max-width:1600px) {
     @content;
   }
 }
 @mixin media-xl {
-  @media screen and (min-width: 1600px){
+  @media screen and (min-width: 1600px) {
     @content;
   }
+}
+
+@mixin elevation {
+  -webkit-box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.10);
+  -moz-box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.10);
+  box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.10);
+}
+@mixin elevationHover {
+  -webkit-box-shadow: 0px 0px 4px 5px rgba(0, 0, 0, 0.10);
+  -moz-box-shadow: 0px 0px 4px 5px rgba(0, 0, 0, 0.10);
+  box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.10);
 }

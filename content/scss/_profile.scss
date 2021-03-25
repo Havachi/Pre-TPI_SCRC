@@ -1,0 +1,145 @@
+.profile-container {
+  .profile-fieldgroup {
+    margin-bottom: 50px;
+    &.primary{
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-column-gap: 10px;
+      padding: 30px;
+      padding-right: 50px;
+      .profile-picture {
+        grid-column: 1/2;
+        grid-row: 1/3;
+        .profile-gravatar{
+          border-radius: 50%;
+          border-color: black;
+          border-style: outset;
+          border-width: 2px;
+          height: 80px;
+          width: 80px;
+        }
+      }
+      .profile-FullName {
+        grid-column: 2/3;
+        grid-row: 1/2;
+        font-weight: bold;
+        display: block;
+      }
+      .profile-email {
+        grid-column: 2/3;
+        grid-row: 2/3;
+        display: block;
+      }
+    }
+      &.admin{
+        display: flex;
+        flex-direction: column;
+        padding: 30px;
+        padding-right: 50px;
+        text-align: center;
+        .profile-admin-title {
+          font-weight: bold;
+          text-align: center;
+        }
+        .profile-admin-link {
+          border-style: solid;
+          border-color: black;
+          border-width: 1px;
+          border-radius: 2px;
+          width: 15%;
+          align-self: center;
+          background-color: #d1c4e9;
+      }
+    }
+    &.secondary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      padding: 30px;
+      padding-right: 50px;
+      .profile-bestscore {
+        font-weight: bold;
+        text-align: center;
+        grid-row: 1/2;
+        grid-column: 1/2;
+      }
+      .profile-PB {
+        font-size: 45px;
+        font-weight: bold;
+        text-align: center;
+        grid-row: 2/3;
+        grid-column: 1/2;
+      }
+      .profile-PosLabel {
+        font-weight: bold;
+        text-align: center;
+        grid-row: 1/2;
+        grid-column: 3/4;
+      }
+      .profile-Pos {
+        font-size: 45px;
+        font-weight: bold;
+        text-align: center;
+        grid-row: 2/3;
+        grid-column: 3/4;
+        &.first{
+          color: #ffd700;
+        }
+        &.second {
+          color: #C0C0C0;
+        }
+        &.third {
+          color: #cd7f32
+        }
+      }
+
+    }
+    &.tertiary{
+      padding: 30px;
+      padding-right: 50px;
+      .profile-lastGame-label {
+        font-weight: bold;
+        font-size: 25px;
+        white-space: nowrap;
+        grid-row: 1/2;
+        grid-column: 1/2;
+        max-height: 30px;
+      }
+        .profile-lastGame {
+          .profile-lastGame-values {
+            margin-top: 5px;
+            display: flex;
+            justify-content: center;
+            flex-flow: row wrap;
+            .profile-lastGame-value {
+              padding-bottom: 1px;
+              flex: 0 0 50%;
+              &.l2 {
+                flex: 0 0 50%;
+              }
+            }
+          }
+        }
+      
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 950px) {
+  .profile-fieldgroup {
+    margin-bottom: 10px;
+  }
+}
