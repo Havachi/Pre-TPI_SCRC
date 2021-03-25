@@ -8,15 +8,7 @@ require "models/validateForm.php";
 
 //set_exception_handler('exception_handler');
 if (!isset($_SESSION)) session_start();
-if (!empty($_POST)) {
-  try {
-    inputVerifier($_POST);
-  } catch (illegalCharDetected $e) {
-    $error = array('illegalCharDetected' => $e->getMessage() );
-    require "views/home.php";
-    exit();
-  }
-}
+
 if (isset($_GET['error'])) {
 require "models/httperror.php";
 displayErrorPage($_GET['error']);
