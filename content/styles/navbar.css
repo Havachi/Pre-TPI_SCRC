@@ -10,11 +10,10 @@ a{
 }
 .navbar{
   background: white;
-
-  border-left:1px solid var(--primary-color);
-  border-top:1px solid var(--primary-color);
-  border-bottom:1px solid var(--primary-color);
-  border-radius: 2px
+  border-radius: 2px;
+  -webkit-box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.10);
+  -moz-box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.10);
+  box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.10);
 }
 .navbar-list{
   display: grid;
@@ -30,8 +29,9 @@ a{
   font-size: 18px;
 }
 .navbar-item.active{
+  font-family: SourceSansPro_Bold;
   border-bottom:3px solid var(--primary-dark-color);
-  font-weight: bold;
+
 }
 
 .navbar-item.home{

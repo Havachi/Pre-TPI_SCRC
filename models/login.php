@@ -57,5 +57,5 @@ function createSession($userEmailAddress){
     $userData['userLastName'] = $dbData['userLastName'];
     $userData['userEmailAddress'] = $dbData['userEmail'];
     $userData['userRole'] = $dbData['userRole'];
-    $_SESSION['userdata'] = $dbData;
+    $_SESSION['userdata'] = $userData;
 }

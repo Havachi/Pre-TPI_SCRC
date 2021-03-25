@@ -1,0 +1,40 @@
+//max-width:768px
+@include media-sm{
+  .container-nav{
+    display: none;
+  }
+  .error{
+    padding: 5px !important;
+    margin-top: 0 !important;
+    width: auto !important;
+  }
+}
+//min-width: 768px and max-width:1024px
+@include media-md{
+  .container-side{
+    display: none;
+  }
+  .error{
+    padding: 5px !important;
+    margin-top: 1vh !important;
+    width: auto !important;
+  }
+}
+//min-width: 1024px and max-width:1600px
+@include media-lg{
+  .container-side{
+    display: none;
+  }
+}
+//min-width: 1600px;
+@include media-xl{
+  .container-side{
+    display: none;
+  }
+}
+
+@media print{
+  *{
+    display: none;
+  }
+}

@@ -76,6 +76,9 @@ if (isset($_GET['action'])) {
       }else {
       }
       break;
+    case 'test':
+      setTestEnv();
+      break;
     default:
       displayHome();
       break;

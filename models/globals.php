@@ -5,6 +5,7 @@ $GLOBALS['DEBUG_DB'] = true;
 $files = glob($_SERVER['DOCUMENT_ROOT'] . "/content/images/" . "*");
 if ($files){
  $filecount = count($files);
+ $GLOBALS['FILES'] = $files;
  $GLOBALS['COUNT_IMAGE'] = $filecount;
 }
 

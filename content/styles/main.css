@@ -1,20 +1,20 @@
 /*font*/
 @font-face {
-  font-family: SourceSansPro;
+  font-family: SourceSansPro_Regular;
   src:url(../../content/font/SourceSansPro/SourceSansPro-Regular.ttf);
 }
 @font-face {
-  font-family: SourceSansPro;
+  font-family: SourceSansPro_Bold;
   src:url(../../content/font/SourceSansPro/SourceSansPro-Bold.ttf);
   font-weight: bold;
 }
 @font-face {
-  font-family: SourceSansPro;
+  font-family: SourceSansPro_Italic;
   src:url(../../content/font/SourceSansPro/SourceSansPro-Italic.ttf);
   font-style: italic;
 }
 html{
-  font-family: SourceSansPro;
+  font-family: SourceSansPro_Regular;
 }
 body{
   padding: 0;

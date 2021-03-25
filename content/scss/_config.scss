@@ -1,0 +1,57 @@
+$primary-color: #6002ee;
+$primary-dark-color:#0000b9;
+$primary-light-color:#9c47ff;
+$primary-textover-color: #ffffff;
+
+$secondary-color:#90ee02;
+$secondary-dark-color:#58ba00;
+$secondary-light-color:#c5ff53;
+$secondary-textover-color: #000000;
+
+
+*{
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+@mixin transition-ease {
+  transition: all 0.5s ease-in-out;
+}
+@function setTextColor($color) {
+  @if (lightness($color) > 40%) {
+    @return $secondary-textover-color;
+  } @else {
+    @return $primary-textover-color;
+  }
+}
+@mixin media-sm {
+  @media screen and (max-width:768px) {
+    @content;
+  }
+}
+@mixin media-md {
+  @media screen and (min-width: 768px) and (max-width: 1024px) {
+    @content;
+  }
+}
+@mixin media-lg {
+  @media screen and (min-width: 1024px) and (max-width:1600px) {
+    @content;
+  }
+}
+@mixin media-xl {
+  @media screen and (min-width: 1600px) {
+    @content;
+  }
+}
+
+@mixin elevation {
+  -webkit-box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.10);
+  -moz-box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.10);
+  box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.10);
+}
+@mixin elevationHover {
+  -webkit-box-shadow: 0px 0px 4px 5px rgba(0, 0, 0, 0.10);
+  -moz-box-shadow: 0px 0px 4px 5px rgba(0, 0, 0, 0.10);
+  box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.10);
+}

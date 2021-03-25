@@ -1,0 +1,20 @@
+.home-textContainer{
+  margin-top: 5vh;
+  margin-left: 20vw;
+  margin-right: 20vw;
+
+  p{
+    text-align: center;
+    font-size: 1rem;
+    a{
+      color: darken($primary-color, 10%);
+      font-weight: 600;
+    }
+  }
+}
+.home-goodLuck{
+  text-align: center;
+  color: $primary-color;
+  margin-top: 10vh;
+  font-size: 2rem;
+}
