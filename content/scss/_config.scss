@@ -1,0 +1,46 @@
+$primary-color: #6002ee;
+$primary-dark-color:#0000b9;
+$primary-light-color:#9c47ff;
+$primary-textover-color: #ffffff;
+
+$secondary-color:#90ee02;
+$secondary-dark-color:#58ba00;
+$secondary-light-color:#c5ff53;
+$secondary-textover-color: #000000;
+
+
+*{
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+@mixin transition-ease {
+  transition: all 0.5s ease-in-out;
+}
+@function setTextColor($color) {
+  @if (lightness($color) > 40%) {
+    @return #000;
+  } @else {
+    @return #fff;
+  }
+}
+@mixin media-sm {
+  @media screen and (max-width:450px){
+    @content;
+  }
+}
+@mixin media-md {
+  @media screen and (min-width: 768px) and (max-width:850px){
+    @content;
+  }
+}
+@mixin media-lg {
+  @media screen and (min-width: 850px) and (max-width:1600px){
+    @content;
+  }
+}
+@mixin media-xl {
+  @media screen and (min-width: 1600px){
+    @content;
+  }
+}
