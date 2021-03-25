@@ -10,30 +10,6 @@
     <meta name="Description" content="SCRC, the cool image localization contest website">
     <title><?php echo $title; ?></title>
     <link rel="icon" type="image/png" href="content\icones\favicon.png" sizes="16x16">
-<!--
-    <link rel="stylesheet" href="content/styles/main.css">
-    <link rel="stylesheet" href="content/styles/color.css">
-    <link rel="stylesheet" href="content/styles/navbar.css">
-    <link rel="stylesheet" href="content/styles/sidebar.css">
-    <link rel="stylesheet" href="content/styles/rainbow.css">
-    <?php if ($title=='Accueil'): ?>
-      <link rel="stylesheet" href="content/styles/home.css">
-    <?php elseif($title=='Login'): ?>
-      <link rel="stylesheet" href="content/styles/login.css">
-    <?php elseif($title=='Register'): ?>
-      <link rel="stylesheet" href="content/styles/register.css">
-    <?php elseif($title=='Concours'): ?>
-      <link rel="stylesheet" href="content/styles/concours.css">
-      <link rel="stylesheet" href="content/styles/cards.css">
-    <?php elseif($title=='Classement'): ?>
-      <link rel="stylesheet" href="content/styles/leaderboard.css">
-    <?php elseif($title=='Profile'): ?>
-      <link rel="stylesheet" href="content/styles/profile.css">
-      <link rel="stylesheet" href="content/styles/cards.css">
-    <?php elseif($title=="Administration"): ?>
-      <link rel="stylesheet" href="content/styles/admin.css">
-    <?php endif; ?>
--->
     <link rel="stylesheet" href="content/styles/master.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
