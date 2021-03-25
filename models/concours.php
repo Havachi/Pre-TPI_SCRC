@@ -280,7 +280,7 @@ function calculateImageScore($diff){
  *
  * @author Alessandro Rossi
  */
-function endConcours(){
+  function endConcours(){
   $settings_Concours = $_SESSION['Settings']['Concours'];
   $postdata = $_SESSION['postdata'];
 

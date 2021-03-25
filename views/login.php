@@ -12,7 +12,7 @@ $title = "Login";
   <form class="login-form" action="index.php?action=login" method="post">
     <div class="login-fieldGroup email">
       <label class="login-fieldGroup-label" for="inputUserEmail">Adresse E-Mail</label>
-      <input class="login-fieldGroup-input" type="text" id="inputUserEmail" name="inputUserEmail" value="">
+      <input class="login-fieldGroup-input" type="email" id="inputUserEmail" name="inputUserEmail" value="">
     </div>
     <div class="login-fieldGroup password">
       <label class="login-fieldGroup-label" for="inputUserPassword">Mot de passe</label>

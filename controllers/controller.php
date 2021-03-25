@@ -47,13 +47,13 @@ function login($userLoginData){
     } catch (loginError $e) {
       $error = array('loginError' => $e->getMessage());
       unset($_SESSION['postdata']);
-      header('Location : /index.php?action=login');
+      header('Location: /index.php?action=login');
       require("views/login.php");
-      exit();
+
     }catch (databaseError $e){
       $error = array('databaseError' => $e->getMessage());
       unset($_SESSION['postdata']);
-      header('Location : /index.php?action=login');
+      header('Location: /index.php?action=login');
       require("views/login.php");
       exit();
     }
@@ -68,11 +68,13 @@ function login($userLoginData){
 
       require("views/home.php");
     }else {
-      $error = array('loginError' => 'Adresse E-Mail ou mot de passe incorrect, veuillez reéssayer');
-      unset($_SESSION['postdata']);
-      header('Location : /index.php?action=login');
-      require("views/login.php");
-      exit();
+      if (!isset($error['loginError'])) {
+        $error = array('loginError' => 'Adresse E-Mail ou mot de passe incorrect, veuillez reéssayer');
+        unset($_SESSION['postdata']);
+        header('Location: /index.php?action=login');
+        require("views/login.php");
+        exit();
+      }
     }
   }else {
     displayLogin();
