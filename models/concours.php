@@ -21,7 +21,8 @@ function concoursComeback(){
 function concoursInit(){
   $settings_Concours = array();
   $settings_Concours['currentLevel']=1;
-  $settings_Concours['currentImage']=randomImage();
+  $settings_Concours['currentImage']= randomImage(1);
+  $settings_Concours['exclusionList'] = $_SESSION['Settings']['Concours']['exclusionList'];
   $settings_Concours['pathToImage']="/content/images/".$settings_Concours['currentImage'].".jpg";
   $settings_Concours['attemptsNumber']=0;
   $settings_Concours['userScores'] = array(
@@ -49,18 +50,20 @@ function nextLevel(){
   }else {
     $settings_Concours['currentLevel']++;
     do {
-      $nextLevel = randomImage();
-    } while ($nextLevel === $settings_Concours['currentImage']);
+      $nextLevel = randomImage($settings_Concours['currentImage']);
+    } while ($nextLevel === $_SESSION['Settings']['Concours']['currentImage']);
+    $settings_Concours['exclusionList'] = $_SESSION['Settings']['Concours']['exclusionList'];
 
-    $settings_Concours['pathToImage']="/content/images/".$settings_Concours['currentImage'].".jpg";
+    $settings_Concours['pathToImage']="/content/images/". $nextLevel .".jpg";
     $settings_Concours['attemptsNumber']=0;
     $settings_Concours['tryScores'] = array('Try1' => 0,'Try2' => 0,'Try3' => 0);
     $settings_Concours['attempts'] = array('Try1' => array('Lat' => 0,'Long' => 0),'Try2' => array('Lat' => 0,'Long' => 0),'Try3' => array('Lat' => 0,'Long' => 0));
     $settings_Concours['hints'] = 3;
     $settings_Concours['levelHints'] = array();
     $_SESSION['Settings']['Concours'] = $settings_Concours;
-    clearPostData(2);
+    clearPostData();
   }
+
 }
 /**
  * This function get the next hint for this image from the database
@@ -282,7 +285,7 @@ function calculateImageScore($diff){
  */
   function endConcours(){
   $settings_Concours = $_SESSION['Settings']['Concours'];
-  $postdata = $_SESSION['postdata'];
+
 
   $totalScore = 0;
   foreach ($settings_Concours['userScores'] as $lvl => $score) {
@@ -303,7 +306,7 @@ function calculateImageScore($diff){
     }
   }
   $_SESSION['Settings']['Concours'] = $settings_Concours;
-  $_SESSION['postdata'] = $postdata;
+
   saveLastGame();
   require "views/finalScore.php";
 }
@@ -347,28 +350,50 @@ function loadLastGame(){
     return null;
   }
 }
-function randomImage(){
-  if (!isset($_SESSION['Settings']['Concours']['exclutionList'])) {
-    $_SESSION['Settings']['Concours']['exclutionList'] = array(0 => 1);
-  }
-  $exclutionList = $_SESSION['Settings']['Concours']['exclutionList'];
-  $nextLevelOk = false;
-  if (!empty($exclutionList)) {
-    do {
-      $nextLevel = rand(1,$GLOBALS['COUNT_IMAGE']);
-
-      foreach ($exclutionList as $passedLevel) {
-        if ($nextLevel === $passedLevel) {
-          $nextLevelOk = false;
-        }elseif ($nextLevel !== $passedLevel) {
-          $nextLevelOk = true;
-        }
-      }
-    } while ($nextLevelOk !== true);
+function randomImage($currentLevel){
+  if ($currentLevel === 1) {
+    //reset exclusionList, no check needed
+    $randomImage = rand(1,$GLOBALS['COUNT_IMAGE']);
+    $_SESSION['Settings']['Concours']['exclusionList'] = array(0=>$randomImage);
+    return $randomImage;
   }else {
-    $nextLevel = rand(1,$GLOBALS['COUNT_IMAGE']);
+    do {
+      $randomImage = rand(1,$GLOBALS['COUNT_IMAGE']);
+    } while (checkExclusion($_SESSION['Settings']['Concours']['exclusionList'], $randomImage) !== true);
+    $_SESSION['Settings']['Concours']['exclusionList'][] = $randomImage;
+    return $randomImage;
   }
-  $exclutionList[] = $nextLevel;
-  $_SESSION['Settings']['Concours']['exclutionList'] = $exclutionList;
-  return $nextLevel;
+}
+
+function checkExclusion($exclusionList,$imageToCheck){
+  $allClear = false;
+  $allChecked = false;
+  $imageOK = false;
+  $i = 0;
+  do {
+    foreach ($exclusionList as $exclusion) {
+      if ($imageToCheck === $exclusion) {
+        $imageOK = false;
+        $i++;
+        return false;
+      }else {
+        $imageOK = true;
+        $i++;
+      }
+      if ($i === count($exclusionList)) {
+          $allChecked = true;
+      }else {
+        $allChecked = false;
+      }
+    }
+    if ($allChecked === true && $imageOK === true) {
+      $allClear = true;
+      break;
+    }
+    if ($allChecked === true && $allClear === false) {
+      return false;
+      break;
+    }
+  } while ($allClear !== true);
+  return true;
 }

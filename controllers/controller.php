@@ -189,12 +189,16 @@ function concoursControle(){
           $_SESSION['postdata']['submitType'] = "delete";
           coucoursValidate($_SESSION['postdata']['userInputLatitude'],$_SESSION['postdata']['userInputLongitude']);
           clearPostData(0);
-          require "views/concoursLogged.php";
+          if (!$_SESSION['Settings']['Concours']['currentLevel']===10) {
+            require "views/concoursLogged.php";
+          }
         }elseif($flags['postdata'] === "setattempts") {
           $bestAttemptsCoordinates=calculateBestAttempt();
           coucoursValidate($bestAttemptsCoordinates['Lat'],$bestAttemptsCoordinates['Long']);
           clearPostData(0);
-          require "views/concoursLogged.php";
+          if (!$_SESSION['Settings']['Concours']['currentLevel']===10) {
+            require "views/concoursLogged.php";
+          }
         }else {
           $flags['postdata'] = 'unset';
         }
@@ -207,7 +211,11 @@ function concoursControle(){
       if ($flags['reset']){
         concoursFirstTime();
       }else {
-        concoursComeback();
+        if ($Settings_Concours['currentLevel'] === 10) {
+          endConcours();
+        }else {
+          concoursComeback();
+        }
       }
       if ($flags['hint']) {
         concoursComeback();
@@ -261,7 +269,7 @@ function setTestEnv()
   $userData['userEmailAddress'] = "alessandro.rossi7610@gmail.com";
   $userData['userRole'] = "1";
   $_SESSION['userdata'] = $userData;
-  $_SESSION['isLogged'] = true; 
+  $_SESSION['isLogged'] = true;
   require 'views/home.php';
 }
 

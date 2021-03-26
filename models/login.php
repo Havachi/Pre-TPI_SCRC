@@ -17,22 +17,24 @@ function isLoginCorrect($userLoginData)
   try {
     $db = new DBConnection;
     $dbpsw = $db->single("SELECT userPasswordHash FROM users WHERE userEmail = :userEmail",array("userEmail"=>$email));
-    if (empty($dbpsw)) {
+    if ($dbpsw === false) {
       throw new loginError;
+    }else {
+      if (!empty($dbpsw)) {
+        if (password_verify($psw,$dbpsw)) {
+          return true;
+        }else {
+          return false;
+        }
+      }else {
+        throw new loginError;
+      }
     }
   }
   catch (PDOException $e) {
     throw new loginError;
   }
-  if (!empty($dbpsw)) {
-    if (password_verify($psw,$dbpsw)) {
-      return true;
-    }else {
-      return false;
-    }
-  }else {
-    throw new loginError;
-  }
+
 }
 /**
  * This function create the user Session and add some value to it
