@@ -9,7 +9,6 @@ function concoursFirstTime(){
   exit();
 }
 function concoursComeback(){
-  //TODO : kinda check where the player is
   require "views/concoursLogged.php";
   exit();
 }
@@ -350,6 +349,12 @@ function loadLastGame(){
     return null;
   }
 }
+/**
+ * Select a random image from all images available
+ *
+ * @param int $currentLevel is the actual level where the player is
+ * @return int The random image ID to use
+ */
 function randomImage($currentLevel){
   if ($currentLevel === 1) {
     //reset exclusionList, no check needed
@@ -364,7 +369,13 @@ function randomImage($currentLevel){
     return $randomImage;
   }
 }
-
+/**
+ * Check the list of already used image
+ *
+ * @param array $exclusionList The list of already selected images
+ * @param array $imageToCheck The image to check
+ * @return bool
+ */
 function checkExclusion($exclusionList,$imageToCheck){
   $allClear = false;
   $allChecked = false;
