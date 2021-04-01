@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * This function will initalize the concours whenever the play first enter or reset the coucours
+ */
 function concoursFirstTime(){
   concoursInit();
   require "views/concoursLogged.php";
@@ -8,6 +11,9 @@ function concoursFirstTime(){
   }
   exit();
 }
+/**
+ * This function will display the login page
+ */
 function concoursComeback(){
   require "views/concoursLogged.php";
   exit();
@@ -125,6 +131,12 @@ function coucoursAttempt(){
     }
   }
 }
+
+/**
+ * This function will calculate the best attempt for a level and return which is the best
+ *
+ * @return array
+ */
 
 function calculateBestAttempt(){
   $settings_Concours = $_SESSION['Settings']['Concours'];

@@ -1,5 +1,13 @@
   <?php
 
+/**
+ * This function is used for controlling cache and send 304 Not Modified HTTP code if the file hasn't change
+ *
+ *
+ * @param type $file The file to check
+ * @param type $timestamp The current timestamp
+ * @return return type
+ */
 function cacheControl ($file, $timestamp) {
   if (!isset($_SESSION['isLogged'])) {
     if (!headers_sent()) {

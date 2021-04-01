@@ -67,7 +67,12 @@ function verifyEmailAddress($emailToVerify){
   }
   return false;
 }
-
+/**
+ * This function verify if the user inputed password respect some basic security rules
+ *
+ * @param type var Description
+ * @return bool
+ */
 function verifyPassword($passwordToVerify){
   $containsNum = false;
   $containsSpe = false;

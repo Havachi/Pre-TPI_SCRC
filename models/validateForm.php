@@ -1,4 +1,13 @@
 <?php
+/**
+ * This file is a bit special, it is used every time a POST request is sent.
+ *  1. It takes $_POST and put it in the $_SESSION['postdata'] var
+ *  2. unset $_POST
+ *  3. Sent a Header with 303 Found HTTP code
+ *  4. Exit the script
+ */
+
+
 
 if (!isset($_SESSION)) session_start();
 

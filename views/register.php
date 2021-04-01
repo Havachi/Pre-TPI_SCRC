@@ -30,7 +30,7 @@ $title = "Register";
     <!--Password Field -->
     <div class="register-fieldGroup psw">
       <label class="register-fieldGroup-label" for="inputUserPassword">Mot de passe</label>
-      <input class="register-fieldGroup-input" type="password" name="inputUserPassword" value="">
+      <input class="register-fieldGroup-input" type="password" name="inputUserPassword" value="" placeholder="(Minimum 8 caractères, 1 chiffre, 1 lettre)">
     </div>
     <!--Password Confirmation Field -->
     <div class="register-fieldGroup pswConf">

@@ -16,7 +16,7 @@ $title = "Login";
     </div>
     <div class="login-fieldGroup">
       <label class="login-fieldGroup-label" for="inputUserPassword">Mot de passe</label>
-      <input class="login-fieldGroup-input" type="password" id="inputUserPassword" name="inputUserPassword" value="">
+      <input class="login-fieldGroup-input" type="password" id="inputUserPassword" name="inputUserPassword" value="" placeholder="(Minimum 8 caractères, 1 chiffre, 1 lettre)">
     </div>
 
     <div class="login-fieldGroup">
